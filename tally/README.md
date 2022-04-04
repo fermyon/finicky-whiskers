@@ -1,0 +1,1 @@
+Responsible for sending an individual event to the Redis queue

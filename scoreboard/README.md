@@ -1,0 +1,1 @@
+Generate the scoreboard at the end of the game
