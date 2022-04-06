@@ -1,0 +1,10 @@
+spin_version = "1"
+name = "finicky-whiskers"
+version = "1.0.0"
+trigger = { type = "http", base = "/" }
+
+[[component]]
+id = "tally"
+source = "tally/target/wasm32-wasi/release/tally.wasm"
+[component.trigger]
+route = "/tally"
