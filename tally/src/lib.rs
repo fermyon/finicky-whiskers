@@ -11,7 +11,7 @@ use std::collections::HashMap;
 
 mod tally;
 
-//const GAME_DURATION_MILLIS: i32 = 30 * 1000;
+const GAME_DURATION_SECONDS: i64 = 30;
 
 /// A simple Spin HTTP component.
 #[http_component]
@@ -87,7 +87,7 @@ fn validate_ulid(ulid: &str) -> anyhow::Result<Ulid> {
 
     // Check expiration
     let now = Utc::now();
-    if id.datetime() + Duration::seconds(30) < now {
+    if id.datetime() + Duration::seconds(GAME_DURATION_SECONDS) < now {
         anyhow::bail!("Session is expired")
     }
 
