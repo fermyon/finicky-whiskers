@@ -24,5 +24,6 @@ executor = { type = "wagi" }
 [[component]]
 id = "tally"
 source = "components/tally.wasm"
+environment = {REDIS_ADDRESS = "redis://localhost:6379/", REDIS_CHANNEL = "fw-tally"}
 [component.trigger]
 route = "/tally"

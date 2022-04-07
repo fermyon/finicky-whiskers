@@ -5,13 +5,23 @@ use http::Uri;
 use rusty_ulid::Ulid;
 use spin_sdk::{
     http::{Request, Response},
-    http_component,
+    http_component, redis,
 };
 use std::collections::HashMap;
 
 mod tally;
 
+/// Game duration in seconds
 const GAME_DURATION_SECONDS: i64 = 30;
+
+// The environment variable set in `spin.toml` that points to the
+// address of the Redis server that the component will publish
+// a message to.
+const REDIS_ADDRESS_ENV: &str = "REDIS_ADDRESS";
+
+// The environment variable set in `spin.toml` that specifies
+// the Redis channel that the component will publish to.
+const REDIS_CHANNEL_ENV: &str = "REDIS_CHANNEL";
 
 /// A simple Spin HTTP component.
 #[http_component]
@@ -20,6 +30,17 @@ fn tally_point(req: Request) -> Result<Response> {
     match parse_query_params(req.uri()) {
         Ok(tally) => {
             // Should store something in Redis.
+            match serde_json::to_string(&tally) {
+                Ok(payload) => {
+                    if let Err(e) = publish(payload.clone()) {
+                        eprintln!("Error sending to Redis: {}", e)
+                    } else {
+                        println!("Sent message to Redis: {}", payload)
+                    }
+                },
+                Err(e) => eprintln!("Error serializing JSON: {}", e)
+            }
+            
 
             // Send a response
             let msg = format!("ULID: {:?}", tally.ulid);
@@ -92,6 +113,20 @@ fn validate_ulid(ulid: &str) -> anyhow::Result<Ulid> {
     }
 
     Ok(id)
+}
+
+fn publish(payload: String) -> Result<()> {
+    let address = std::env::var(REDIS_ADDRESS_ENV)?;
+    let channel = std::env::var(REDIS_CHANNEL_ENV)?;
+
+    let msg = redis::Message {
+        address: &address,
+        channel: &channel,
+        payload: payload.as_bytes(),
+    };
+    redis::publish(msg).map_err(|e| anyhow::anyhow!(
+        "Error sending to redis: {:?}", e
+    ))
 }
 
 #[cfg(test)]
