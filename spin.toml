@@ -3,8 +3,26 @@ name = "finicky-whiskers"
 version = "1.0.0"
 trigger = { type = "http", base = "/" }
 
+# Serve static files
+[[component]]
+id = "fileserver"
+source = "components/fileserver.wasm"
+files = [{source = "site/static", destination = "/"}]
+[component.trigger]
+route = "/..."
+
+# Redirect / to /index.html
+[[component]]
+id = "redirect-to-index"
+source = "components/redirect.wasm"
+environment = {DESTINATION = "/index.html"}
+[component.trigger]
+route = "/"
+executor = { type = "wagi" }
+
+# Tally an individual event
 [[component]]
 id = "tally"
-source = "tally/target/wasm32-wasi/release/tally.wasm"
+source = "components/tally.wasm"
 [component.trigger]
 route = "/tally"
