@@ -1,7 +1,7 @@
 RUBY_FLAVOR = head-wasm32-unknown-wasi-full
 
 .PHONY: build
-serve: ruby .gem
+build: ruby .gem
 
 .gem:
 	GEM_HOME=.gem bundle install
