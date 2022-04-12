@@ -1,0 +1,23 @@
+{
+  "name": "finickywhiskers",
+  "version": "0.0.1",
+  "description": "slats has needs",
+  "homepage": "https://github.com/fermyon/finickywhiskers",
+  "author": {
+    "name": "Fermyon Technologies",
+    "email": "accounts@fermyon.com",
+    "url": "https://fermyon.com"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@fermyon/styleguide": "^0.1.4",
+    "@parcel/transformer-sass": "^2.4.1",
+    "parcel": "^2.4.1"
+  },
+  "scripts": {
+    "build": "parcel build index.html",
+    "dev": "parcel serve index.html --open",
+    "styles": "parcel build assets/scss/whiskers.scss --dist-dir assets/css",
+    "watch": "parcel watch assets/scss/whiskers.scss --dist-dir assets/css"
+  }
+}

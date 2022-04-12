@@ -1,0 +1,376 @@
+html {
+    background: #F1F1F1;
+}
+body {
+    font-family: 'Azeret Mono', monospace;
+    padding: 2rem 0;
+}
+
+$light1: #F1F1F1;
+$light2: #DADADA;
+
+$salmon: #EDC0A8;
+$yellow: #F6C067;
+$blue:   #6B9CB3;
+$red:    #E46153;
+$black:  #333333;
+
+@keyframes tailSwish {
+    0%   { rotate: 0deg; }
+    25%  { rotate: -2deg; }
+    27%  { rotate: -28deg; }
+    30%  { rotate: -25deg; }
+    36%  { rotate: -25deg; }
+    50%  { rotate: -5deg; }
+    75%  { rotate: 10deg; }
+    78%  { rotate: 5deg; }
+    98%  { rotate: 5deg; }
+    100% { rotate: 0deg; }
+}
+
+@keyframes headLook {
+    0%   { rotate: 0deg; }
+    60%  { rotate: 0deg; }
+    80%  { rotate: -12deg; }
+    100% { rotate: 0deg; }
+}
+
+h3 {
+    color: $red;
+}
+
+#whiskerStage {
+    border-radius: 1rem;
+    background: #DADADA;
+    padding: 1.5rem;
+    position: relative;
+    min-height: 670px;
+    margin: 3rem 0 3rem;
+    overflow: hidden;
+
+    .button {
+        position: relative;
+        z-index: 1100;
+    }
+
+    &:after {
+        background: linear-gradient(45deg, #F1F1F1 20%, transparent 20%, transparent 80%, #F1F1F1  80%, #F1F1F1 100%), linear-gradient(135deg, #F1F1F1 20%, transparent 20%, transparent 80%, #F1F1F1  80%, #F1F1F1 100%);
+        background-size: 3em 3em;
+        background-color: #F6C067;
+        opacity: 0.45;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 20%;
+        position: absolute;
+        display: block;
+        content: " ";
+        z-index: 1;
+    }
+
+    nav,
+    aside,
+    progress,
+    span.tag {
+        position: absolute;
+        z-index: 100;
+    }
+
+    nav {
+        position: absolute;
+        bottom: 1.2vw;
+        left: 0;
+        right: 0;
+
+        .button {
+            width: 17%;
+            margin: 0.5%;
+            padding: 1.5rem 0;
+            min-height: 4rem;
+            border-radius: 1rem;
+            background: $yellow;
+            box-shadow: 0 0.25rem 0.125rem 0 rgba(100,100,100,0.25);
+            transition: all 0.3s ease-in-out;
+            color: $black;
+
+            &:hover {
+                outline: 2px solid green;
+            }
+
+            &:first-of-type {
+                margin-left: 2%;
+            }
+            &:last-of-type {
+                margin-right: 2%;
+            }
+
+            em {
+                position: relative;
+                display: inline-block;
+                padding-right: 0.67rem;
+                margin-top: 0.5vw;
+
+                img {
+                    max-width: 3vw;
+                    max-height: 3vw;
+                }
+            }
+        }
+    }
+
+    progress {
+        position: absolute;
+        top: 2.333rem; 
+        left: 2%;
+        width: 63%;
+        transition: all 0.3s ease;
+    }
+
+    .tag.game-time {
+        position: absolute;
+        top: 0.8rem; 
+        right: 22.5%;
+        font-size: 2rem;
+        border-radius: 2.75rem;
+
+        img {
+            width: 3rem;
+            height: auto;
+            margin: 1rem 0.5rem 0 -0.5rem;
+        }
+    }
+
+    .modal {
+        z-index: 800;
+        position: absolute;
+        left: 2.5%;
+        top: 7.5rem;
+        right: 2.5%;
+        justify-content: flex-start;
+
+        .modal-content {
+            margin: 0 auto;
+            max-height: auto !important;
+            height: 25rem;
+            width: 100%;
+            align-self: flex-start;
+            display: flex;
+        }
+
+        .box {
+            z-index: 810;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 2rem;
+            overflow: hidden;
+            width: 42.5%;
+            min-height: 20rem;
+
+            h1 {
+                font-size: 3.5rem;
+                font-weight: bold;
+                line-height: 1;
+                color: $black;
+                text-shadow: -0.35vw 0.35vw $salmon;
+            }
+
+            .button {
+                background: $red;
+                font-weight: bold;
+                font-size: 1.5rem;
+                padding: 1.5rem 3rem;
+                margin-top: 1rem;
+                font-family: Azeret Mono, monospace;
+            }
+        }
+    }
+
+    #gameFinishModal {
+
+        .modal-content {
+            height: 27rem !important;
+
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            p.finalscore {
+                // position: absolute;
+                // left: 22%;
+                // top: 7rem;
+                // width: 15%;
+            }
+
+            .button#gameStart {
+                font-family: Azeret Mono, monospace;
+                margin-top: 0.75rem;
+            }
+
+            .leaderboard {
+                background-color: lighten($salmon, 17.5%);
+                position: absolute;
+                left: 0;
+                top: 18rem;
+                width: 42.5%;
+                height: 9rem;
+                padding: 2rem;
+            }
+
+            .button.is-info {
+                font-size: 0.825rem;
+                padding: 1.2rem;
+                background-color: $light2;
+                color: $blue;
+                margin: 0;
+            }
+
+            p small {
+                font-size: 0.75rem;
+            }
+        }
+    }
+
+
+    aside {
+        width: 20%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-left: 1px dashed white;
+        padding: 2rem;
+        background: $light2;
+
+        strong {
+            float: right;
+            margin: 0 1.5rem;
+        }
+
+        ul {
+            margin: 2rem 0.125rem 0;
+            padding-top: 2rem;
+            border-top: 1px solid $light1;
+            
+            li {
+                line-height: 2;
+                list-style: none;
+            }
+        }
+    }
+
+    .slats-the-cat {
+        position: absolute;
+        bottom: -1.5rem;
+        right: 25%;
+        width: 20rem;
+        height: 30rem;
+        background: url('../images/slats-torso.svg') no-repeat 0 0;
+        background-size: contain;
+        z-index: 5;
+
+        .slats-head {
+            position: absolute;
+            top: -8rem;
+            left: -2rem;
+            animation: headLook 12s linear infinite;
+        }
+
+        .slats-tail {
+            position: absolute;
+            top: 15rem;
+            right: 5rem;
+            background: url('../images/slats-tail.svg') no-repeat 0 0;
+            background-size: contain;
+            width: 25rem;
+            min-height: 15rem;
+            display: inline-block;
+            position: relative;
+            transform-origin: 100% 0vh;
+            animation: tailSwish 12s linear infinite;
+        }
+    }
+}
+
+.slats-head {
+    background: url('../images/slats-head.svg') no-repeat 0 0;
+    background-size: contain;
+    width: 12rem;
+    min-height: 25rem;
+    display: inline-block;
+    position: relative;
+
+    img {
+        display: none;
+        position: absolute;
+        top: 6.33rem;
+        left:-1.25rem;
+        width: 100%;
+    }
+
+    &.slats-resting {
+        img.is-resting {
+            display: inline-block;
+        }
+    }
+
+    &.slats-blink {
+        img.is-blink {
+            display: inline-block;
+        }
+    }
+
+    &.slats-eating2 {
+        img.is-eating2 {
+            display: inline-block;
+        }
+    }
+
+    &.slats-eating {
+        img.is-eating {
+            display: inline-block;
+        }
+    }
+
+    &.slats-huh {
+        img.is-huh {
+            display: inline-block;
+        }
+    }
+
+    &.slats-grumpy {
+        img.is-grumpy {
+            display: inline-block;
+        }
+    }
+}
+
+#elements {
+    position: relative;
+    svg, img {
+        max-width: 20vw;
+        height: auto;
+
+        h3, h4 {
+            margin: 1rem 0;
+            font-weight: bold;
+            color: $red;
+        }
+    }
+
+    ul {
+        margin: 2rem 0;
+    }
+
+    li {
+        padding-top: 3rem;
+
+        .slats-head {
+            padding-top: 16rem;
+        }
+
+        code {
+            background: $light2;
+            color: $black;
+        }
+    }
+}

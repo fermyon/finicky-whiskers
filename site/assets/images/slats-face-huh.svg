@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="226px" height="94px" viewBox="0 0 226 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>huh-state</title>
+    <g id="huh-state" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Rectangle" fill="#000000" points="33 0 226 0 226 94 139.773438 85.1835937 33 54.390625"></polygon>
+        <g id="eating-state" transform="translate(4.856445, 8.000000)">
+            <g id="eyes" transform="translate(41.643555, 5.000000)" fill="#FFFFFF">
+                <circle id="Oval" cx="9" cy="9" r="9"></circle>
+                <circle id="Oval" cx="116" cy="17" r="10"></circle>
+            </g>
+            <rect id="Rectangle" fill="#000000" x="37" y="0" width="26" height="12"></rect>
+            <g id="nose" transform="translate(83.119606, 22.042897)" fill="#FFFFFF">
+                <ellipse id="Oval" transform="translate(14.523948, 8.957103) rotate(4.000000) translate(-14.523948, -8.957103) " cx="14.5239485" cy="8.95710303" rx="14" ry="8"></ellipse>
+            </g>
+            <g id="outside-whiskers" transform="translate(0.000000, 22.503677)" stroke="#000000" stroke-linecap="round" stroke-width="8">
+                <path d="M0,0.0132231438 C13.8707547,-0.0837037602 24.5738729,0.352231917 32.1093547,1.32103018" id="Path-2"></path>
+                <path d="M0,18.0132231 C9.85024688,17.7041049 19.7223172,15.1721044 29.6162109,10.4172216" id="Path-2"></path>
+            </g>
+            <g id="inside-whiskers" transform="translate(188.499023, 52.645020)" stroke="#FFFFFF" stroke-linecap="round" stroke-width="8">
+                <line x1="4.37304688" y1="0" x2="26.578125" y2="3.61230469" id="Path-3"></line>
+                <path d="M0,13.8696289 C12.2226562,19.3022461 20.2477214,22.8585612 24.0751953,24.5385742" id="Path-4"></path>
+            </g>
+        </g>
+        <path d="M85.8226423,63.529095 C101.244956,64.1036393 110.57829,65.3241797 113.822642,67.1907161" id="Path-6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" transform="translate(99.822642, 65.359906) rotate(-5.000000) translate(-99.822642, -65.359906) "></path>
+        <polyline id="Path-8" fill="#FFFFFF" points="88.4836066 65.3127441 89.4700442 58.3127441 92.918457 64.8681264"></polyline>
+        <polyline id="Path-8" fill="#FFFFFF" transform="translate(108.289673, 61.163452) scale(-1, 1) rotate(6.000000) translate(-108.289673, -61.163452) " points="105.660889 65.3127441 106.830322 57.0141602 110.918457 64.7856445"></polyline>
+    </g>
+</svg>

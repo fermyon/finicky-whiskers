@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="226px" height="94px" viewBox="0 0 226 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>grumpy-state</title>
+    <g id="grumpy-state" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Rectangle" fill="#000000" points="33 0 226 0 226 94 139.773438 85.1835937 33 54.390625"></polygon>
+        <g id="resting-state" transform="translate(4.856445, -0.766445)">
+            <g id="eyes" transform="translate(32.738170, 0.000000)">
+                <circle id="Oval" fill="#FFFFFF" cx="15.9053848" cy="17.7664453" r="14"></circle>
+                <circle id="Oval" fill="#FFFFFF" cx="135.905385" cy="34.7664453" r="15"></circle>
+                <rect id="Rectangle" fill="#000000" transform="translate(17.378041, 9.266445) rotate(10.000000) translate(-17.378041, -9.266445) " x="0.87804108" y="2.76644533" width="33" height="13"></rect>
+                <rect id="Rectangle" fill="#000000" transform="translate(138.378041, 25.266445) rotate(5.000000) translate(-138.378041, -25.266445) " x="121.878041" y="18.7664453" width="33" height="13"></rect>
+            </g>
+            <g id="nose" transform="translate(83.119606, 28.809342)" fill="#FFFFFF">
+                <ellipse id="Oval" transform="translate(14.523948, 8.957103) rotate(4.000000) translate(-14.523948, -8.957103) " cx="14.5239485" cy="8.95710303" rx="14" ry="8"></ellipse>
+            </g>
+            <g id="outside-whiskers" transform="translate(0.000000, 27.511563)" stroke="#000000" stroke-linecap="round" stroke-width="8">
+                <path d="M3.30371094,0 C14.9719917,2.41759497 24.5738729,4.11079159 32.1093547,5.07958984" id="Path-2"></path>
+                <path d="M0,21.7717828 C9.85024688,21.4626646 19.7223172,18.9306641 29.6162109,14.1757812" id="Path-2"></path>
+            </g>
+            <g id="inside-whiskers" transform="translate(188.499023, 61.411465)" stroke="#FFFFFF" stroke-linecap="round" stroke-width="8">
+                <line x1="4.37304688" y1="0" x2="26.578125" y2="3.61230469" id="Path-3"></line>
+                <path d="M0,13.8696289 C12.2226562,19.3022461 20.2477214,22.8585612 24.0751953,24.5385742" id="Path-4"></path>
+            </g>
+        </g>
+        <path d="M88.9072266,60.1523437 C97.6197765,59.319987 103.568833,60.4498698 106.754395,63.5419922 C113.743963,61.2822266 119.53628,60.1523438 124.131348,60.1523438" id="Path-5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" transform="translate(106.519287, 61.714765) scale(-1, 1) rotate(-7.000000) translate(-106.519287, -61.714765) "></path>
+    </g>
+</svg>
