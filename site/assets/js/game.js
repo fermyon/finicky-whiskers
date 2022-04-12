@@ -29,14 +29,13 @@ $("nav > .button").on('click', function(){
 
 $(document).ready(function(){
     
-    
-    // https://w3collective.com/fetch-display-api-data-javascript/
-    function displayMorsels(data) {
-        const morsels = data.menu[0];
-        // const stageWrapper = document.getElementById("whiskerStage");
-        currentMorsel = morsels;
-        $("#whiskerStage").addClass(currentMorsel);
-    }   
+
+    // function displayMorsels(data) {
+    //     const morsels = data.menu[0];
+    //     // const stageWrapper = document.getElementById("whiskerStage");
+    //     currentMorsel = morsels;
+    //     $("#whiskerStage").addClass(currentMorsel);
+    // }   
 
     // get the data
         // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -47,6 +46,8 @@ $(document).ready(function(){
         displayMorsels(data);
     })
 
+    // render the data
+        // https://w3collective.com/fetch-display-api-data-javascript/
     function displayMorsels(data) {
         const morsels = data.menu[0];
         const whiskerStage = document.getElementById("whiskerStage");
