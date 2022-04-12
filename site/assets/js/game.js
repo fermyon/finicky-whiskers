@@ -43,9 +43,27 @@ $(document).ready(function(){
     fetch('/session').then(
         response => response.json()
     ).then(data => {
-        data => console.log(data),
-        displayMorsels(data)
+        console.log(data),
+        displayMorsels(data);
     })
+
+    function displayMorsels(data) {
+        const morsels = data.menu[0];
+        const whiskerStage = document.getElementById("whiskerStage");
+
+        const morselName = morsels.demand;
+        const morselTime = morsels.offset;
+        const heading = document.createElement("h1");
+
+        for (morsel in morsels) {
+            setTimeout(function() {
+                console.log(morselName + " demand! for " + morselTime + " milliseconds.");
+    
+                heading.innerHTML = morselName;
+                whiskerStage.appendChild(heading);
+            }, morselTime);
+        };
+    }
 
 
     // open start screen on load
