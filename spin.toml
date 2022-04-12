@@ -43,3 +43,10 @@ route = "/session"
 [component.environment]
 HOME = "/"
 GEM_HOME = "/.gem"
+
+# Tally an individual event
+[[component]]
+id = "scoreboard"
+source = "components/scoreboard.wasm"
+[component.trigger]
+route = "/score"

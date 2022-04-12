@@ -32,6 +32,6 @@ The session data is returned as json.
 
 ## Building
 
-Run `make build` in this directory to build.
+Run `make ruby .gem` in this directory to build.
 
 To serve, use the `spin.toml` file in the parent directory.
