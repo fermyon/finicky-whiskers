@@ -16,7 +16,7 @@ Example with Curl (using `rusty_ulid` to generate a ULID):
 
 ```console
 $ curl localhost:3000/score\?ulid=$(rusty_ulid)
-{"id":"01G0DKQK8FZ6ZFVP0DMR9RNH47","meat":5,"fish":7,"chicken":33,"veg":10,"total":55}
+{"id":"01G0DKQK8FZ6ZFVP0DMR9RNH47","beef":5,"fish":7,"chicken":33,"veg":10,"total":55}
 ```
 
 This will return a simple JSON file:
@@ -24,7 +24,7 @@ This will return a simple JSON file:
 ```json
 {
     "id":"01G0DKQK8FZ6ZFVP0DMR9RNH47",
-    "meat":5,
+    "beef":5,
     "fish":7,
     "chicken":33,
     "veg":10,

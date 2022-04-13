@@ -1,11 +1,11 @@
 use anyhow::Result;
 use http::Uri;
 use rusty_ulid::Ulid;
+use serde::{Deserialize, Serialize};
 use spin_sdk::{
     http::{Request, Response},
     http_component, redis,
 };
-use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 // Env var that has the Redis address
@@ -13,7 +13,6 @@ const REDIS_ADDRESS_ENV: &str = "REDIS_ADDRESS";
 
 #[http_component]
 fn scoreboard(req: Request) -> Result<Response> {
-
     let ulid = get_ulid(req.uri())?;
 
     let score = match get_scores(&ulid) {
@@ -22,19 +21,19 @@ fn scoreboard(req: Request) -> Result<Response> {
             eprintln!("Error fetching scorecard: {}", e);
             // Return a blank scorecard.
             Scorecard::new(ulid)
-        } 
+        }
     };
 
     let msg = serde_json::to_string(&score)?;
     Ok(http::Response::builder()
-                .status(200)
-                .body(Some(msg.into()))?)
+        .status(200)
+        .body(Some(msg.into()))?)
 }
 
 #[derive(Deserialize, Serialize)]
 pub struct Scorecard {
     pub ulid: Ulid,
-    pub meat: i32,
+    pub beef: i32,
     pub fish: i32,
     pub chicken: i32,
     pub veg: i32,
@@ -45,7 +44,7 @@ impl Scorecard {
     fn new(ulid: Ulid) -> Self {
         Scorecard {
             ulid,
-            meat: 0,
+            beef: 0,
             fish: 0,
             chicken: 0,
             veg: 0,
@@ -60,8 +59,8 @@ fn get_ulid(url: &Uri) -> Result<Ulid> {
         Some(raw_ulid) => {
             let ulid = raw_ulid.parse()?;
             Ok(ulid)
-        },
-        None => anyhow::bail!("ULID is required in query parameters")
+        }
+        None => anyhow::bail!("ULID is required in query parameters"),
     }
 }
 
@@ -84,3 +83,4 @@ fn simple_query_parser(q: &str) -> HashMap<String, String> {
     });
     dict
 }
+
