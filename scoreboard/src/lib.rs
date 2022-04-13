@@ -3,41 +3,55 @@ use http::Uri;
 use rusty_ulid::Ulid;
 use spin_sdk::{
     http::{Request, Response},
-    http_component,};
-use serde::Serialize;
+    http_component, redis,
+};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// Env var that has the Redis address
+const REDIS_ADDRESS_ENV: &str = "REDIS_ADDRESS";
 
 #[http_component]
 fn scoreboard(req: Request) -> Result<Response> {
 
     let ulid = get_ulid(req.uri())?;
 
-    let score = Scorecard{
-        id: ulid,
-        meat: 5,
-        fish: 7,
-        chicken: 33,
-        veg: 10,
-        total: 55,
+    let score = match get_scores(&ulid) {
+        Ok(scores) => scores,
+        Err(e) => {
+            eprintln!("Error fetching scorecard: {}", e);
+            // Return a blank scorecard.
+            Scorecard::new(ulid)
+        } 
     };
 
     let msg = serde_json::to_string(&score)?;
-
     Ok(http::Response::builder()
                 .status(200)
                 .body(Some(msg.into()))?)
-
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct Scorecard {
-    pub id: Ulid,
+    pub ulid: Ulid,
     pub meat: i32,
     pub fish: i32,
     pub chicken: i32,
     pub veg: i32,
     pub total: i32,
+}
+
+impl Scorecard {
+    fn new(ulid: Ulid) -> Self {
+        Scorecard {
+            ulid,
+            meat: 0,
+            fish: 0,
+            chicken: 0,
+            veg: 0,
+            total: 0,
+        }
+    }
 }
 
 fn get_ulid(url: &Uri) -> Result<Ulid> {
@@ -49,6 +63,16 @@ fn get_ulid(url: &Uri) -> Result<Ulid> {
         },
         None => anyhow::bail!("ULID is required in query parameters")
     }
+}
+
+fn get_scores(ulid: &Ulid) -> Result<Scorecard> {
+    let address = std::env::var(REDIS_ADDRESS_ENV)?;
+    //let channel = std::env::var(REDIS_CHANNEL_ENV)?;
+
+    let raw_scorecard = redis::get(&address, &ulid.to_string())
+        .map_err(|_| anyhow::anyhow!("Error fetching from Redis"))?;
+    let score: Scorecard = serde_json::from_slice(raw_scorecard.as_slice())?;
+    Ok(score)
 }
 
 fn simple_query_parser(q: &str) -> HashMap<String, String> {
