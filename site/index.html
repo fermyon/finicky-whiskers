@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Finicky Whiskers</title>
-    
+
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,12 +18,12 @@
 
     <main class="container">
         <div class="columns content">
-            
+
             <article class="column">
                 <h3>Game Stage</h3>
 
                 <!-- the game stage -->
-                <section id="whiskerStage" >
+                <section id="whiskerStage">
                     <progress class="progress is-link" id="progressBar" value="30" max="30"></progress>
                     <span class="tag game-time is-info"><i><img src="assets/images/timer.svg" alt
                         Time remaining" /></i> <span id="gameTime">30</span></span>
@@ -42,7 +42,7 @@
 
                                 <p>Slats demands satsifaction.<br>
                                 But <em>which</em> morsel does Slats want?</p>
-                                
+
                                 <button id="gameStart" class="button is-primary modal-trigger-close is-large">Start</button>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                         <button class="modal-close modal-trigger-close is-large" aria-label="close"></button>
                     </div>
 
-                   
+
 
                     <div class="slats-the-cat" id="hiSlats">
                         <span class="slats-head slats-resting">
@@ -87,7 +87,7 @@
                         </span>
                         <span class="slats-body"></span>
                         <span class="slats-tail"></span>
-                        
+
                         <div class="cat-bubble" style="display: none;">
                             <p>I want to eat beef</p>
                             <p>I want to eat chicken</p>
@@ -97,17 +97,17 @@
                     </div>
 
                     <nav>
-                        <a class="button">
+                        <a class="button beef">
                             <em><img src="assets/images/beef.svg" alt="Choose Beef" /></em>
                             Beef</a>
-                        <a class="button">
+                        <a class="button chicken">
                             <em><img src="assets/images/chicken.svg" alt="Choose Chicken" /></em>
                             Chicken</a>
-                        <a class="button">
+                        <a class="button fish">
                             <em><img src="assets/images/fish.svg" alt="Choose Fish" /></em>
                             Fish
                         </a>
-                        <a class="button">
+                        <a class="button veg">
                             <em><img src="assets/images/veggies.svg" alt="Choose Veggie" /></em>
                             Veggie
                         </a>
@@ -159,7 +159,7 @@
                                     Veggie icon
                                 </li>
                                 <li>
-                                    <img src="assets/images/can-closed.svg" alt="A can of food" />  
+                                    <img src="assets/images/can-closed.svg" alt="A can of food" />
                                     Closed can of food
                                 </li>
                                 <li>
@@ -235,29 +235,6 @@
     </main>
 
     <script src="assets/js/game.js"></script>
-    <!-- <script type="text/javascript">
-        $(document).ready(function(){
-
-            console.log('Loaded.');
-
-            $(".button").on('click', function(){
-                console.log('Food was clicked.');
-            });
-        });
-
-        // blinking
-        setInterval(function(){ 
-            console.log('> blink <');
-            $("#hiSlats > .slats-head").addClass("slats-blink");
-            $("#hiSlats > .slats-head").removeClass("slats-resting");
-
-            setTimeout(function () { 
-                $("#hiSlats > .slats-head").addClass("slats-resting");
-                $("#hiSlats > .slats-head").removeClass("slats-blink");
-            }, 500);
-        }, 5000);
-    </script>
-     -->
 
 </body>
 </html>
