@@ -59,7 +59,7 @@
 
                                 <p class="finalscore">Time is up! You fed Slats <strong id="scoreFinal">0</strong> times.</p>
 
-                                <button id="gameStart" class="button is-link modal-trigger-close is-large">&#8617; Restart</button>
+                                <button id="gameRestart" class="button is-link modal-trigger-close is-large">&#8617; Restart</button>
 
                                 <section class="leaderboard">
                                     <div class="field has-addons">
@@ -97,24 +97,24 @@
                     </div>
 
                     <nav>
-                        <a class="button beef">
+                        <a id="beef" class="button beef">
                             <em><img src="assets/images/beef.svg" alt="Choose Beef" /></em>
                             Beef</a>
-                        <a class="button chicken">
+                        <a id="chicken" class="button chicken">
                             <em><img src="assets/images/chicken.svg" alt="Choose Chicken" /></em>
                             Chicken</a>
-                        <a class="button fish">
+                        <a id="fish" class="button fish">
                             <em><img src="assets/images/fish.svg" alt="Choose Fish" /></em>
                             Fish
                         </a>
-                        <a class="button veg">
+                        <a id="veg" class="button veg">
                             <em><img src="assets/images/veggies.svg" alt="Choose Veggie" /></em>
                             Veggie
                         </a>
                     </nav>
 
                     <aside>
-                        <h2>Score: <strong id="scoreTotal is-size-3">0</strong></h2>
+                        <h2>Score: <strong id="scoreTotal" class="is-size-3">0</strong></h2>
                         <ul>
                             <li>
                                 Beef: <strong id="scoreBeef">0</strong>
@@ -130,6 +130,7 @@
                             </li>
                         </ul>
                     </aside>
+                  <h1 id="currentDemand"></h1>
                 </section>
                 <!-- / end of the game stage -->
 

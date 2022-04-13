@@ -6,7 +6,7 @@ puts
 require 'json'
 require 'ulid'
 
-FLAVORS = %i[chicken fish meat veg]
+FLAVORS = %i[chicken fish beef veg]
 TIMEOUT = 30_000
 
 def random_flavor

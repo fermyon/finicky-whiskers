@@ -3,3 +3,4 @@ scoreboard/target/*
 site/.parcel-cache/
 site/dist/
 site/node_modules/
+log/
