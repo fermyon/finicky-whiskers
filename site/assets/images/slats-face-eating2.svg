@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="226px" height="94px" viewBox="0 0 226 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>eating-state-2</title>
+    <g id="eating-state-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Rectangle" fill="#000000" points="33 0 226 0 226 94 139.773438 85.1835937 33 54.390625"></polygon>
+        <g id="eating-state" transform="translate(4.856445, 8.000000)">
+            <g id="eyes" transform="translate(36.643555, 0.000000)" fill="#FFFFFF">
+                <circle id="Oval" cx="11.5" cy="11.5" r="11.5"></circle>
+                <circle id="Oval" cx="128" cy="26" r="15"></circle>
+            </g>
+            <g id="nose" transform="translate(83.119606, 22.042897)" fill="#FFFFFF">
+                <ellipse id="Oval" transform="translate(14.523948, 8.957103) rotate(4.000000) translate(-14.523948, -8.957103) " cx="14.5239485" cy="8.95710303" rx="14" ry="8"></ellipse>
+            </g>
+            <g id="outside-whiskers" transform="translate(0.000000, 22.503677)" stroke="#000000" stroke-linecap="round" stroke-width="8">
+                <path d="M0,0.0132231438 C13.8707547,-0.0837037602 24.5738729,0.352231917 32.1093547,1.32103018" id="Path-2"></path>
+                <path d="M0,18.0132231 C9.85024688,17.7041049 19.7223172,15.1721044 29.6162109,10.4172216" id="Path-2"></path>
+            </g>
+            <g id="inside-whiskers" transform="translate(188.499023, 52.645020)" stroke="#FFFFFF" stroke-linecap="round" stroke-width="8">
+                <line x1="4.37304688" y1="0" x2="26.578125" y2="3.61230469" id="Path-3"></line>
+                <path d="M0,13.8696289 C12.2226562,19.3022461 20.2477214,22.8585612 24.0751953,24.5385742" id="Path-4"></path>
+            </g>
+        </g>
+        <path d="M75.0239485,58.7753906 C84.588712,52.7716471 91.3282878,50.2470703 95.2426758,51.2016602 C101.114258,52.6335449 109.693604,60.0991211 107.131592,61.6428223 C104.56958,63.1865234 102.109863,64.9023438 95.2426758,63.3867188 C88.3754883,61.8710938 89.1723633,60.0908203 83.7116699,61.2509766" id="Path-7" fill="#FFFFFF" transform="translate(91.310548, 57.489995) scale(-1, 1) rotate(-24.000000) translate(-91.310548, -57.489995) "></path>
+        <path d="M80.8236816,63.4175421 C103.957153,63.9920864 117.957153,65.2126268 122.823682,67.0791632" id="Path-6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" transform="translate(101.823682, 65.248353) rotate(-1.000000) translate(-101.823682, -65.248353) "></path>
+    </g>
+</svg>
