@@ -44,9 +44,10 @@ route = "/session"
 HOME = "/"
 GEM_HOME = "/.gem"
 
-# Tally an individual event
+# Get the scores for a particular game
 [[component]]
 id = "scoreboard"
 source = "components/scoreboard.wasm"
+environment = {REDIS_ADDRESS = "redis://localhost:6379/"}
 [component.trigger]
 route = "/score"
