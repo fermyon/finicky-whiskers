@@ -295,6 +295,7 @@ dependencies = [
 [[package]]
 name = "spin-macro"
 version = "0.1.0"
+source = "git+https://github.com/fermyon/spin#b3c5c5b5121f9bfd649393b51a1fefd867b5a8b3"
 dependencies = [
  "anyhow",
  "bytes",
@@ -310,6 +311,7 @@ dependencies = [
 [[package]]
 name = "spin-sdk"
 version = "0.1.0"
+source = "git+https://github.com/fermyon/spin#b3c5c5b5121f9bfd649393b51a1fefd867b5a8b3"
 dependencies = [
  "anyhow",
  "bytes",
