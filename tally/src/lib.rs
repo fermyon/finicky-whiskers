@@ -37,10 +37,9 @@ fn tally_point(req: Request) -> Result<Response> {
                     } else {
                         println!("Sent message to Redis: {}", payload)
                     }
-                },
-                Err(e) => eprintln!("Error serializing JSON: {}", e)
+                }
+                Err(e) => eprintln!("Error serializing JSON: {}", e),
             }
-            
 
             // Send a response
             let msg = format!("ULID: {:?}", tally.ulid);
@@ -119,14 +118,8 @@ fn publish(payload: String) -> Result<()> {
     let address = std::env::var(REDIS_ADDRESS_ENV)?;
     let channel = std::env::var(REDIS_CHANNEL_ENV)?;
 
-    let msg = redis::Message {
-        address: &address,
-        channel: &channel,
-        payload: payload.as_bytes(),
-    };
-    redis::publish(msg).map_err(|e| anyhow::anyhow!(
-        "Error sending to redis: {:?}", e
-    ))
+    redis::publish(&address, &channel, payload.as_bytes())
+        .map_err(|e| anyhow::anyhow!("Error sending to redis: {:?}", e))
 }
 
 #[cfg(test)]
@@ -167,6 +160,5 @@ mod test {
             let url: http::Uri = invalid_url.parse().expect("URL is valid and will parse");
             parse_query_params(&url).expect_err("Ulid is missing so parse should fail");
         }
-        
     }
 }
