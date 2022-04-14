@@ -93,6 +93,10 @@ function displayMorsels(data) {
       console.log(morselName + " demand! for " + morselTime + " milliseconds.");
 
       $("#currentDemand").text(morselName);
+      heading.innerHTML = morselName;
+      whiskerStage.appendChild(heading);
+      $("whiskerStage").removeClass();
+      $("whiskerStage").addClass("demand-${morselName}");
 
       // remove correct class from all buttons
       $("nav > .button.correct").removeClass('correct');
