@@ -21,10 +21,6 @@ function setScoreboard() {
 
     $("#scoreTotal").text(data.total);
     $("#scoreFinal").text(data.total);
-    $("#scoreBeef").text(data.beef);
-    $("#scoreChicken").text(data.chicken);
-    $("#scoreFish").text(data.fish);
-    $("#scoreVeggie").text(data.veg);
   })
 }
 
@@ -35,18 +31,10 @@ function gameEnd() {
   setScoreboard();
 
   $("#gameOver").click();
-
-  $("#gameOver").on('click', function(e) {
-    e.preventDefault();
-    isPaused = true;
-  });
 };
 
 // starting the game
 function setup() {
-  // e.preventDefault();
-  // isPaused = false;
-
   // get the data
   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   fetch('/session').then(
@@ -72,6 +60,7 @@ function setup() {
       textLeft.innerHTML = timeLeft;
       progressLeft.setAttribute("value", timeLeft);
       timeLeft--;
+      $("#whiskerStage").removeClass('waiting');
       setScoreboard();
     }
   }
@@ -92,11 +81,12 @@ function displayMorsels(data) {
     setTimeout(function() {
       console.log(morselName + " demand! for " + morselTime + " milliseconds.");
 
-      $("#currentDemand").text(morselName);
-      heading.innerHTML = morselName;
-      whiskerStage.appendChild(heading);
-      $("whiskerStage").removeClass();
-      $("whiskerStage").addClass("demand-${morselName}");
+      $("#whiskerStage").removeClass('[beef,]');
+      $("#whiskerStage").addClass(morselName);
+      // heading.innerHTML = morselName;
+      // whiskerStage.appendChild(heading);
+      
+      // $("whiskerStage").addClass("demand-${morselName}");
 
       // remove correct class from all buttons
       $("nav > .button.correct").removeClass('correct');
@@ -126,6 +116,7 @@ $("nav > .button").on('click', function(i, e) {
 $(document).ready(function() {
 
   // open start screen on load
+  $("#whiskerStage").addClass('waiting');
   $("#gameInit").click();
 
   $("#gameStart").on('click', function() {

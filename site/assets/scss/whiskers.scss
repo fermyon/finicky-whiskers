@@ -3,17 +3,25 @@ html {
 }
 body {
     font-family: 'Azeret Mono', monospace;
-    padding: 2rem 0;
+    padding: 0;
 }
 
-$light1: #F1F1F1;
-$light2: #DADADA;
+$green:  #56EEB8;
+$black:  #031835;
+$white:  #fff;
+$mauve:  #B287A3;
+$yellow: #F4D35E;
+$gold:   #F6CA83;
 
-$salmon: #EDC0A8;
-$yellow: #F6C067;
-$blue:   #6B9CB3;
-$red:    #E46153;
-$black:  #333333;
+$dark1:   $black;
+$dark2: #1A2A60;
+$dark3: #1F5080;
+
+$light3: #368CA1;
+$light2: #3998B7;
+$light1: #3AD0C6;
+$light0:   $green;
+
 
 @keyframes tailSwish {
     0%   { rotate: 0deg; }
@@ -36,37 +44,72 @@ $black:  #333333;
 }
 
 h3 {
-    color: $red;
+    color: $green;
+}
+
+html,
+body,
+.content,
+.columns.content,
+article.column,
+#whiskerStage {
+    height: 100%; 
+    min-height: 100%;
+}
+
+.container-full,
+.fullscreen {
+    width: 100%;
+    border-radius: 0;
+    margin: 0 !important;
+
+    .column {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
 
 #whiskerStage {
-    border-radius: 1rem;
-    background: #DADADA;
     padding: 1.5rem;
     position: relative;
-    min-height: 670px;
     margin: 3rem 0 3rem;
     overflow: hidden;
+    background-color: $dark3;
+    background-size: cover;
+
+    &.fullscreen {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 
     .button {
         position: relative;
         z-index: 1100;
     }
 
-    &:after {
-        background: linear-gradient(45deg, #F1F1F1 20%, transparent 20%, transparent 80%, #F1F1F1  80%, #F1F1F1 100%), linear-gradient(135deg, #F1F1F1 20%, transparent 20%, transparent 80%, #F1F1F1  80%, #F1F1F1 100%);
-        background-size: 3em 3em;
-        background-color: #F6C067;
-        opacity: 0.45;
-        width: 100%;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 20%;
-        position: absolute;
-        display: block;
+    &:before,
+    &:after,
+    .modal.monitor,
+    .modal.monitor:before,
+    .modal.monitor:after {
+        position: fixed;
         content: " ";
         z-index: 1;
+    }
+
+    &:after {
+        background: url('../images/background-desk.svg') no-repeat 0 0;
+        background-size: cover;
+        display: block;
+        opacity: 1;
+        width: 100%;
+        min-height: 39%;
+        bottom: 0;
+        left: 0;
+        z-index: 1700;
     }
 
     nav,
@@ -82,20 +125,31 @@ h3 {
         bottom: 1.2vw;
         left: 0;
         right: 0;
+        z-index: 1900;
+        transition: all 0.3s ease-in-out;
 
         .button {
             width: 17%;
             margin: 0.5%;
-            padding: 1.5rem 0;
-            min-height: 4rem;
-            border-radius: 1rem;
-            background: $yellow;
-            box-shadow: 0 0.25rem 0.125rem 0 rgba(100,100,100,0.25);
-            transition: all 0.3s ease-in-out;
-            color: $black;
+            padding: 2rem 0;
+            min-height: 5rem;
+            border-radius: 0.1rem;
+            background: $gold;
+            color: $dark2;
+            position: relative;
+            transition: background 0.1s linear;
+            box-shadow: 0 9px darken($gold, 12.5%);
 
             &:hover {
-                outline: 2px solid green;
+                border-radius: 0.25rem;
+                top: 1px;
+                box-shadow: 0 8px darken($gold, 17.5%);
+            }
+
+            &:active {
+                top: 8px;
+                box-shadow: none;
+                background: darken($gold, 5%);
             }
 
             &:first-of-type {
@@ -108,46 +162,110 @@ h3 {
             em {
                 position: relative;
                 display: inline-block;
-                padding-right: 0.67rem;
+                padding-right: 1.25rem;
                 margin-top: 0.5vw;
 
                 img {
-                    max-width: 3vw;
-                    max-height: 3vw;
+                    max-width: 4vw;
+                    max-height: 3.333vw;
                 }
             }
         }
     }
 
+    &.waiting {
+        progress,
+        .tag.game-time {
+            top: -12vw;
+
+        }
+        nav {
+            bottom: -12vw;
+        }
+    }
+
+    // game is activated!
+    // &.beef,
+    // &.chicken,
+    // &.fish,
+    // &.veggie {
+    //     nav {
+            
+    //     }
+    // }
+
     progress {
         position: absolute;
-        top: 2.333rem; 
-        left: 2%;
-        width: 63%;
+        top: 0; 
+        left: 0%;
+        width: 72%;
         transition: all 0.3s ease;
+        border: 1rem solid $dark2;
+        height: 3rem;
+        border-radius: 0;
+        transition: all 0.3s linear;
     }
 
     .tag.game-time {
         position: absolute;
-        top: 0.8rem; 
-        right: 22.5%;
-        font-size: 2rem;
-        border-radius: 2.75rem;
+        top: 0; 
+        right: 19.5%;
+        font-size: 1.5rem;
+        width: 8.5%;
+        border-radius: 0;
+        transition: all 0.3s linear;
+        background-color: darken($dark2, 5%);
 
         img {
-            width: 3rem;
+            width: 1.25rem;
             height: auto;
-            margin: 1rem 0.5rem 0 -0.5rem;
+            margin: 0.67rem 1rem 0 -0.825rem;
+            opacity: 0.5;
+            fill: white;
         }
     }
 
     .modal {
-        z-index: 800;
+        z-index: 1330 !important;
         position: absolute;
-        left: 2.5%;
+        left: 4.5%;
         top: 7.5rem;
-        right: 2.5%;
+        right: 33%;
+        bottom: 30%;
         justify-content: flex-start;
+        background-color: $dark1;
+        border: 0.7rem solid $light2;
+        overflow: visible !important;
+        box-shadow: -0.5rem 0.5rem 0 0rem darken($light3, 10%);
+
+        &.monitor-placeholder {
+            display: block !important;
+        }
+
+        &:before {
+            background: url('../images/foreground-light.svg') no-repeat left bottom;
+            background-size: contain;
+            display: block;
+            bottom: 18%;
+            min-width: 55%;
+            left: -3%;
+            top: 6%;
+            z-index: 1650 !important;
+        }
+
+        &:after {
+            background: url('../images/background-monitorbase.svg') no-repeat center bottom;
+            background-size: contain;
+            display: block;
+            height: 18%;
+            width: 466px;
+            z-index: 1300 !important;
+            left: 35%;
+            margin-left: -15%;
+            bottom: 11% !important;
+            position: fixed !important;
+        }
+
 
         .modal-content {
             margin: 0 auto;
@@ -156,27 +274,50 @@ h3 {
             width: 100%;
             align-self: flex-start;
             display: flex;
+            padding-left: 13.333%;
+            background-color: transparent;
+            position: relative;
+            z-index: 2020;
+
+            @keyframes ivanCursor {
+                0%    { opacity: 0; }
+                50%   { opacity: 0.5; }
+                100%  { opacity: 0; }
+            }
+
+            .ivan {
+                color: $green;
+                padding-top: 3.5rem;
+                animation: ivanCursor 3s infinite;
+                transition: 0.3s all ease-in-out ;
+            } 
         }
 
         .box {
-            z-index: 810;
-            background-color: white;
+            z-index: 2150;
+            background-color: transparent;
             padding: 3rem;
-            border-radius: 2rem;
-            overflow: hidden;
-            width: 42.5%;
-            min-height: 20rem;
+            width: 100%;
+            min-height: 25rem;
+            color: white;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
 
             h1 {
                 font-size: 3.5rem;
                 font-weight: bold;
                 line-height: 1;
-                color: $black;
-                text-shadow: -0.35vw 0.35vw $salmon;
+                color: $green;
+                text-shadow: -0.35vw 0.35vw rgba(67, 20, 57, 1);
+            }
+
+            strong {
+                color: $gold;
             }
 
             .button {
-                background: $red;
+                background: $light1;
                 font-weight: bold;
                 font-size: 1.5rem;
                 padding: 1.5rem 3rem;
@@ -195,33 +336,36 @@ h3 {
                 font-size: 3.5rem;
             }
 
-            p.finalscore {
-                // position: absolute;
-                // left: 22%;
-                // top: 7rem;
-                // width: 15%;
-            }
-
             .button#gameStart {
                 font-family: Azeret Mono, monospace;
                 margin-top: 0.75rem;
             }
 
             .leaderboard {
-                background-color: lighten($salmon, 17.5%);
+                // background-color: lighten($dark2, 17.5%);
                 position: absolute;
                 left: 0;
                 top: 18rem;
-                width: 42.5%;
+                width: 100%;
                 height: 9rem;
-                padding: 2rem;
+                padding: 2rem 5% 2rem 13.333%;
+                margin-left: 3rem;
+                // text-align: center;
+
+                p {
+                    color: $white;
+
+                    a {
+                        color: $light2;
+                    }
+                }
             }
 
             .button.is-info {
                 font-size: 0.825rem;
                 padding: 1.2rem;
                 background-color: $light2;
-                color: $blue;
+                color: $dark1;
                 margin: 0;
             }
 
@@ -231,42 +375,38 @@ h3 {
         }
     }
 
-
-    aside {
+    aside.score {
         width: 20%;
         right: 0;
         top: 0;
         bottom: 0;
-        border-left: 1px dashed white;
-        padding: 2rem;
-        background: $light2;
+        padding: 1rem 2rem 2rem 2rem;
+        background: url('../images/background-shelf.svg') no-repeat 0 0;
+        background-size: cover;
+        text-align: center;
 
-        strong {
-            float: right;
-            margin: 0 1.5rem;
+        h2 {
+            color: $gold;
+            font-size: 0.75rem;
         }
 
-        ul {
-            margin: 2rem 0.125rem 0;
-            padding-top: 2rem;
-            border-top: 1px solid $light1;
-            
-            li {
-                line-height: 2;
-                list-style: none;
-            }
+        strong {
+            color: $gold;
+            font-size: 3rem;
+            margin: -0.825rem 0.5rem 0;
+            display: block;
         }
     }
 
     .slats-the-cat {
         position: absolute;
-        bottom: -1.5rem;
+        bottom: -4.5%;
         right: 25%;
         width: 20rem;
         height: 30rem;
         background: url('../images/slats-torso.svg') no-repeat 0 0;
         background-size: contain;
-        z-index: 5;
+        z-index: 1405;
 
         .slats-head {
             position: absolute;
@@ -353,7 +493,7 @@ h3 {
         h3, h4 {
             margin: 1rem 0;
             font-weight: bold;
-            color: $red;
+            color: $green;
         }
     }
 
