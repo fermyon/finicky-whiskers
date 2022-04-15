@@ -12,6 +12,7 @@ $white:  #fff;
 $mauve:  #B287A3;
 $yellow: #F4D35E;
 $gold:   #F6CA83;
+$success:#629460;
 
 $dark1:   $black;
 $dark2: #1A2A60;
@@ -41,6 +42,40 @@ $light0:   $green;
     60%  { rotate: 0deg; }
     80%  { rotate: -12deg; }
     100% { rotate: 0deg; }
+}
+@keyframes bubbleFood {
+    0%   {
+        rotate: 0deg;
+    }
+    33%  {
+        rotate: 2deg;
+        margin-top: 1rem; 
+    }
+    50% {
+        margin-top: 0;
+    }
+    67%  {
+        rotate: -2deg;
+        margin-top: 0.6rem;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+@keyframes thots {
+    0%   { 
+        top: 13rem;
+        left: 13rem;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        top: 12rem;
+        left: 10rem;
+        opacity: 0;
+     }
 }
 
 h3 {
@@ -150,6 +185,10 @@ article.column,
                 top: 8px;
                 box-shadow: none;
                 background: darken($gold, 5%);
+
+                &.correct {
+                    background: $success !important;
+                }
             }
 
             &:first-of-type {
@@ -182,17 +221,14 @@ article.column,
         nav {
             bottom: -12vw;
         }
-    }
 
-    // game is activated!
-    // &.beef,
-    // &.chicken,
-    // &.fish,
-    // &.veggie {
-    //     nav {
-            
-    //     }
-    // }
+        .cat-bubble {
+            width: 1rem;
+            height: 1rem;
+            top: 0;
+            left: 0;
+        }
+    }
 
     progress {
         position: absolute;
@@ -431,6 +467,52 @@ article.column,
     }
 }
 
+.cat-bubble {
+    background: rgba(255,255,255,0.92);
+    border-radius: 22rem;
+    width: 15rem;
+    height: 12rem;
+    display: none;
+    position: absolute;
+    z-index: 1850;
+    top: -13rem;
+    left: -15rem;
+    transition: all 0.3s ease;
+    animation: bubbleFood 5s linear infinite;
+    z-index: 1111;
+    text-align: center;
+    padding: 2rem;
+
+    &:before {
+        width: 3rem;
+        height: 3rem;
+        display: block;
+        border-radius: 50%;
+        content: " ";
+        position: absolute;
+        z-index: 1850;
+        top: 12rem;
+        left: 10rem;
+        background: rgba(255,255,255,0.92);
+        transition: all 0.3s ease-in-out;
+        opacity: 0.8;
+        animation: thots 7s ease-in-out infinite;
+    }
+
+    &:after {
+        display: block;
+        content: " ";
+        width: 7rem;
+        height: 7rem;
+        z-index: 1900;
+        margin: 0 auto;
+        background: red;
+        position: relative;
+        background: transparent;
+        background-size: cover;
+    }
+}
+
 .slats-head {
     background: url('../images/slats-head.svg') no-repeat 0 0;
     background-size: contain;
@@ -438,6 +520,7 @@ article.column,
     min-height: 25rem;
     display: inline-block;
     position: relative;
+    z-index: 1300;
 
     img {
         display: none;
@@ -513,4 +596,25 @@ article.column,
             color: $black;
         }
     }
+}
+
+// game is activated!
+.beef > .cat-bubble:after {
+    background: url('../images/beef.svg') no-repeat 50% 50%;
+    background-size: contain;
+}
+
+.chicken > .cat-bubble:after {
+    background: url('../images/chicken.svg') no-repeat 50% 50%;
+    background-size: contain;
+}
+
+.fish > .cat-bubble:after {
+    background: url('../images/fish.svg') no-repeat 50% 50%;
+    background-size: contain;
+}
+
+.veg > .cat-bubble:after {
+    background: url('../images/veggies.svg') no-repeat 50% 50%;
+    background-size: contain;
 }

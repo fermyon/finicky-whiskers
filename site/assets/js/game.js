@@ -56,10 +56,12 @@ function setup() {
       // if (timeLeft == -1) {
       clearTimeout(timerId);
       gameEnd();
+      $(".cat-bubble").hide();
     } else {
       textLeft.innerHTML = timeLeft;
       progressLeft.setAttribute("value", timeLeft);
       timeLeft--;
+      $(".cat-bubble").show();
       $("#whiskerStage").removeClass('waiting');
       setScoreboard();
     }
@@ -81,8 +83,8 @@ function displayMorsels(data) {
     setTimeout(function() {
       console.log(morselName + " demand! for " + morselTime + " milliseconds.");
 
-      $("#whiskerStage").removeClass('[beef,]');
-      $("#whiskerStage").addClass(morselName);
+      $("#hiSlats").removeClass("beef chicken fish veg");
+      $("#hiSlats").addClass(morselName);
       // heading.innerHTML = morselName;
       // whiskerStage.appendChild(heading);
       

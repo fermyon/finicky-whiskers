@@ -67,6 +67,48 @@ body {
   }
 }
 
+@keyframes bubbleFood {
+  0% {
+    rotate: none;
+  }
+
+  33% {
+    margin-top: 1rem;
+    rotate: 2deg;
+  }
+
+  50% {
+    margin-top: 0;
+  }
+
+  67% {
+    margin-top: .6rem;
+    rotate: -2deg;
+  }
+
+  100% {
+    rotate: none;
+  }
+}
+
+@keyframes thots {
+  0% {
+    opacity: 0;
+    top: 13rem;
+    left: 13rem;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    top: 12rem;
+    left: 10rem;
+  }
+}
+
 h3 {
   color: #56eeb8;
 }
@@ -162,6 +204,10 @@ html, body, .content, .columns.content, article.column, #whiskerStage {
   top: 8px;
 }
 
+#whiskerStage nav .button:active.correct {
+  background: #629460 !important;
+}
+
 #whiskerStage nav .button:first-of-type {
   margin-left: 2%;
 }
@@ -188,6 +234,13 @@ html, body, .content, .columns.content, article.column, #whiskerStage {
 
 #whiskerStage.waiting nav {
   bottom: -12vw;
+}
+
+#whiskerStage.waiting .cat-bubble {
+  width: 1rem;
+  height: 1rem;
+  top: 0;
+  left: 0;
 }
 
 #whiskerStage progress {
@@ -416,9 +469,54 @@ html, body, .content, .columns.content, article.column, #whiskerStage {
   right: 5rem;
 }
 
+.cat-bubble {
+  width: 15rem;
+  height: 12rem;
+  z-index: 1850;
+  z-index: 1111;
+  text-align: center;
+  background: #ffffffeb;
+  border-radius: 22rem;
+  padding: 2rem;
+  transition: all .3s;
+  animation: bubbleFood 5s linear infinite;
+  display: none;
+  position: absolute;
+  top: -13rem;
+  left: -15rem;
+}
+
+.cat-bubble:before {
+  width: 3rem;
+  height: 3rem;
+  content: " ";
+  z-index: 1850;
+  opacity: .8;
+  background: #ffffffeb;
+  border-radius: 50%;
+  transition: all .3s ease-in-out;
+  animation: thots 7s ease-in-out infinite;
+  display: block;
+  position: absolute;
+  top: 12rem;
+  left: 10rem;
+}
+
+.cat-bubble:after {
+  content: " ";
+  width: 7rem;
+  height: 7rem;
+  z-index: 1900;
+  background: 0 0 / cover;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+}
+
 .slats-head {
   width: 12rem;
   min-height: 25rem;
+  z-index: 1300;
   background: url("slats-head.2f388bd3.svg") 0 0 / contain no-repeat;
   display: inline-block;
   position: relative;
@@ -466,6 +564,22 @@ html, body, .content, .columns.content, article.column, #whiskerStage {
 #elements li code {
   color: #031835;
   background: #3998b7;
+}
+
+.beef > .cat-bubble:after {
+  background: url("beef.0113edc4.svg") 50% / contain no-repeat;
+}
+
+.chicken > .cat-bubble:after {
+  background: url("chicken.b2fbc713.svg") 50% / contain no-repeat;
+}
+
+.fish > .cat-bubble:after {
+  background: url("fish.b8351397.svg") 50% / contain no-repeat;
+}
+
+.veg > .cat-bubble:after {
+  background: url("veggies.f3018b54.svg") 50% / contain no-repeat;
 }
 
 /*# sourceMappingURL=whiskers.css.map */
