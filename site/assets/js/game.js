@@ -108,11 +108,31 @@ $("nav > .button").on('click', function(i, e) {
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=true`).then(
       response => console.log(response)
     );
+  
+    $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
+    $(".slats-head").addClass("slats-eating").delay(50).queue(function () {
+      $(this).removeClass("slats-eating"); 
+      $(this).dequeue();
+    });
+    $(".slats-head").addClass("slats-eating2").delay(50).queue(function () {
+      $(this).removeClass("slats-eating2"); 
+      $(this).dequeue();
+    });
+
   } else {
+    
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=false`).then(
       response => console.log(response)
     );
-  }
+    
+    $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
+    $(".slats-head").addClass("slats-huh").delay(100).queue(function () {
+      $(this).removeClass("slats-huh"); 
+      $(this).dequeue();
+    });
+
+  };
+  
 });
 
 $(document).ready(function() {
@@ -131,13 +151,15 @@ $(document).ready(function() {
 
   // blinking
   setInterval(function() {
-    console.log('> blink <');
-    $("#hiSlats > .slats-head").addClass("slats-blink");
-    $("#hiSlats > .slats-head").removeClass("slats-resting");
+    if ($("#whiskerStage").hasClass("waiting")) {
+      $("#hiSlats > .slats-head").addClass("slats-blink");
+      $("#hiSlats > .slats-head").removeClass("slats-resting");
 
-    setTimeout(function() {
-      $("#hiSlats > .slats-head").addClass("slats-resting");
-      $("#hiSlats > .slats-head").removeClass("slats-blink");
-    }, 500);
+      setTimeout(function() {
+        $("#hiSlats > .slats-head").addClass("slats-resting");
+        $("#hiSlats > .slats-head").removeClass("slats-blink");
+      }, 500);
+    };
   }, 3000);
+
 });
