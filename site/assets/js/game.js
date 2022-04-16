@@ -56,13 +56,13 @@ function setup() {
       // if (timeLeft == -1) {
       clearTimeout(timerId);
       gameEnd();
-      $(".cat-bubble").hide();
+      $("#whiskerStage").addClass('waiting').removeClass('gametime')
     } else {
       textLeft.innerHTML = timeLeft;
       progressLeft.setAttribute("value", timeLeft);
       timeLeft--;
       $(".cat-bubble").show();
-      $("#whiskerStage").removeClass('waiting');
+      $("#whiskerStage").addClass('gametime').removeClass('waiting');
       setScoreboard();
     }
   }
@@ -85,10 +85,6 @@ function displayMorsels(data) {
 
       $("#hiSlats").removeClass("beef chicken fish veg");
       $("#hiSlats").addClass(morselName);
-      // heading.innerHTML = morselName;
-      // whiskerStage.appendChild(heading);
-      
-      // $("whiskerStage").addClass("demand-${morselName}");
 
       // remove correct class from all buttons
       $("nav > .button.correct").removeClass('correct');
@@ -110,7 +106,10 @@ $("nav > .button").on('click', function(i, e) {
     );
   
     $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
-    $(".slats-head").addClass("slats-eating").delay(50).removeClass("slats-eating").delay(50).addClass("slats-eating2").delay(50).removeClass("slats-eating2");
+    $(".slats-head").addClass("slats-eating2").delay(100).queue(function () {
+      $(this).removeClass("slats-eating2"); 
+      $(this).dequeue();
+    });
 
 
   } else {

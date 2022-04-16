@@ -173,7 +173,8 @@ article.column,
 
     nav {
         position: absolute;
-        bottom: 1.2vw;
+        // bottom: 1.2vw;
+        bottom: -10vw;
         left: 0;
         right: 0;
         z-index: 1900;
@@ -228,6 +229,20 @@ article.column,
         }
     }
 
+    &.gametime {
+        progress,
+        .tag.game-time {
+            top: 0vw !important;
+
+        }
+        nav {
+            bottom: 1.2vw !important;
+        }
+        .cat-bubble {
+            display: block !important;
+        }
+    }
+
     &.waiting {
         progress,
         .tag.game-time {
@@ -248,7 +263,7 @@ article.column,
 
     progress {
         position: absolute;
-        top: 0; 
+        top: -12vw;
         left: 0%;
         width: 72%;
         transition: all 0.3s ease;
@@ -260,7 +275,7 @@ article.column,
 
     .tag.game-time {
         position: absolute;
-        top: 0; 
+        top: -12vw;
         right: 19.5%;
         font-size: 1.5rem;
         width: 8.5%;
@@ -286,7 +301,9 @@ article.column,
         bottom: 30%;
         min-height: 344px;
         justify-content: flex-start;
-        background-color: $dark1;
+        // background-color: $dark1;
+        background: 
+            linear-gradient(to left, $dark1 0%, darken($dark2, 5%) 100%);
         border: 0.7rem solid $light2;
         overflow: visible !important;
         box-shadow: -0.5rem 0.5rem 0 0rem darken($light3, 10%);
@@ -319,18 +336,32 @@ article.column,
             position: fixed !important;
         }
 
+        &.monitor-placeholder .modal-content {
+            align-self: flex-start;
+            align-items: flex-start;
+            top: 0%;
+            -ms-transform: translateY(0%);
+            transform: translateY(0%);
+        }
 
         .modal-content {
             margin: 0 auto;
             max-height: auto !important;
             height: 25rem;
             width: 100%;
-            align-self: flex-start;
+            align-self: center;
             display: flex;
             padding-left: 13.333%;
             background-color: transparent;
-            position: relative;
             z-index: 2020;
+            overflow-x: hidden;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            position: absolute;
+            align-items: center;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
 
             .ivan {
                 color: $green;
@@ -359,7 +390,7 @@ article.column,
                 width: 1px;
                 animation: typing 7s normal forwards ease-in-out;
                 animation-iteration-count: 1;
-                animation-delay: 7s;
+                animation-delay: 9s;
                 position: relative;
               }
 
@@ -382,9 +413,6 @@ article.column,
             width: 100%;
             min-height: 25rem;
             color: white;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
 
             h1 {
                 font-size: 3.5rem;
@@ -515,7 +543,7 @@ article.column,
 
 .cat-bubble {
     background: rgba(255,255,255,0.92);
-    border-radius: 22rem;
+    border-radius: 50%;
     width: 15rem;
     height: 12rem;
     display: none;
