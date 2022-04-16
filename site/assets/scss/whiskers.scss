@@ -77,6 +77,22 @@ $light0:   $green;
         opacity: 0;
      }
 }
+/* The typing effect */
+@keyframes typing {
+    0% { width: 0 }
+    30% { width: 40% }
+    45% { width: 40% }
+    60% { width: 65% }
+    65% { width: 65% }
+    100% { width: 100% }
+}
+  
+/* The typewriter cursor effect */
+@keyframes blinkCaret {
+    0%   { opacity: 0 }
+    50%  { opacity: 100% }
+    100% { opacity: 0 }
+}
 
 h3 {
     color: $green;
@@ -316,18 +332,47 @@ article.column,
             position: relative;
             z-index: 2020;
 
-            @keyframes ivanCursor {
-                0%    { opacity: 0; }
-                50%   { opacity: 0.5; }
-                100%  { opacity: 0; }
-            }
-
             .ivan {
                 color: $green;
                 padding-top: 3.5rem;
-                animation: ivanCursor 3s infinite;
-                transition: 0.3s all ease-in-out ;
-            } 
+                display: inline-block;
+                position: relative;
+
+                span {
+                    display: inline-block;
+                }
+
+                em {
+                    position: absolute;
+                    font-style: normal;
+                    left: -1rem;
+                }
+            }
+            
+            .ivantype {
+                color: $light3;
+                overflow: hidden; /* Ensures the content is not revealed until the animation */
+                white-space: nowrap; /* Keeps the content on a single line */
+                margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+                letter-spacing: .15em; /* Adjust as needed */
+                padding-left: 1rem;
+                width: 1px;
+                animation: typing 7s normal forwards ease-in-out;
+                animation-iteration-count: 1;
+                animation-delay: 7s;
+                position: relative;
+              }
+
+              .prompt {
+                  animation: blinkCaret 1s ease;
+                  animation-iteration-count: infinite;
+                  transition: opacity 1s ease-in-out;
+                  width: 2px;
+                  background-color: $green;
+                  height: 2rem;
+                  position: absolute;
+                  right: 0;
+              }
         }
 
         .box {

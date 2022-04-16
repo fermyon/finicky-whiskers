@@ -110,14 +110,8 @@ $("nav > .button").on('click', function(i, e) {
     );
   
     $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
-    $(".slats-head").addClass("slats-eating").delay(50).queue(function () {
-      $(this).removeClass("slats-eating"); 
-      $(this).dequeue();
-    });
-    $(".slats-head").addClass("slats-eating2").delay(50).queue(function () {
-      $(this).removeClass("slats-eating2"); 
-      $(this).dequeue();
-    });
+    $(".slats-head").addClass("slats-eating").delay(50).removeClass("slats-eating").delay(50).addClass("slats-eating2").delay(50).removeClass("slats-eating2");
+
 
   } else {
     
