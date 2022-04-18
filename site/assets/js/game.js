@@ -21,10 +21,6 @@ function setScoreboard() {
 
     $("#scoreTotal").text(data.total);
     $("#scoreFinal").text(data.total);
-    $("#scoreBeef").text(data.beef);
-    $("#scoreChicken").text(data.chicken);
-    $("#scoreFish").text(data.fish);
-    $("#scoreVeggie").text(data.veg);
   })
 }
 
@@ -35,18 +31,10 @@ function gameEnd() {
   setScoreboard();
 
   $("#gameOver").click();
-
-  $("#gameOver").on('click', function(e) {
-    e.preventDefault();
-    isPaused = true;
-  });
 };
 
 // starting the game
 function setup() {
-  // e.preventDefault();
-  // isPaused = false;
-
   // get the data
   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   fetch('/session').then(
@@ -68,10 +56,13 @@ function setup() {
       // if (timeLeft == -1) {
       clearTimeout(timerId);
       gameEnd();
+      $("#whiskerStage").addClass('waiting').removeClass('gametime')
     } else {
       textLeft.innerHTML = timeLeft;
       progressLeft.setAttribute("value", timeLeft);
       timeLeft--;
+      $(".cat-bubble").show();
+      $("#whiskerStage").addClass('gametime').removeClass('waiting');
       setScoreboard();
     }
   }
@@ -92,7 +83,8 @@ function displayMorsels(data) {
     setTimeout(function() {
       console.log(morselName + " demand! for " + morselTime + " milliseconds.");
 
-      $("#currentDemand").text(morselName);
+      $("#hiSlats").removeClass("beef chicken fish veg");
+      $("#hiSlats").addClass(morselName);
 
       // remove correct class from all buttons
       $("nav > .button.correct").removeClass('correct');
@@ -112,16 +104,34 @@ $("nav > .button").on('click', function(i, e) {
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=true`).then(
       response => console.log(response)
     );
+  
+    $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
+    $(".slats-head").addClass("slats-eating2").delay(100).queue(function () {
+      $(this).removeClass("slats-eating2"); 
+      $(this).dequeue();
+    });
+
+
   } else {
+    
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=false`).then(
       response => console.log(response)
     );
-  }
+    
+    $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
+    $(".slats-head").addClass("slats-huh").delay(100).queue(function () {
+      $(this).removeClass("slats-huh"); 
+      $(this).dequeue();
+    });
+
+  };
+  
 });
 
 $(document).ready(function() {
 
   // open start screen on load
+  $("#whiskerStage").addClass('waiting');
   $("#gameInit").click();
 
   $("#gameStart").on('click', function() {
@@ -134,13 +144,15 @@ $(document).ready(function() {
 
   // blinking
   setInterval(function() {
-    console.log('> blink <');
-    $("#hiSlats > .slats-head").addClass("slats-blink");
-    $("#hiSlats > .slats-head").removeClass("slats-resting");
+    if ($("#whiskerStage").hasClass("waiting")) {
+      $("#hiSlats > .slats-head").addClass("slats-blink");
+      $("#hiSlats > .slats-head").removeClass("slats-resting");
 
-    setTimeout(function() {
-      $("#hiSlats > .slats-head").addClass("slats-resting");
-      $("#hiSlats > .slats-head").removeClass("slats-blink");
-    }, 500);
+      setTimeout(function() {
+        $("#hiSlats > .slats-head").addClass("slats-resting");
+        $("#hiSlats > .slats-head").removeClass("slats-blink");
+      }, 500);
+    };
   }, 3000);
+
 });

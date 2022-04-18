@@ -1,26 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="226px" height="94px" viewBox="0 0 226 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>eating-state</title>
-    <g id="eating-state" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <polygon id="Rectangle" fill="#000000" points="33 0 226 0 226 94 139.773438 85.1835937 33 54.390625"></polygon>
-        <g transform="translate(4.856445, 8.000000)">
-            <g id="eyes" transform="translate(36.643555, 0.000000)" fill="#FFFFFF">
-                <circle id="Oval" cx="11.5" cy="11.5" r="11.5"></circle>
-                <circle id="Oval" cx="128" cy="26" r="15"></circle>
-            </g>
-            <g id="nose" transform="translate(83.119606, 22.042897)" fill="#FFFFFF">
-                <ellipse id="Oval" transform="translate(14.523948, 8.957103) rotate(4.000000) translate(-14.523948, -8.957103) " cx="14.5239485" cy="8.95710303" rx="14" ry="8"></ellipse>
-            </g>
-            <g id="outside-whiskers" transform="translate(0.000000, 22.503677)" stroke="#000000" stroke-linecap="round" stroke-width="8">
-                <path d="M0,0.0132231438 C13.8707547,-0.0837037602 24.5738729,0.352231917 32.1093547,1.32103018" id="Path-2"></path>
-                <path d="M0,18.0132231 C9.85024688,17.7041049 19.7223172,15.1721044 29.6162109,10.4172216" id="Path-2"></path>
-            </g>
-            <g id="inside-whiskers" transform="translate(188.499023, 52.645020)" stroke="#FFFFFF" stroke-linecap="round" stroke-width="8">
-                <line x1="4.37304688" y1="0" x2="26.578125" y2="3.61230469" id="Path-3"></line>
-                <path d="M0,13.8696289 C12.2226562,19.3022461 20.2477214,22.8585612 24.0751953,24.5385742" id="Path-4"></path>
-            </g>
-        </g>
-        <path d="M117.023948,63.7753906 C126.588712,57.7716471 133.328288,55.2470703 137.242676,56.2016602 C143.114258,57.6335449 151.693604,65.0991211 149.131592,66.6428223 C146.56958,68.1865234 144.109863,69.9023438 137.242676,68.3867188 C130.375488,66.8710938 131.172363,65.0908203 125.71167,66.2509766" id="Path-7" fill="#FFFFFF"></path>
-        <path d="M79.8232422,63.3671875 C106.135091,63.9417318 122.058594,65.1622721 127.59375,67.0288086" id="Path-6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></path>
-    </g>
+<svg width="226" height="94" viewBox="0 0 226 94" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M33 0H226V94L139.773 85.1836L33 54.3906V0Z" fill="black"/>
+<path d="M101.942 46.9805C109.655 47.5199 116.158 44.3841 116.466 39.9766C116.774 35.5691 110.771 31.5589 103.058 31.0195C95.345 30.4801 88.8424 33.6159 88.5342 38.0234C88.226 42.4309 94.2289 46.4412 101.942 46.9805Z" fill="white"/>
+<path d="M4.85645 30.5169C18.7272 30.42 29.4303 30.8559 36.9658 31.8247" stroke="black" stroke-width="8" stroke-linecap="round"/>
+<path d="M4.85645 48.5169C14.7067 48.2078 24.5788 45.6758 34.4727 40.9209" stroke="black" stroke-width="8" stroke-linecap="round"/>
+<path d="M197.729 60.645L219.934 64.2573" stroke="white" stroke-width="8" stroke-linecap="round"/>
+<path d="M193.355 74.5146C205.578 79.9473 213.603 83.5036 217.431 85.1836" stroke="white" stroke-width="8" stroke-linecap="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M117.024 63.7754C126.589 57.7716 133.328 55.2471 137.243 56.2017C143.114 57.6335 151.694 65.0991 149.132 66.6428C146.57 68.1865 144.11 69.9023 137.243 68.3867C130.375 66.8711 131.172 65.0908 125.712 66.251" fill="white"/>
+<path d="M79.8232 63.3672C106.135 63.9417 122.059 65.1623 127.594 67.0288" stroke="white" stroke-width="3" stroke-linecap="round"/>
+<path d="M49 31C56.732 31 63 24.732 63 17C63 9.26801 56.732 3 49 3C41.268 3 35 9.26801 35 17C35 24.732 41.268 31 49 31Z" fill="white"/>
+<path d="M169 49C177.284 49 184 42.2843 184 34C184 25.7157 177.284 19 169 19C160.716 19 154 25.7157 154 34C154 42.2843 160.716 49 169 49Z" fill="white"/>
 </svg>

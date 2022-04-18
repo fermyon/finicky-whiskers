@@ -1,2 +1,674 @@
-html{background:#f1f1f1}body{padding:2rem 0;font-family:Azeret Mono,monospace}@keyframes tailSwish{0%{rotate:none}25%{rotate:-2deg}27%{rotate:-28deg}30%{rotate:-25deg}36%{rotate:-25deg}50%{rotate:-5deg}75%{rotate:10deg}78%{rotate:5deg}98%{rotate:5deg}to{rotate:none}}@keyframes headLook{0%{rotate:none}60%{rotate:none}80%{rotate:-12deg}to{rotate:none}}h3{color:#e46153}#whiskerStage{min-height:670px;background:#dadada;border-radius:1rem;margin:3rem 0;padding:1.5rem;position:relative;overflow:hidden}#whiskerStage .button{z-index:1100;position:relative}#whiskerStage:after{opacity:.45;width:100%;content:" ";z-index:1;background-color:#f6c067;background-image:linear-gradient(45deg,#f1f1f1 20%,#0000 20% 80%,#f1f1f1 80% 100%),linear-gradient(135deg,#f1f1f1 20%,#0000 20% 80%,#f1f1f1 80% 100%);background-position:0 0,0 0;background-repeat:repeat,repeat;background-size:3em 3em;background-attachment:scroll,scroll;background-origin:padding-box,padding-box;background-clip:border-box,border-box;display:block;position:absolute;inset:0 20% 0 0}#whiskerStage nav,#whiskerStage aside,#whiskerStage progress,#whiskerStage span.tag{z-index:100;position:absolute}#whiskerStage nav{position:absolute;bottom:1.2vw;left:0;right:0}#whiskerStage nav .button{width:17%;min-height:4rem;color:#333;background:#f6c067;border-radius:1rem;margin:.5%;padding:1.5rem 0;transition:all .3s ease-in-out;box-shadow:0 .25rem .125rem #64646440}#whiskerStage nav .button:hover{outline:2px solid green}#whiskerStage nav .button:first-of-type{margin-left:2%}#whiskerStage nav .button:last-of-type{margin-right:2%}#whiskerStage nav .button em{margin-top:.5vw;padding-right:.67rem;display:inline-block;position:relative}#whiskerStage nav .button em img{max-width:3vw;max-height:3vw}#whiskerStage progress{width:63%;transition:all .3s;position:absolute;top:2.333rem;left:2%}#whiskerStage .tag.game-time{border-radius:2.75rem;font-size:2rem;position:absolute;top:.8rem;right:22.5%}#whiskerStage .tag.game-time img{width:3rem;height:auto;margin:1rem .5rem 0 -.5rem}#whiskerStage .modal{z-index:800;justify-content:flex-start;position:absolute;top:7.5rem;left:2.5%;right:2.5%}#whiskerStage .modal .modal-content{height:25rem;width:100%;align-self:flex-start;margin:0 auto;display:flex;max-height:auto!important}#whiskerStage .modal .box{z-index:810;width:42.5%;min-height:20rem;background-color:#fff;border-radius:2rem;padding:3rem;overflow:hidden}#whiskerStage .modal .box h1{color:#333;text-shadow:-.35vw .35vw #edc0a8;font-size:3.5rem;font-weight:700;line-height:1}#whiskerStage .modal .box .button{background:#e46153;margin-top:1rem;padding:1.5rem 3rem;font-family:Azeret Mono,monospace;font-size:1.5rem;font-weight:700}#whiskerStage #gameFinishModal .modal-content{height:27rem!important}#whiskerStage #gameFinishModal .modal-content h1{font-size:3.5rem}#whiskerStage #gameFinishModal .modal-content .button#gameStart{margin-top:.75rem;font-family:Azeret Mono,monospace}#whiskerStage #gameFinishModal .modal-content .leaderboard{width:42.5%;height:9rem;background-color:#fcf6f2;padding:2rem;position:absolute;top:18rem;left:0}#whiskerStage #gameFinishModal .modal-content .button.is-info{color:#6b9cb3;background-color:#dadada;margin:0;padding:1.2rem;font-size:.825rem}#whiskerStage #gameFinishModal .modal-content p small{font-size:.75rem}#whiskerStage aside{width:20%;background:#dadada;border-left:1px dashed #fff;padding:2rem;top:0;bottom:0;right:0}#whiskerStage aside strong{float:right;margin:0 1.5rem}#whiskerStage aside ul{border-top:1px solid #f1f1f1;margin:2rem .125rem 0;padding-top:2rem}#whiskerStage aside ul li{line-height:2;list-style:none}#whiskerStage .slats-the-cat{width:20rem;height:30rem;z-index:5;background:url(slats-torso.64e56eb6.svg) 0 0/contain no-repeat;position:absolute;bottom:-1.5rem;right:25%}#whiskerStage .slats-the-cat .slats-head{animation:headLook 12s linear infinite;position:absolute;top:-8rem;left:-2rem}#whiskerStage .slats-the-cat .slats-tail{width:25rem;min-height:15rem;transform-origin:100% 0;background:url(slats-tail.5082d04e.svg) 0 0/contain no-repeat;animation:tailSwish 12s linear infinite;display:inline-block;position:relative;top:15rem;right:5rem}.slats-head{width:12rem;min-height:25rem;background:url(slats-head.d381f18c.svg) 0 0/contain no-repeat;display:inline-block;position:relative}.slats-head img{width:100%;display:none;position:absolute;top:6.33rem;left:-1.25rem}.slats-head.slats-resting img.is-resting,.slats-head.slats-blink img.is-blink,.slats-head.slats-eating2 img.is-eating2,.slats-head.slats-eating img.is-eating,.slats-head.slats-huh img.is-huh,.slats-head.slats-grumpy img.is-grumpy{display:inline-block}#elements{position:relative}#elements svg,#elements img{max-width:20vw;height:auto}#elements svg h3,#elements svg h4,#elements img h3,#elements img h4{color:#e46153;margin:1rem 0;font-weight:700}#elements ul{margin:2rem 0}#elements li{padding-top:3rem}#elements li .slats-head{padding-top:16rem}#elements li code{color:#333;background:#dadada}
+html {
+  background: #f1f1f1;
+}
+
+body {
+  padding: 0;
+  font-family: Azeret Mono, monospace;
+}
+
+@keyframes tailSwish {
+  0% {
+    rotate: none;
+  }
+
+  25% {
+    rotate: -2deg;
+  }
+
+  27% {
+    rotate: -28deg;
+  }
+
+  30% {
+    rotate: -25deg;
+  }
+
+  36% {
+    rotate: -25deg;
+  }
+
+  50% {
+    rotate: -5deg;
+  }
+
+  75% {
+    rotate: 10deg;
+  }
+
+  78% {
+    rotate: 5deg;
+  }
+
+  98% {
+    rotate: 5deg;
+  }
+
+  100% {
+    rotate: none;
+  }
+}
+
+@keyframes headLook {
+  0% {
+    rotate: none;
+  }
+
+  60% {
+    rotate: none;
+  }
+
+  80% {
+    rotate: -12deg;
+  }
+
+  100% {
+    rotate: none;
+  }
+}
+
+@keyframes bubbleFood {
+  0% {
+    rotate: none;
+  }
+
+  33% {
+    margin-top: 1rem;
+    rotate: 2deg;
+  }
+
+  50% {
+    margin-top: 0;
+  }
+
+  67% {
+    margin-top: .6rem;
+    rotate: -2deg;
+  }
+
+  100% {
+    rotate: none;
+  }
+}
+
+@keyframes thots {
+  0% {
+    opacity: 0;
+    top: 13rem;
+    left: 13rem;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    top: 12rem;
+    left: 10rem;
+  }
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+
+  30% {
+    width: 40%;
+  }
+
+  45% {
+    width: 40%;
+  }
+
+  60% {
+    width: 65%;
+  }
+
+  65% {
+    width: 65%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes blinkCaret {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+h3 {
+  color: #56eeb8;
+}
+
+html, body, .content, .columns.content, article.column, #whiskerStage {
+  height: 100%;
+  min-height: 100%;
+}
+
+.container-full, .fullscreen {
+  width: 100%;
+  border-radius: 0;
+  margin: 0 !important;
+}
+
+.container-full .column, .fullscreen .column {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#whiskerStage {
+  background-color: #1f5080;
+  background-size: cover;
+  margin: 3rem 0;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+#whiskerStage.fullscreen {
+  position: fixed;
+  inset: 0;
+}
+
+#whiskerStage .button {
+  z-index: 1100;
+  position: relative;
+}
+
+#whiskerStage:before, #whiskerStage:after, #whiskerStage .modal.monitor, #whiskerStage .modal.monitor:before, #whiskerStage .modal.monitor:after {
+  content: " ";
+  z-index: 1;
+  position: fixed;
+}
+
+#whiskerStage:after {
+  opacity: 1;
+  width: 100%;
+  min-height: 39%;
+  z-index: 1700;
+  background: url("background-desk.23c03cda.svg") 0 0 / cover no-repeat;
+  display: block;
+  bottom: 0;
+  left: 0;
+}
+
+#whiskerStage nav, #whiskerStage aside, #whiskerStage progress, #whiskerStage span.tag {
+  z-index: 100;
+  position: absolute;
+}
+
+#whiskerStage nav {
+  z-index: 1900;
+  transition: all .3s ease-in-out;
+  position: absolute;
+  bottom: -10vw;
+  left: 0;
+  right: 0;
+}
+
+#whiskerStage nav .button {
+  width: 17%;
+  min-height: 5rem;
+  color: #1a2a60;
+  background: #f6ca83;
+  border-radius: .1rem;
+  margin: .5%;
+  padding: 2rem 0;
+  transition: background .1s linear;
+  position: relative;
+  box-shadow: 0 9px #f2b148;
+}
+
+#whiskerStage nav .button:hover {
+  border-radius: .25rem;
+  top: 1px;
+  box-shadow: 0 8px #f0a630;
+}
+
+#whiskerStage nav .button:active {
+  box-shadow: none;
+  background: #f4c06b;
+  top: 8px;
+}
+
+#whiskerStage nav .button:active.correct {
+  background: #629460 !important;
+}
+
+#whiskerStage nav .button:first-of-type {
+  margin-left: 2%;
+}
+
+#whiskerStage nav .button:last-of-type {
+  margin-right: 2%;
+}
+
+#whiskerStage nav .button em {
+  margin-top: .5vw;
+  padding-right: 1.25rem;
+  display: inline-block;
+  position: relative;
+}
+
+#whiskerStage nav .button em img {
+  max-width: 4vw;
+  max-height: 3.333vw;
+}
+
+#whiskerStage.gametime progress, #whiskerStage.gametime .tag.game-time {
+  top: 0 !important;
+}
+
+#whiskerStage.gametime nav {
+  bottom: 1.2vw !important;
+}
+
+#whiskerStage.gametime .cat-bubble {
+  display: block !important;
+}
+
+#whiskerStage.waiting progress, #whiskerStage.waiting .tag.game-time {
+  top: -12vw;
+}
+
+#whiskerStage.waiting nav {
+  bottom: -12vw;
+}
+
+#whiskerStage.waiting .cat-bubble {
+  width: 1rem;
+  height: 1rem;
+  top: 0;
+  left: 0;
+}
+
+#whiskerStage progress {
+  width: 72%;
+  height: 3rem;
+  border: 1rem solid #1a2a60;
+  border-radius: 0;
+  transition: all .3s linear;
+  position: absolute;
+  top: -12vw;
+  left: 0%;
+}
+
+#whiskerStage .tag.game-time {
+  width: 8.5%;
+  background-color: #15214c;
+  border-radius: 0;
+  font-size: 1.5rem;
+  transition: all .3s linear;
+  position: absolute;
+  top: -12vw;
+  right: 19.5%;
+}
+
+#whiskerStage .tag.game-time img {
+  width: 1.25rem;
+  height: auto;
+  opacity: .5;
+  fill: #fff;
+  margin: .67rem 1rem 0 -.825rem;
+}
+
+#whiskerStage .modal {
+  min-height: 344px;
+  background: linear-gradient(to left, #031835 0%, #15214c 100%);
+  border: .7rem solid #3998b7;
+  justify-content: flex-start;
+  position: absolute;
+  inset: 7.5rem 33% 30% 4.5%;
+  box-shadow: -.5rem .5rem 0 0 #296b7b;
+  z-index: 1330 !important;
+  overflow: visible !important;
+}
+
+#whiskerStage .modal.monitor-placeholder {
+  display: block !important;
+}
+
+#whiskerStage .modal:before {
+  min-width: 55%;
+  background: url("foreground-light.c7ac66a3.svg") 0 100% / contain no-repeat;
+  display: block;
+  top: 6%;
+  bottom: 18%;
+  left: -3%;
+  z-index: 1650 !important;
+}
+
+#whiskerStage .modal:after {
+  height: 18%;
+  width: 466px;
+  background: url("background-monitorbase.9b6d3bdd.svg") bottom / contain no-repeat;
+  margin-left: -15%;
+  display: block;
+  left: 35%;
+  z-index: 1300 !important;
+  position: fixed !important;
+  bottom: 11% !important;
+}
+
+#whiskerStage .modal.monitor-placeholder .modal-content {
+  align-self: flex-start;
+  align-items: flex-start;
+  top: 0%;
+  transform: translateY(0%);
+}
+
+#whiskerStage .modal .modal-content {
+  height: 25rem;
+  width: 100%;
+  z-index: 2020;
+  background-color: #0000;
+  align-self: center;
+  align-items: center;
+  margin: 0 auto;
+  padding-left: 13.333%;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  overflow-x: hidden;
+  transform: translateY(-50%);
+  max-height: auto !important;
+}
+
+#whiskerStage .modal .modal-content .ivan {
+  color: #56eeb8;
+  padding-top: 3.5rem;
+  display: inline-block;
+  position: relative;
+}
+
+#whiskerStage .modal .modal-content .ivan span {
+  display: inline-block;
+}
+
+#whiskerStage .modal .modal-content .ivan em {
+  font-style: normal;
+  position: absolute;
+  left: -1rem;
+}
+
+#whiskerStage .modal .modal-content .ivantype {
+  color: #368ca1;
+  white-space: nowrap;
+  letter-spacing: .15em;
+  width: 1px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  animation: typing 7s ease-in-out 9s forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+#whiskerStage .modal .modal-content .prompt {
+  width: 2px;
+  height: 2rem;
+  background-color: #56eeb8;
+  transition: opacity 1s ease-in-out;
+  animation: blinkCaret 1s infinite;
+  position: absolute;
+  right: 0;
+}
+
+#whiskerStage .modal .box {
+  z-index: 2150;
+  width: 100%;
+  min-height: 25rem;
+  color: #fff;
+  background-color: #0000;
+  padding: 3rem;
+}
+
+#whiskerStage .modal .box h1 {
+  color: #56eeb8;
+  text-shadow: -.35vw .35vw #431439;
+  font-size: 3.5rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+#whiskerStage .modal .box strong {
+  color: #f6ca83;
+}
+
+#whiskerStage .modal .box .button {
+  background: #3ad0c6;
+  margin-top: 1rem;
+  padding: 1.5rem 3rem;
+  font-family: Azeret Mono, monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#whiskerStage #gameFinishModal .modal-content {
+  height: 27rem !important;
+}
+
+#whiskerStage #gameFinishModal .modal-content h1 {
+  font-size: 3.5rem;
+}
+
+#whiskerStage #gameFinishModal .modal-content .button#gameStart {
+  margin-top: .75rem;
+  font-family: Azeret Mono, monospace;
+}
+
+#whiskerStage #gameFinishModal .modal-content .leaderboard {
+  width: 100%;
+  height: 9rem;
+  margin-left: 3rem;
+  padding: 2rem 5% 2rem 13.333%;
+  position: absolute;
+  top: 18rem;
+  left: 0;
+}
+
+#whiskerStage #gameFinishModal .modal-content .leaderboard p {
+  color: #fff;
+}
+
+#whiskerStage #gameFinishModal .modal-content .leaderboard p a {
+  color: #3998b7;
+}
+
+#whiskerStage #gameFinishModal .modal-content .button.is-info {
+  color: #031835;
+  background-color: #3998b7;
+  margin: 0;
+  padding: 1.2rem;
+  font-size: .825rem;
+}
+
+#whiskerStage #gameFinishModal .modal-content p small {
+  font-size: .75rem;
+}
+
+#whiskerStage aside.score {
+  width: 20%;
+  text-align: center;
+  background: url("background-shelf.8959d982.svg") 0 0 / cover no-repeat;
+  padding: 1rem 2rem 2rem;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+#whiskerStage aside.score h2 {
+  color: #f6ca83;
+  font-size: .75rem;
+}
+
+#whiskerStage aside.score strong {
+  color: #f6ca83;
+  margin: -.825rem .5rem 0;
+  font-size: 3rem;
+  display: block;
+}
+
+#whiskerStage .slats-the-cat {
+  width: 20rem;
+  height: 30rem;
+  z-index: 1405;
+  background: url("slats-torso.1eb59964.svg") 0 0 / contain no-repeat;
+  position: absolute;
+  bottom: -4.5%;
+  right: 25%;
+}
+
+#whiskerStage .slats-the-cat .slats-head {
+  animation: headLook 12s linear infinite;
+  position: absolute;
+  top: -8rem;
+  left: -2rem;
+}
+
+#whiskerStage .slats-the-cat .slats-tail {
+  width: 25rem;
+  min-height: 15rem;
+  transform-origin: 100% 0;
+  background: url("slats-tail.de24e1a7.svg") 0 0 / contain no-repeat;
+  animation: tailSwish 12s linear infinite;
+  display: inline-block;
+  position: relative;
+  top: 15rem;
+  right: 5rem;
+}
+
+.cat-bubble {
+  width: 15rem;
+  height: 12rem;
+  z-index: 1850;
+  z-index: 1111;
+  text-align: center;
+  background: #ffffffeb;
+  border-radius: 50%;
+  padding: 2rem;
+  transition: all .3s;
+  animation: bubbleFood 5s linear infinite;
+  display: none;
+  position: absolute;
+  top: -13rem;
+  left: -15rem;
+}
+
+.cat-bubble:before {
+  width: 3rem;
+  height: 3rem;
+  content: " ";
+  z-index: 1850;
+  opacity: .8;
+  background: #ffffffeb;
+  border-radius: 50%;
+  transition: all .3s ease-in-out;
+  animation: thots 7s ease-in-out infinite;
+  display: block;
+  position: absolute;
+  top: 12rem;
+  left: 10rem;
+}
+
+.cat-bubble:after {
+  content: " ";
+  width: 7rem;
+  height: 7rem;
+  z-index: 1900;
+  background: 0 0 / cover;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+}
+
+.slats-head {
+  width: 12rem;
+  min-height: 25rem;
+  z-index: 1300;
+  background: url("slats-head.2f388bd3.svg") 0 0 / contain no-repeat;
+  display: inline-block;
+  position: relative;
+}
+
+.slats-head img {
+  width: 100%;
+  display: none;
+  position: absolute;
+  top: 6.33rem;
+  left: -1.25rem;
+}
+
+.slats-head.slats-resting img.is-resting {
+  display: inline-block;
+}
+
+.slats-head.slats-blink img.is-blink, .slats-head.slats-eating2 img.is-eating2 {
+  display: inline-block !important;
+}
+
+.slats-head.slats-eating img.is-eating, .slats-head.slats-huh img.is-huh, .slats-head.slats-grumpy img.is-grumpy {
+  display: inline-block;
+}
+
+#elements {
+  position: relative;
+}
+
+#elements svg, #elements img {
+  max-width: 20vw;
+  height: auto;
+}
+
+#elements svg h3, #elements svg h4, #elements img h3, #elements img h4 {
+  color: #56eeb8;
+  margin: 1rem 0;
+  font-weight: bold;
+}
+
+#elements ul {
+  margin: 2rem 0;
+}
+
+#elements li {
+  padding-top: 3rem;
+}
+
+#elements li .slats-head {
+  padding-top: 16rem;
+}
+
+#elements li code {
+  color: #031835;
+  background: #3998b7;
+}
+
+.beef > .cat-bubble:after {
+  background: url("beef.0113edc4.svg") 50% / contain no-repeat;
+}
+
+.chicken > .cat-bubble:after {
+  background: url("chicken.b2fbc713.svg") 50% / contain no-repeat;
+}
+
+.fish > .cat-bubble:after {
+  background: url("fish.b8351397.svg") 50% / contain no-repeat;
+}
+
+.veg > .cat-bubble:after {
+  background: url("veggies.f3018b54.svg") 50% / contain no-repeat;
+}
+
 /*# sourceMappingURL=whiskers.css.map */

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Finicky Whiskers</title>
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@100;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/whiskers.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+    <main class="container">
+        <div class="columns content">
+
+            <article class="column">
+                <h3>Game Stage</h3>
+
+                <!-- the game stage -->
+                <section id="whiskerStage">
+                    <progress class="progress is-link" id="progressBar" value="30" max="30"></progress>
+                    <span class="tag game-time is-info"><i><img src="assets/images/timer.svg" alt
+                        Time remaining" /></i> <span id="gameTime">30</span></span>
+
+                    <button id="gameInit" class="modal-button is-hidden" data-target="#gameStartModal" aria-haspopup="true">Init</button>
+                    <button id="gameRestartInit" class="modal-button is-hidden" data-target="#gameStartModal" aria-haspopup="true">RestartInit</button>
+                    <button id="gameOver" class="modal-button is-hidden" data-target="#gameFinishModal" aria-haspopup="true">Over</button>
+
+                    <!-- start screen -->
+                    <div class="modal" id="gameStartModal">
+                        <div class="modal-content">
+                            <div class="box">
+                                <h1 class="logo">
+                                    Finicky<br>
+                                    Whiskers
+                                </h1>
+
+                                <p>Slats demands satsifaction.<br>
+                                But <em>which</em> morsel does Slats want?</p>
+
+                                <button id="gameStart" class="button is-primary modal-trigger-close is-large">Start</button>
+                            </div>
+                        </div>
+                        <button class="modal-close modal-trigger-close is-large" aria-label="close"></button>
+                    </div>
+
+                    <!-- end screen -->
+                    <div class="modal" id="gameFinishModal">
+                        <div class="modal-content">
+                            <div class="box">
+                                <h1 class="logo logo-game-over">
+                                    Game Over
+                                </h1>
+
+                                <p class="finalscore">Time is up! You fed Slats <strong id="scoreFinal">0</strong> times.</p>
+
+                                <button id="gameRestart" class="button is-link modal-trigger-close is-large" >&#8617; Restart</button>
+
+                                <section class="leaderboard">
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="Your name">
+                                        </div>
+                                        <div class="control">
+                                            <a class="button is-info is-small">Publish Score</a>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <p><small>Scores are <a href="COOLDEMOINFO" target="_blank">impressively</a> published to <a href="<LEADERBOARD" target="_blank">the leaderboard</a>.</small></p>
+                                </section>
+                            </div>
+                        </div>
+                        <button class="modal-close modal-trigger-close is-large" aria-label="close"></button>
+                    </div>
+
+
+
+                    <div class="slats-the-cat" id="hiSlats">
+                        <span class="slats-head slats-resting">
+                            <img src="assets/images/slats-face-resting.svg" alt="Slats is waiting." class="is-resting" />
+                            <img src="assets/images/slats-face-blink.svg" alt="Slats is waiting."  class="is-blink" />
+                        </span>
+                        <span class="slats-body"></span>
+                        <span class="slats-tail"></span>
+
+                        <div class="cat-bubble" style="display: none;">
+                            <p>I want to eat beef</p>
+                            <p>I want to eat chicken</p>
+                            <p>I want to eat fish</p>
+                            <p>I want to eat veggie</p>
+                        </div>
+                    </div>
+
+                    <nav>
+                        <a id="beef" class="button beef">
+                            <em><img src="assets/images/beef.svg" alt="Choose Beef" /></em>
+                            Beef</a>
+                        <a id="chicken" class="button chicken">
+                            <em><img src="assets/images/chicken.svg" alt="Choose Chicken" /></em>
+                            Chicken</a>
+                        <a id="fish" class="button fish">
+                            <em><img src="assets/images/fish.svg" alt="Choose Fish" /></em>
+                            Fish
+                        </a>
+                        <a id="veg" class="button veg">
+                            <em><img src="assets/images/veggies.svg" alt="Choose Veggie" /></em>
+                            Veggie
+                        </a>
+                    </nav>
+
+                    <aside>
+                        <h2>Score: <strong id="scoreTotal" class="is-size-3">0</strong></h2>
+                        <ul>
+                            <li>
+                                Beef: <strong id="scoreBeef">0</strong>
+                            </li>
+                            <li>
+                                Chicken: <strong id="scoreChicken">0</strong>
+                            </li>
+                            <li>
+                                Fish: <strong id="scoreFish">0</strong>
+                            </li>
+                            <li>
+                                Veggies: <strong id="scoreVeggie">0</strong>
+                            </li>
+                        </ul>
+                    </aside>
+                  <h1 id="currentDemand"></h1>
+                </section>
+                <!-- / end of the game stage -->
+
+                <section id="elements">
+                    <h3>Game Elements</h3>
+
+                    <div class="columns">
+                        <div class="column">
+                            <p>Food items:</p>
+                            <hr>
+
+                            <ul>
+                                <li>
+                                    <img src="assets/images/beef.svg" alt="Beef" />
+                                    Beef icon
+                                </li>
+                                <li>
+                                    <img src="assets/images/chicken.svg" alt="Chicken" />
+                                    Chicken icon
+                                </li>
+                                <li>
+                                    <img src="assets/images/fish.svg" alt="Fish" />
+                                    Fish icon
+                                </li>
+                                <li>
+                                    <img src="assets/images/veggies.svg" alt="Veggies" />
+                                    Veggie icon
+                                </li>
+                                <li>
+                                    <img src="assets/images/can-closed.svg" alt="A can of food" />
+                                    Closed can of food
+                                </li>
+                                <li>
+                                    <img src="assets/images/can-opened.svg" alt="A can of food" />
+                                    Open can of food
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+
+                            <h4>Slats the cat:</h4>
+                            <hr>
+
+                            <ul>
+                                <li>
+                                    <img src="assets/images/slats.svg" alt="Slats Original" /> I am Slats
+                                </li>
+                                <li>
+                                    <img src="assets/images/slats-torso.svg" alt="Slats Torso" /> My torso
+                                </li>
+                                <li>
+                                    <img src="assets/images/slats-head.svg" alt="Slats Original" /> My head (blank)
+                                </li>
+                                <li>
+                                    <img src="assets/images/slats-tail.svg" alt="Slats Original" /> My tail
+                                </li>
+                            </ul>
+
+                            <h4>I am <em>feeling</em>:</h4>
+                            <ul>
+                                <li>
+                                    <span class="slats-head slats-resting">
+                                        <img src="assets/images/slats-face-resting.svg" alt="Slats is waiting."  class="is-resting" />
+                                        Slats <code>is-resting</code>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="slats-head slats-blink">
+                                        <img src="assets/images/slats-face-blink.svg" alt="Slats is waiting."  class="is-blink" />
+                                        Slats <code>is-blink</code>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="slats-head slats-huh">
+                                        <img src="assets/images/slats-face-huh.svg" alt="Slats is confused."  class="is-huh" />
+                                        Slats <code>is-huh</code>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="slats-head slats-eating">
+                                        <img src="assets/images/slats-face-eating.svg" alt="Slats is eating."  class="is-eating" />
+                                        Slats <code>is-eating</code>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="slats-head slats-eating2">
+                                        <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating."  class="is-eating2" />
+                                        Slats <code>is-eating2</code>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="slats-head slats-grumpy">
+                                        <img src="assets/images/slats-face-grumpy.svg" alt="Slats is grumpy."  class="is-grumpy" />
+                                        Slats <code>is-grumpy</code>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <script src="assets/js/game.js"></script>
+
+</body>
+</html>
