@@ -173,7 +173,6 @@ article.column,
 
     nav {
         position: absolute;
-        // bottom: 1.2vw;
         bottom: -10vw;
         left: 0;
         right: 0;
@@ -452,7 +451,6 @@ article.column,
             }
 
             .leaderboard {
-                // background-color: lighten($dark2, 17.5%);
                 position: absolute;
                 left: 0;
                 top: 18rem;
@@ -460,7 +458,6 @@ article.column,
                 height: 9rem;
                 padding: 2rem 5% 2rem 13.333%;
                 margin-left: 3rem;
-                // text-align: center;
 
                 p {
                     color: $white;
