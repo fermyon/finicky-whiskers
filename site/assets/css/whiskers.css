@@ -672,4 +672,88 @@ html, body, .content, .columns.content, article.column, #whiskerStage {
   background: url("veggies.f3018b54.svg") 50% / contain no-repeat;
 }
 
+@media (min-aspect-ratio: 4 / 3) {
+  #whiskerStage {
+    border: 12px solid green;
+  }
+}
+
+@media (min-aspect-ratio: 1) and (max-aspect-ratio: 4 / 3) {
+  #whiskerStage {
+    border: 12px solid #ff0;
+  }
+}
+
+@media (min-aspect-ratio: 3 / 4) and (max-aspect-ratio: 1) {
+  #whiskerStage {
+    border: 12px solid orange;
+  }
+}
+
+@media (max-aspect-ratio: 3 / 4) {
+  #whiskerStage {
+    border: 12px solid red;
+  }
+
+  #whiskerStage:after {
+    display: none !important;
+  }
+
+  #whiskerStage .slats-the-cat {
+    right: -42%;
+  }
+
+  #whiskerStage aside.score {
+    min-width: 20%;
+    width: auto;
+    padding: 1rem 4rem 2rem;
+  }
+
+  #whiskerStage .modal {
+    min-width: 65%;
+  }
+
+  #whiskerStage .modal .box {
+    padding: 1.75rem 1.5rem;
+  }
+
+  #whiskerStage .modal .box h1 {
+    font-size: 2.25rem;
+  }
+
+  #whiskerStage .modal .box .button {
+    padding: 1.5rem 1rem;
+  }
+
+  #whiskerStage .modal .modal-content {
+    padding-left: 0 !important;
+  }
+
+  #whiskerStage #gameFinishModal .modal-content .leaderboard {
+    margin-left: 0;
+    padding: 0 1.5rem;
+  }
+
+  #whiskerStage #gameFinishModal .modal-content h1 {
+    font-size: 2.25rem;
+  }
+
+  #whiskerStage nav {
+    bottom: 0 !important;
+  }
+
+  #whiskerStage nav .button {
+    width: 47%;
+    margin: .67rem 1%;
+  }
+
+  #whiskerStage nav .button:first-of-type, #whiskerStage nav .button:nth-child(3) {
+    margin-left: 0 !important;
+  }
+
+  #whiskerStage nav .button:nth-child(2), #whiskerStage nav .button:last-of-type {
+    margin-right: 0 !important;
+  }
+}
+
 /*# sourceMappingURL=whiskers.css.map */

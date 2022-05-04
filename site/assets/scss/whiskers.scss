@@ -690,3 +690,101 @@ article.column,
     background: url('../images/veggies.svg') no-repeat 50% 50%;
     background-size: contain;
 }
+
+
+
+/* Mobile Styles */
+
+// most normal screens: laptop, tablet etc
+@media (min-aspect-ratio: 4/3) {
+    #whiskerStage {
+        border: 12px solid green;
+    }
+}
+
+// taller viewport
+@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 4/3) {
+    #whiskerStage {
+        border: 12px solid yellow;
+    }
+}
+
+// thin viewport
+@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 1/1) {
+    #whiskerStage {
+        border: 12px solid orange;
+    }
+}
+
+// very thin viewport
+@media (max-aspect-ratio: 3/4) {
+    #whiskerStage {
+        border: 12px solid red;
+
+        &::after {
+            display: none !important;
+        }
+
+        .slats-the-cat {
+            right: -42%;
+        }
+
+        aside.score {
+            min-width: 20%;
+            width: auto;
+            padding: 1rem 4rem 2rem;
+        }
+        
+        .modal {
+            min-width: 65%;
+
+            .box {
+                padding: 1.75rem 1.5rem;
+                
+                h1 {
+                    font-size: 2.25rem;
+                }
+
+                .button {
+                    padding: 1.5rem 1rem;
+                }
+            }
+
+            .modal-content {
+                padding-left: 0 !important;
+            }
+        }
+
+        #gameFinishModal {
+            .modal-content {
+                .leaderboard {
+                    padding: 0 1.5rem;
+                    margin-left: 0;
+                }
+                
+                h1 {
+                    font-size: 2.25rem;
+                }
+            }
+        }
+
+        nav {
+            bottom: 0 !important;
+
+            .button {
+                width: 47%;
+                margin: 0.67rem 1%;
+
+                &:first-of-type,
+                &:nth-child(3) {
+                    margin-left: 0 !important;
+                }
+
+                &:nth-child(2),
+                &:last-of-type, {
+                    margin-right: 0 !important;
+                }
+            }
+        }
+    }
+}
