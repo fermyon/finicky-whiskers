@@ -1,4 +1,2 @@
 .bundle/
 .gem/
-ruby.wasm
-ruby/
