@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
 
@@ -12,8 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@100;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/whiskers.css" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
+
 <body>
 
     <main class="container container-full is-fullheight">
@@ -24,11 +28,15 @@
                 <!-- the game stage -->
                 <section id="whiskerStage" class="fullscreen">
                     <progress class="progress is-primary" id="progressBar" value="30" max="30"></progress>
-                    <span class="tag game-time is-info"><i><img src="assets/images/timer.svg" alt="Time remaining" /></i> <span id="gameTime">30</span></span>
+                    <span class="tag game-time is-info"><i><img src="assets/images/timer.svg"
+                                alt="Time remaining" /></i> <span id="gameTime">30</span></span>
 
-                    <button id="gameInit" class="modal-button is-hidden" data-target="#gameStartModal" aria-haspopup="true">Init</button>
-                    <button id="gameRestartInit" class="modal-button is-hidden" data-target="#gameStartModal" aria-haspopup="true">RestartInit</button>
-                    <button id="gameOver" class="modal-button is-hidden" data-target="#gameFinishModal" aria-haspopup="true">Over</button>
+                    <button id="gameInit" class="modal-button is-hidden" data-target="#gameStartModal"
+                        aria-haspopup="true">Init</button>
+                    <button id="gameRestartInit" class="modal-button is-hidden" data-target="#gameStartModal"
+                        aria-haspopup="true">RestartInit</button>
+                    <button id="gameOver" class="modal-button is-hidden" data-target="#gameFinishModal"
+                        aria-haspopup="true">Over</button>
 
                     <div class="modal monitor monitor-placeholder">
                         <div class="modal-content">
@@ -51,10 +59,11 @@
                                     Whiskers
                                 </h1>
 
-                                <p>Slats demands satsifaction.<br>
-                                But <em>which</em> morsel does Slats want?</p>
+                                <p>Slats demands satisfaction.<br>
+                                    But <em>which</em> morsel does Slats want?</p>
 
-                                <button id="gameStart" class="button is-primary modal-trigger-close is-large">Start</button>
+                                <button id="gameStart"
+                                    class="button is-primary modal-trigger-close is-large">Start</button>
                             </div>
                         </div>
                     </div>
@@ -67,9 +76,11 @@
                                     Game Over
                                 </h1>
 
-                                <p class="finalscore">Time is up! You fed Slats <strong id="scoreFinal">0</strong> times.</p>
+                                <p class="finalscore">Time is up! You fed Slats <strong id="scoreFinal">0</strong>
+                                    times.</p>
 
-                                <button id="gameRestart" class="button is-link modal-trigger-close is-large" >&#8617; Restart</button>
+                                <button id="gameRestart" class="button is-link modal-trigger-close is-large">&#8617;
+                                    Restart</button>
                             </div>
                         </div>
                     </div>
@@ -78,11 +89,12 @@
 
                     <div class="slats-the-cat" id="hiSlats">
                         <span class="slats-head slats-resting">
-                            <img src="assets/images/slats-face-resting.svg" alt="Slats is waiting." class="is-resting" />
-                            <img src="assets/images/slats-face-blink.svg" alt="Slats is waiting."  class="is-blink" />
-                            <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating."  class="is-eating" />
-                            <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating."  class="is-eating2" />
-                            <img src="assets/images/slats-face-huh.svg" alt="Slats is confused."  class="is-huh" />
+                            <img src="assets/images/slats-face-resting.svg" alt="Slats is waiting."
+                                class="is-resting" />
+                            <img src="assets/images/slats-face-blink.svg" alt="Slats is waiting." class="is-blink" />
+                            <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating." class="is-eating" />
+                            <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating." class="is-eating2" />
+                            <img src="assets/images/slats-face-huh.svg" alt="Slats is confused." class="is-huh" />
                         </span>
                         <span class="slats-body"></span>
                         <span class="slats-tail"></span>
@@ -111,7 +123,7 @@
                         <h2>Score</h2>
                         <strong id="scoreTotal">0</strong>
                     </aside>
-                  <h1 id="currentDemand"></h1>
+                    <h1 id="currentDemand"></h1>
                 </section>
             </article>
         </div>
@@ -120,4 +132,5 @@
     <script src="assets/js/game.js"></script>
 
 </body>
+
 </html>
