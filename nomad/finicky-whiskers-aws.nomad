@@ -100,13 +100,17 @@ job "finicky-whiskers" {
         make
         cd ${repo_dir}
 
-        perl -i -pe "s/localhost:6379/finicky-whiskers-redis.service.consul:6379/" spin.toml
+        {{ with service "finicky-whiskers-redis" }}{{ with index . 0 }}
+        REDIS_ADDRESS=redis://finicky-whiskers-redis.service.consul:{{ .Port }}
+        {{ end }}{{ end }}
+
+        perl -i -pe "s/localhost:6379/${REDIS_ADDRESS}/" spin.toml
 
         ${NOMAD_TASK_DIR}/spin up \
           --log-dir ${NOMAD_ALLOC_DIR}/logs \
           --file spin.toml \
           --listen ${NOMAD_ADDR_http} \
-          --env REDIS_ADDRESS=redis://finicky-whiskers-redis.service.consul:6379
+          --env REDIS_ADDRESS=${REDIS_ADDRESS}
         EOF
         destination = "${NOMAD_TASK_DIR}/run.bash"
         perms       = "700"
@@ -121,7 +125,7 @@ job "finicky-whiskers" {
   group "finicky-whiskers-backend" {
     network {
       port "db" {
-        static = 6379
+        to = 6379
       }
     }
 
@@ -195,12 +199,12 @@ job "finicky-whiskers" {
         git clone git@github.com:fermyon/finicky-whiskers.git ${repo_dir}
 
         cd ${repo_dir}
-        perl -i -pe "s/localhost:6379/${NOMAD_ADDR_db}/" spin-morsel.toml
+        perl -i -pe "s/localhost:6379/${NOMAD_HOST_ADDR_db}/" spin-morsel.toml
 
         ${NOMAD_TASK_DIR}/spin up \
           --log-dir ${NOMAD_ALLOC_DIR}/logs \
           --file spin-morsel.toml \
-          --env REDIS_ADDRESS=redis://${NOMAD_ADDR_db}
+          --env REDIS_ADDRESS=redis://${NOMAD_HOST_ADDR_db}
         EOF
         destination = "${NOMAD_TASK_DIR}/run.bash"
         perms       = "700"
