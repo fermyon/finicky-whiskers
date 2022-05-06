@@ -20,7 +20,7 @@ job "finicky-whiskers" {
   type        = "service"
 
   group "finicky-whiskers-frontend" {
-    count = 2
+    count = 3
 
     network {
       port "http" {}
@@ -101,7 +101,7 @@ job "finicky-whiskers" {
         cd ${repo_dir}
 
         {{ with service "finicky-whiskers-redis" }}{{ with index . 0 }}
-        REDIS_ADDRESS=redis://finicky-whiskers-redis.service.consul:{{ .Port }}
+        export REDIS_ADDRESS=finicky-whiskers-redis.service.consul:{{ .Port }}
         {{ end }}{{ end }}
 
         perl -i -pe "s/localhost:6379/${REDIS_ADDRESS}/" spin.toml
@@ -110,7 +110,7 @@ job "finicky-whiskers" {
           --log-dir ${NOMAD_ALLOC_DIR}/logs \
           --file spin.toml \
           --listen ${NOMAD_ADDR_http} \
-          --env REDIS_ADDRESS=${REDIS_ADDRESS}
+          --env REDIS_ADDRESS=redis://${REDIS_ADDRESS}
         EOF
         destination = "${NOMAD_TASK_DIR}/run.bash"
         perms       = "700"
