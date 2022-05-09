@@ -173,7 +173,6 @@ article.column,
 
     nav {
         position: absolute;
-        // bottom: 1.2vw;
         bottom: -10vw;
         left: 0;
         right: 0;
@@ -258,6 +257,7 @@ article.column,
             height: 1rem;
             top: 0;
             left: 0;
+            display: none !important;
         }
     }
 
@@ -452,7 +452,6 @@ article.column,
             }
 
             .leaderboard {
-                // background-color: lighten($dark2, 17.5%);
                 position: absolute;
                 left: 0;
                 top: 18rem;
@@ -460,7 +459,6 @@ article.column,
                 height: 9rem;
                 padding: 2rem 5% 2rem 13.333%;
                 margin-left: 3rem;
-                // text-align: center;
 
                 p {
                     color: $white;
@@ -691,4 +689,215 @@ article.column,
 .veg > .cat-bubble:after {
     background: url('../images/veggies.svg') no-repeat 50% 50%;
     background-size: contain;
+}
+
+
+
+/* Mobile Styles */
+
+// most normal screens: laptop, tablet etc
+@media (min-aspect-ratio: 4/3) {
+    #whiskerStage {
+
+        .slats-the-cat {
+            right: 0;
+            bottom: -7.5vw;
+        }
+    }
+}
+
+// taller viewport
+@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 4/3) {
+    #whiskerStage {
+
+        .slats-the-cat {
+            right: 0;
+            margin-right: -7vw;
+            bottom: 0;
+        }
+
+        nav {
+
+        }
+
+        aside.score {
+            min-width: 25%;
+            width: auto;
+            padding: 1rem 4rem 2rem;
+        }
+    }
+}
+
+// thin viewport
+@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 1/1) {
+    #whiskerStage {
+        .slats-the-cat {
+            right: 0;
+            margin-right: -20vw;
+            bottom: 0%;
+        }
+
+        &.waiting > nav {
+            bottom: -50vw;
+        }
+    }
+}
+
+// very thin viewport
+@media (max-aspect-ratio: 3/4) {
+    #whiskerStage {
+
+        &::after {
+            display: none !important;
+        }
+
+        .slats-the-cat {
+            right: 0;
+            margin-right: -33vw;
+            bottom: -14%;
+        }
+
+        aside.score {
+            min-width: 20%;
+            width: auto;
+            padding: 1rem 4rem 2rem;
+        }
+        
+        .modal {
+            min-width: 65%;
+
+            .box {
+                padding: 1.75rem 2.5rem 1.75rem 1.5rem;
+                
+                h1 {
+                    font-size: 7vw;
+                    margin-top: 9vw;
+                }
+
+                p {
+                    font-size: 3.75vw;
+                }
+
+                .button {
+                    padding: 1.5rem 1rem;
+                }
+            }
+
+            .modal-content {
+                padding-left: 0 !important;
+            }
+        }
+
+        #gameFinishModal {
+            .modal-content {
+                .leaderboard {
+                    padding: 0 1.5rem;
+                    margin-left: 0;
+                }
+                
+                h1 {
+                    font-size: 2.25rem;
+                }
+            }
+        }
+
+        &.waiting > nav {
+            bottom: -100vw;
+        }
+
+        nav {
+            bottom: 0;
+
+            .button {
+                width: 47%;
+                margin: 0.67rem 1%;
+
+                &:first-of-type,
+                &:nth-child(3) {
+                    margin-left: 0 !important;
+                }
+
+                &:nth-child(2),
+                &:last-of-type {
+                    margin-right: 0 !important;
+                }
+            }
+        }
+    }
+}
+
+@media (max-aspect-ratio: 3/4) and (max-width:400px) {
+    #whiskerStage {
+        .slats-the-cat {
+            right: -25vw;
+        }
+        
+        nav {
+            padding-left: 6.5%;
+            .button {
+                width: 90%;
+                margin: 0.33rem auto;
+                min-height: 3rem;
+            }
+        }
+    }
+}
+
+// ipad specific orientations
+@media (min-width: 1023px) and (max-width: 1081px) and (min-height: 767px) and (max-height: 811px) and (orientation:landscape) {
+    #whiskerStage {
+        .slats-the-cat {
+            bottom: 0;
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 811px) and (min-height: 1023px) and (max-height: 1081px) and (orientation:portrait) {
+    #whiskerStage {
+        &::after {
+            bottom: -10vw;
+            display: block !important;
+        }
+
+        .slats-the-cat {
+            right: 8%;
+            bottom: -1%;
+        }
+
+        &.waiting > nav {
+            bottom: -50vw;
+        }
+
+        aside.score {
+            min-width: 40%;
+            width: auto;
+            padding: 1rem 4rem 2rem;
+        }
+        
+        .modal {
+            min-width: 65%;
+
+            .box {
+                padding: 2.5rem 2.5rem 2.5rem 5rem;
+                
+                h1 {
+                    font-size: 3.5rem;
+                }
+
+                .button {
+                    padding: 2rem 3rem;
+                    margin-top: 3.75rem;
+                }
+            }
+
+            .modal-content {
+                padding-left: 0 !important;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    #whiskerStage > .slats-the-cat {
+        right: 25%;
+    }
 }

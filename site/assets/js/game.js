@@ -31,6 +31,7 @@ function gameEnd() {
   setScoreboard();
 
   $("#gameOver").click();
+  $(".cat-bubble").hide();
 };
 
 // starting the game
