@@ -37,11 +37,8 @@ job "finicky-whiskers" {
       driver = "raw_exec"
 
       artifact {
-        source      = "git::git@github.com:fermyon/finicky-whiskers"
+        source = "git::https://github.com/fermyon/finicky-whiskers"
         destination = "local/repo"
-        options {
-          sshkey = "${base64encode(file(pathexpand("~/.ssh/id_rsa")))}"
-        }
       }
 
       env {
@@ -90,11 +87,8 @@ job "finicky-whiskers" {
       driver = "raw_exec"
 
       artifact {
-        source      = "git::git@github.com:fermyon/finicky-whiskers"
+        source      = "git::https://github.com/fermyon/finicky-whiskers"
         destination = "local/repo"
-        options {
-          sshkey = "${base64encode(file(pathexpand("~/.ssh/id_rsa")))}"
-        }
       }
 
       env {
