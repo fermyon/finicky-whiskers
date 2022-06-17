@@ -123,13 +123,13 @@ article.column,
 footer {
     position: fixed;
     bottom: 0;
-    left: 0;
     right: 0;
+    width: 20%;
     background-color: rgba(100,100,100,0.72);
-    text-align: center;
+    text-align: left;
 
     p {
-        margin: 1.25rem auto;
+        margin: 1rem 1.5rem;
         font-size: 0.825rem;
         color: white;
         padding-left: 3%;
