@@ -9,6 +9,7 @@ jobs:
   dispatch:
     name: Dispatch finicky-whiskers-updated event
     runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'fermyon' }}
     steps:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2

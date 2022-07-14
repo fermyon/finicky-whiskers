@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Wait for Redis
+[[ "${WAIT_FOR_REDIS:-true}" == "true" ]] && \
+  if ! timeout 10s bash -c "until echo PING | nc localhost 6379 &>/dev/null; do sleep 1; done"; then
+    echo "Redis is unreachable or not healthy" && exit 1
+  fi
+
 # IP address and port to listen on
 SPIN_ADDRESS="${SPIN_ADDRESS:-127.0.0.1:3000}"
 
