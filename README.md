@@ -1,11 +1,64 @@
-Not much here yet.
+Finicky Whiskers is comprised of a handful of microservices. Click on each item
+below to see more details around a particular microservice.
+
+- [morsel_event](./morsel_event/README.md)
+- [redirect](./redirect/README.md)
+- [scoreboard](./scoreboard/README.md)
+- [session](./session/README.md)
+- [site](./site/README.md)
+- [tally](./tally/README.md)
+
+## Prerequisites
+
+You'll need Spin [v0.4.0](https://github.com/fermyon/spin/releases/tag/v0.4.0)
+to run the site locally.
 
 ## To Build
 
-Each microservice has its own `Makefile`. However, at this time only `session` needs to be built from source. The rest all have pre-built binaries in `components/`.
+This will by default build all microservices per the `Makefile` in their directories:
+
+```console
+make build
+```
+
+You may also build a particular microservice by navigating into its directory
+and running `make build` or from the root of this repo via
+`make build-<microservice>` e.g.:
+
+```console
+make build-session
+```
 
 ## To Run
 
-Once `session` is built, you should be able to run with `spin up` in this directory.
+Finicky Whiskers depends on a Redis instance to run. The default connection
+string is `redis://localhost:6379`.
 
-To run `morsel_event`, you must run `spin up` in that directory to start the Redis listener.
+If you have Docker installed, you can start a redis container like so:
+
+```console
+make start-redis
+```
+
+The following command will serve the Finicky Whiskers site locally:
+
+```console
+make serve
+```
+
+This will run the game at [http://127.0.0.1:3000](http://127.0.0.1:3000)
+
+When finished, the following command will stop the redis container:
+
+```console
+make stop-redis
+```
+
+## To Test
+
+The following command will serve the site and then run the integration test
+as seen [here](./tests/test-server.sh):
+
+```console
+make test-server
+```

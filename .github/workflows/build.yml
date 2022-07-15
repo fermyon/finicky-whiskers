@@ -1,0 +1,46 @@
+name: Build
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    services:
+      redis:
+        image: redis:7
+        ports:
+           - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Wasm Rust target
+        run: |
+          rustup target add wasm32-wasi
+
+      - name: Install tinygo
+        run: |
+          wget https://github.com/tinygo-org/tinygo/releases/download/v0.23.0/tinygo_0.23.0_amd64.deb
+          sudo dpkg -i tinygo_0.23.0_amd64.deb
+
+      - name: Install spin
+        run: |
+          curl -LOs https://github.com/fermyon/spin/releases/download/v0.4.0/spin-v0.4.0-linux-amd64.tar.gz
+          tar zxvf spin-v0.4.0-linux-amd64.tar.gz
+          mv spin /usr/local/bin
+
+      - name: Build
+        env:
+          ENABLE_WASM_OPT: false
+        run: |
+          make build
+
+      - name: Test site
+        env:
+          WAIT_FOR_REDIS: false
+          TIMEOUT: 1m
+        run: |
+          make test-server
