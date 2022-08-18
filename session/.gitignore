@@ -1,4 +1,5 @@
 .bundle/
 .gem/
-ruby.wasm
-ruby/
+head-wasm32-unknown-wasi-full/
+ruby-head-wasm32-unknown-wasi-full.tar.gz
+session.wasm
