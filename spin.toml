@@ -31,18 +31,10 @@ route = "/tally"
 # Initialize session data
 [[component]]
 id = "session"
-source = "session/ruby.wasm"
-files = [
-  { source = "session/lib", destination = "/lib" },
-  { source = "session/.gem", destination = "/.gem" },
-  { source = "session/ruby/usr", destination = "/usr" },
-]
+source = "session/session.wasm"
 [component.trigger]
 executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/session.rb ${SCRIPT_NAME} ${ARGS}" }
 route = "/session"
-[component.environment]
-HOME = "/"
-GEM_HOME = "/.gem"
 
 # Get the scores for a particular game
 [[component]]

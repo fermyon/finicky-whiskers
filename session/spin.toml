@@ -1,19 +1,11 @@
 spin_version = "1"
-name = "finicky-whiskers-redis"
+name = "finicky-whiskers-session"
 version = "0.1.0"
 trigger = { type = "http", base = "/" }
 
 [[component]]
-files = [
-  { source = "lib", destination = "/lib" },
-  { source = ".gem", destination = "/.gem" },
-  { source = "ruby/usr", destination = "/usr" },
-]
 id = "ruby"
-source = "ruby.wasm"
+source = "session.wasm"
 [component.trigger]
 executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/session.rb ${SCRIPT_NAME} ${ARGS}" }
 route = "/session"
-[component.environment]
-HOME = "/"
-GEM_HOME = "/.gem"

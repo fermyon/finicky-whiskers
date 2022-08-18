@@ -1,3 +1,6 @@
+ENV['HOME'] = '/'
+ENV['GEM_HOME'] = '/.gem'
+
 puts 'Content-Type: application/json; charset=UTF-8'
 puts 'Status: 200'
 
