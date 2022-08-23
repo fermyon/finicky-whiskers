@@ -4,24 +4,7 @@ A game that demonstrates wasm microservices. And the complex dietary whims of a 
 
 ### Development
 
-To run Finicky Whiskers locally:
-
-1. Run Spin (with [this Redis update](https://github.com/fermyon/spin/pull/328)) and export the Path
-    ```
-    cd spin
-    make build
-    ```
-    
-    Then export the PATH: `export PATH=$PWD/target/release:$PATH`
-    
-2. In the same shell session, move to the finicky-whiskers directory, and use `spin up`
-    ```
-    cd ../finicky-whiskers
-    spin up --file spin.toml
-    ```
-    
-    This will run the game at [http://127.0.0.1:3000](http://127.0.0.1:3000)
-
+See the root-level [README.md](../README.md) for steps to run Finicky Whiskers locally.
 
 ### Data Endpoint
 
