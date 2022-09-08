@@ -46,7 +46,6 @@ jobs:
 
       - name: Test site
         env:
-          WAIT_FOR_REDIS: false
           TIMEOUT: 1m
         run: |
           make test-server
