@@ -10,9 +10,9 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@fermyon/styleguide": "^0.1.4",
-    "@parcel/transformer-sass": "^2.4.1",
-    "parcel": "^2.4.1"
+    "@fermyon/styleguide": "^0.1.6",
+    "@parcel/transformer-sass": "^2.7.0",
+    "parcel": "^2.7.0"
   },
   "scripts": {
     "build": "parcel build index.html",
