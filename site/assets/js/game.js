@@ -31,6 +31,7 @@ function gameEnd() {
   setScoreboard();
 
   $("#gameOver").click();
+  $("#highScores").show();
   $(".cat-bubble").hide();
 };
 
@@ -134,6 +135,7 @@ $(document).ready(function() {
   // open start screen on load
   $("#whiskerStage").addClass('waiting');
   $("#gameInit").click();
+  $("#highScores").hide();
 
   $("#gameStart").on('click', function() {
     setup()
@@ -141,6 +143,7 @@ $(document).ready(function() {
 
   $("#gameRestart").on('click', function() {
     setup()
+    $("#highScores").hide();
   });
 
   // blinking

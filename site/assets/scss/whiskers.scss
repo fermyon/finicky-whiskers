@@ -451,6 +451,14 @@ footer {
                 color: $gold;
             }
 
+            input#yourName {
+                text-transform: uppercase;
+                font-size: 1rem;
+                letter-spacing: 0.02em;
+                color: #1A2A60;
+                font-family: Azeret Mono, monospace;
+            }
+
             .button {
                 background: $light1;
                 font-weight: bold;
@@ -458,6 +466,18 @@ footer {
                 padding: 1.5rem 3rem;
                 margin-top: 1rem;
                 font-family: Azeret Mono, monospace;
+
+                &.is-small {
+                    width: auto;
+                    margin: 0 !important;
+                    padding: 0.5rem !important;
+                    min-height: 5rem;
+                    border-radius: 0.1rem;
+                    background: $gold;
+                    color: $dark2;
+                    min-height: 2rem;
+                    font-size: 1rem !important;
+                }
             }
         }
     }
@@ -528,6 +548,39 @@ footer {
             font-size: 3rem;
             margin: -0.825rem 0.5rem 0;
             display: block;
+        }
+    }
+
+    aside.highscore {
+        width: 20%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: 1rem 2rem 2rem 2rem;
+        background: $dark2;
+        text-align: center;
+        z-index: 250;
+
+        h2 {
+            color: $gold;
+            font-size: 1.725rem;
+            padding: 1rem;
+            margin: 1rem auto 2rem;
+            border: 3px solid #60ACB5;
+        }
+        
+        dl {
+            dt, dd {
+                width: 45%;
+                display: inline-block;
+                font-size: 1.25rem;
+                color: white;
+                margin: 0 0;
+                float: left;
+                vertical-align: middle;
+                min-height: 3.33vh;
+                text-transform: uppercase;
+            }
         }
     }
 
@@ -927,6 +980,6 @@ footer {
 
 @media screen and (min-width: 1024px) {
     #whiskerStage > .slats-the-cat {
-        right: 25%;
+        right: 17.5%;
     }
 }
