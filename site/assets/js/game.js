@@ -1,5 +1,6 @@
 // session id
 var ulid = "";
+var highScore = "";
 
 // start screen
 document.querySelectorAll('.modal-button').forEach(function(el) {
@@ -18,17 +19,84 @@ function setScoreboard() {
   fetch(`/score?ulid=${ulid}`).then(
     response => response.json()
   ).then(data => {
-
     $("#scoreTotal").text(data.total);
     $("#scoreFinal").text(data.total);
   })
 }
+
+function isHighscore() {
+  fetch('/highscore', {
+    method: 'POST',
+    body: JSON.stringify({
+      "score": parseInt($("#scoreFinal").text()),
+      "ulid": ulid,
+      "username": ""
+    })
+  }).then(
+    response => response.json()
+  ).then(data => {
+    console.log(data);
+    highScore = data.high_score_table;
+    if (data.is_high_score) {
+      console.log("It's a highscore")
+      showHighscores();
+      $("#promptName").show();
+    } else {
+      console.log("It's not a highscore")
+      showHighscores();
+    }
+  })
+}
+
+function showHighscores() {
+  document.getElementById("highScoresList").textContent = ''
+  highScore.forEach(element => {
+    console.log(element)
+    var dt = document.createElement("dt")
+    if (element.ulid === ulid && element.username !== '') {
+      dt.style.fontWeight = 'bold'
+      dt.style.background = '#FFFFFF'
+      dt.style.color = '#1A2A60'
+    }
+    dt.innerHTML = element.username
+    var dd = document.createElement("dd")
+    if (element.ulid == ulid) {
+      dd.style.fontWeight = 'bold'
+      dd.style.background = '#FFFFFF'
+      dd.style.color = '#1A2A60'
+    }
+    dd.innerHTML = element.score
+    document.getElementById("highScoresList").appendChild(dt)
+    document.getElementById("highScoresList").appendChild(dd)
+  });
+}
+
+$("#submitName").on('click', function () {
+  fetch('/highscore', {
+    method: 'POST',
+    body: JSON.stringify({
+      "score": parseInt($("#scoreFinal").text()),
+      "ulid": ulid,
+      "username": $("#yourName").val()
+    })
+  }).then(
+    response => response.json()
+  ).then(data => {
+    console.log(data);
+    highScore = data.high_score_table;
+    showHighscores();
+    $("#promptName").hide();
+  })
+})
 
 function gameEnd() {
   console.log('Game over');
 
   // get results from /scoreboard?ulid=${ulid}
   setScoreboard();
+
+  // check highscores
+  isHighscore()
 
   $("#gameOver").click();
   $("#highScores").show();
@@ -37,6 +105,10 @@ function gameEnd() {
 
 // starting the game
 function setup() {
+  // Let's make surea ll highscore data and UI is gone
+  $("#highScores").hide();
+  document.getElementById("highScoresList").textContent = ''
+  highScore = ""
   // get the data
   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   fetch('/session').then(
@@ -106,28 +178,28 @@ $("nav > .button").on('click', function(i, e) {
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=true`).then(
       response => console.log(response)
     );
-  
+
     $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
     $(".slats-head").addClass("slats-eating2").delay(100).queue(function () {
-      $(this).removeClass("slats-eating2"); 
+      $(this).removeClass("slats-eating2");
       $(this).dequeue();
     });
 
 
   } else {
-    
+
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=false`).then(
       response => console.log(response)
     );
-    
+
     $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
     $(".slats-head").addClass("slats-huh").delay(100).queue(function () {
-      $(this).removeClass("slats-huh"); 
+      $(this).removeClass("slats-huh");
       $(this).dequeue();
     });
 
   };
-  
+
 });
 
 $(document).ready(function() {
@@ -143,7 +215,6 @@ $(document).ready(function() {
 
   $("#gameRestart").on('click', function() {
     setup()
-    $("#highScores").hide();
   });
 
   // blinking
