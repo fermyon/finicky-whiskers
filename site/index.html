@@ -84,16 +84,23 @@
                                     Game Over
                                 </h1>
 
-                                <p class="finalscore">Time is up! You fed Slats <strong id="scoreFinal">0</strong>
-                                    times.</p>
+                                <p class="finalscore">Time is up! <br>
+                                    You fed Slats <strong id="scoreFinal">0</strong> times.
+                                </p>
+
+                                <div id="promptName" style="display: none;">
+                                    It's a highscore!!!
+                                    <div class="control">
+                                        <input class="input is-normal" type="text" placeholder="Name" maxlength="3" id="yourName">
+                                        <button class="button is-small" id="submitName">Submit</button>
+                                    </div>
+                                </div>
 
                                 <button id="gameRestart" class="button is-link modal-trigger-close is-large">&#8617;
                                     Restart</button>
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="slats-the-cat" id="hiSlats">
                         <span class="slats-head slats-resting">
@@ -126,6 +133,12 @@
                             Veggie
                         </a>
                     </nav>
+
+                    <aside class="highscore" id="highScores" style="display: none;">
+                        <h2>High Scores</h2>
+                        <dl id="highScoresList">
+                        </dl>
+                    </aside>
 
                     <aside class="score">
                         <h2>Score</h2>

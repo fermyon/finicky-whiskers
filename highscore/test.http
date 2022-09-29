@@ -1,0 +1,12 @@
+POST http://localhost:3000/highscore HTTP/1.1
+content-type: application/json
+
+{
+    "score": 108,
+    "ulid": "11G9PNK680KMWZAQKGPKM2ZWMT",
+    "username": "qwerty"
+}
+
+###
+GET http://localhost:3000/highscore HTTP/1.1
+content-type: application/json

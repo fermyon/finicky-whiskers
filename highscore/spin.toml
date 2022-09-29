@@ -1,0 +1,15 @@
+spin_version = "1"
+authors = ["Mikkel Mørk Hegnhøj <mikkel@fermyon.com>"]
+description = "Highscore service for Finicky Whiskers"
+name = "highscore"
+trigger = { type = "http", base = "/" }
+version = "0.1.0"
+
+[[component]]
+id = "highscore"
+source = "target/wasm32-wasi/release/highscore.wasm"
+allowed_http_hosts = [ "https://api.jsonbin.io" ]
+[component.trigger]
+route = "/..."
+[component.build]
+command = "cargo build --target wasm32-wasi --release"
