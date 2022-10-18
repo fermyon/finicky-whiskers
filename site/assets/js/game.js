@@ -1,14 +1,19 @@
 // session id
 var ulid = "";
 var highScore = "";
+var fetchedHighscore = 0;
+
+// This is all for module counting
+var buttonPresses = 0;
+var timerTicks = 0;
 
 // start screen
-document.querySelectorAll('.modal-button').forEach(function(el) {
-  el.addEventListener('click', function() {
+document.querySelectorAll('.modal-button').forEach(function (el) {
+  el.addEventListener('click', function () {
     var target = document.querySelector(el.getAttribute('data-target'));
 
     target.classList.add('is-active');
-    target.querySelector('.modal-trigger-close').addEventListener('click', function() {
+    target.querySelector('.modal-trigger-close').addEventListener('click', function () {
       target.classList.remove('is-active');
     });
   });
@@ -35,6 +40,7 @@ function isHighscore() {
   }).then(
     response => response.json()
   ).then(data => {
+    fetchedHighscore++;
     console.log(data);
     highScore = data.high_score_table;
     if (data.is_high_score) {
@@ -105,7 +111,7 @@ function gameEnd() {
 
 // starting the game
 function setup() {
-  // Let's make surea ll highscore data and UI is gone
+  // Let's make sure all highscore data and UI is gone
   $("#highScores").hide();
   document.getElementById("highScoresList").textContent = ''
   highScore = ""
@@ -126,6 +132,8 @@ function setup() {
   var progressLeft = document.getElementById("progressBar");
   var timerId = setInterval(gameCountdown, 1000);
   function gameCountdown() {
+    timerTicks++;
+    countWasmModules();
     if (timeLeft == -1 || isPaused == true) {
       // if (timeLeft == -1) {
       clearTimeout(timerId);
@@ -139,22 +147,35 @@ function setup() {
       $("#whiskerStage").addClass('gametime').removeClass('waiting');
       setScoreboard();
     }
+    $()
   }
 
   gameCountdown();
   console.log('Game has started!');
 };
 
+// Count how many Wasm modules were executed
+function countWasmModules() {
+  var score = parseInt($("#scoreTotal").text());
+  // Hard coded count
+  var staticAssetCount = 25;
+
+  var mods = score + buttonPresses + timerTicks + staticAssetCount + fetchedHighscore;
+  console.log("counted wasm modules");
+  $("#modCount").text(mods);
+
+}
+
 // render the data
 // https://w3collective.com/fetch-display-api-data-javascript/
 function displayMorsels(data) {
   ulid = data.id
 
-  data.menu.forEach(function(morsel) {
+  data.menu.forEach(function (morsel) {
     const morselName = morsel.demand;
     const morselTime = morsel.offset;
 
-    setTimeout(function() {
+    setTimeout(function () {
       console.log(morselName + " demand! for " + morselTime + " milliseconds.");
 
       $("#hiSlats").removeClass("beef chicken fish veg");
@@ -171,7 +192,9 @@ function displayMorsels(data) {
 }
 
 // food is chosen
-$("nav > .button").on('click', function(i, e) {
+$("nav > .button").on('click', function (i, e) {
+  buttonPresses++;
+  console.log("button pressed");
   food = $(this).attr('id');
 
   if ($(this).hasClass('correct')) {
@@ -202,32 +225,34 @@ $("nav > .button").on('click', function(i, e) {
 
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 
   // open start screen on load
   $("#whiskerStage").addClass('waiting');
   $("#gameInit").click();
   $("#highScores").hide();
 
-  $("#gameStart").on('click', function() {
+  $("#gameStart").on('click', function () {
     setup()
   });
 
-  $("#gameRestart").on('click', function() {
+  $("#gameRestart").on('click', function () {
     setup()
   });
 
   // blinking
-  setInterval(function() {
+  setInterval(function () {
     if ($("#whiskerStage").hasClass("waiting")) {
       $("#hiSlats > .slats-head").addClass("slats-blink");
       $("#hiSlats > .slats-head").removeClass("slats-resting");
 
-      setTimeout(function() {
+      setTimeout(function () {
         $("#hiSlats > .slats-head").addClass("slats-resting");
         $("#hiSlats > .slats-head").removeClass("slats-blink");
       }, 500);
     };
   }, 3000);
+
+  countWasmModules();
 
 });
