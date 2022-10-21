@@ -1,7 +1,12 @@
 spin_version = "1"
 name = "finicky-whiskers"
-version = "1.0.0"
+version = "1.1.0"
 trigger = { type = "http", base = "/" }
+
+[variables]
+jsonbin_id = { required = true }
+master_key = { required = true }
+access_key = { required = true }
 
 # Serve static files
 [[component]]
@@ -43,3 +48,15 @@ source = "components/scoreboard.wasm"
 environment = {REDIS_ADDRESS = "redis://localhost:6379/"}
 [component.trigger]
 route = "/score"
+
+# Stores a highscore in JSOBbin.io
+[[component]]
+id = "highscore"
+source = "components/highscore.wasm"
+allowed_http_hosts = [ "https://api.jsonbin.io" ]
+[component.trigger]
+route = "/highscore"
+[component.config]
+jsonbin_endpoint = "https://api.jsonbin.io/v3/b/{{ jsonbin_id }}"
+master_key = "{{ master_key }}"
+access_key = "{{ access_key }}"
