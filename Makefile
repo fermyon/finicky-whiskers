@@ -1,5 +1,5 @@
 .PHONY: build
-build: build-morsel_event build-redirect build-scoreboard build-session build-tally
+build: build-morsel_event build-redirect build-scoreboard build-session build-tally build-highscore
 
 .PHONY: build-%
 build-%:

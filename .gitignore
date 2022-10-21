@@ -1,5 +1,6 @@
 tally/target/*
 scoreboard/target/*
+highscore/target/*
 site/.parcel-cache/
 site/dist/
 site/node_modules/
