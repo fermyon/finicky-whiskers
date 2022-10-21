@@ -34,6 +34,6 @@ The session data is returned as json.
 
 This module depends on [wasi-vfs](https://github.com/kateinoigakukun/wasi-vfs) to package Ruby into a single file.
 
-Run `make ruby .gem` in this directory to build.
+Run `make` in this directory to build.
 
 To serve, use the `spin.toml` file in the parent directory.
