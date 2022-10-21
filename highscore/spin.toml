@@ -5,6 +5,11 @@ name = "highscore"
 trigger = { type = "http", base = "/" }
 version = "0.1.0"
 
+[variables]
+jsonbin_id = { required = true }
+master_key = { required = true }
+access_key = { required = true }
+
 [[component]]
 id = "highscore"
 source = "target/wasm32-wasi/release/highscore.wasm"
@@ -13,3 +18,7 @@ allowed_http_hosts = [ "https://api.jsonbin.io" ]
 route = "/..."
 [component.build]
 command = "cargo build --target wasm32-wasi --release"
+[component.config]
+jsonbin_endpoint = "https://api.jsonbin.io/v3/b/{{ jsonbin_id }}"
+master_key = "{{ master_key }}"
+access_key = "{{ access_key }}"

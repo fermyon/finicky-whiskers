@@ -225,6 +225,55 @@ $("nav > .button").on('click', function (i, e) {
 
 });
 
+// Food is chosen by key-press
+window.onkeydown = function (event) {
+  console.log(event.keyCode)
+  switch (event.keyCode) {
+    case 40: // Down arrow
+      food = 'beef'
+      console.log('beef pressed')
+      break;
+    case 38: // Up arrow
+      food = 'fish'
+      console.log('fish pressed')
+      break;
+    case 37: // Left arrow
+      food = 'veg'
+      console.log('veg pressed')
+      break;
+    case 39: // Right arrow
+      food = 'chicken'
+      console.log('chicken pressed')
+      break;
+    default:
+      console.log("Useless key pressed...")
+  }
+
+  if ($(`#${food}`).hasClass('correct')) {
+    fetch(`/tally?ulid=${ulid}&food=${food}&correct=true`).then(
+      response => console.log(response)
+    );
+
+    $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
+    $(".slats-head").addClass("slats-eating2").delay(100).queue(function () {
+      $(this).removeClass("slats-eating2");
+      $(this).dequeue();
+    });
+  } else {
+
+    fetch(`/tally?ulid=${ulid}&food=${food}&correct=false`).then(
+      response => console.log(response)
+    );
+
+    $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
+    $(".slats-head").addClass("slats-huh").delay(100).queue(function () {
+      $(this).removeClass("slats-huh");
+      $(this).dequeue();
+    });
+
+  };
+};
+
 $(document).ready(function () {
 
   // open start screen on load
