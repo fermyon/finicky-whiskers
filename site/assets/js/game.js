@@ -229,19 +229,19 @@ $("nav > .button").on('click', function (i, e) {
 window.onkeydown = function (event) {
   console.log(event.keyCode)
   switch (event.keyCode) {
-    case 40: // Down arrow
+    case 68: // D key
       food = 'beef'
       console.log('beef pressed')
       break;
-    case 38: // Up arrow
+    case 87: // W key
       food = 'fish'
       console.log('fish pressed')
       break;
-    case 37: // Left arrow
+    case 65: // A key
       food = 'veg'
       console.log('veg pressed')
       break;
-    case 39: // Right arrow
+    case 83: // S key
       food = 'chicken'
       console.log('chicken pressed')
       break;
