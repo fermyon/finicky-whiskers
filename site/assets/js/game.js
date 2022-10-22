@@ -7,6 +7,12 @@ var fetchedHighscore = 0;
 var buttonPresses = 0;
 var timerTicks = 0;
 
+function resetModCounter() {
+  fetchedHighscore = 0;
+  buttonPresses = 0;
+  timerTicks = 0;
+}
+
 // start screen
 document.querySelectorAll('.modal-button').forEach(function (el) {
   el.addEventListener('click', function () {
@@ -115,6 +121,7 @@ function setup() {
   $("#highScores").hide();
   document.getElementById("highScoresList").textContent = ''
   highScore = ""
+  resetModCounter()
   // get the data
   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   fetch('/session').then(
