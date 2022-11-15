@@ -1,30 +1,24 @@
 use core::panic;
 
-use anyhow::{Error, Result};
-use http::{Method, StatusCode};
+use anyhow::{anyhow, Error, Result};
+use http::Method;
 use rusty_ulid::Ulid;
 use serde::{Deserialize, Serialize};
 use spin_sdk::{
-    config,
     http::{Request, Response},
-    http_component,
+    http_component, redis,
 };
 
 #[http_component]
 fn highscore(req: Request) -> Result<Response> {
-    let config = Config {
-        jsonbin_endpoint: config::get("jsonbin_endpoint")
-            .expect("Failed to acquire jsonbin_endpoint from spin.toml"),
-        master_key: config::get("master_key").expect("Failed to acquire master_key from spin.toml"),
-        access_key: config::get("access_key").expect("Failed to acquire access_key from spin.toml"),
-    };
-
-    println!("Using JsonBin: {:?}", &config.jsonbin_endpoint);
+    let redis_address = std::env::var("REDIS_ADDRESS")?;
 
     let res_body: String = match *req.method() {
-        Method::GET => serde_json::to_string_pretty(&get_highscore(&config).unwrap()).unwrap(),
-        Method::POST => check_highscore(req, config).unwrap_or_else(|_| "".to_string()),
-        _ => "".to_string()
+        Method::GET => {
+            serde_json::to_string_pretty(&get_highscore(&redis_address).unwrap()).unwrap()
+        }
+        Method::POST => check_highscore(req, redis_address).unwrap_or_else(|_| "".to_string()),
+        _ => "".to_string(),
     };
 
     let mut status = 200;
@@ -38,7 +32,7 @@ fn highscore(req: Request) -> Result<Response> {
         .body(Some(res_body.into()))?)
 }
 
-fn check_highscore(req: Request, config: Config) -> Result<String> {
+fn check_highscore(req: Request, config: String) -> Result<String> {
     println!("Incoming body: {:?}", req.body());
 
     // Parsing incoming request to HighScore
@@ -59,10 +53,20 @@ fn check_highscore(req: Request, config: Config) -> Result<String> {
     let mut is_high_score = false;
     let mut rank = 0;
 
-    // Check if the incoming score is larger than the lowest score,
-    if incoming_score.score > high_score_table[9].score {
+    if high_score_table.len() < 10 {
         is_high_score = true;
-
+    }
+    // Check if the incoming score is larger than the lowest score,
+    else if incoming_score.score > high_score_table[9].score {
+        is_high_score = true;
+        // removing the last score
+        if !incoming_score.username.is_empty() {
+            high_score_table.remove(9);
+        }
+    } else {
+        println!("It's not a high score");
+    }
+    if is_high_score {
         // adding it to the vector
         high_score_table.push(HighScore {
             score: incoming_score.score,
@@ -71,8 +75,6 @@ fn check_highscore(req: Request, config: Config) -> Result<String> {
         });
         // sorting (descending)
         high_score_table.sort_by_key(|k| -(k.score));
-        // removing the 11th score
-        high_score_table.remove(10);
 
         /*
         You're welcome to implement a binary search function
@@ -92,22 +94,14 @@ fn check_highscore(req: Request, config: Config) -> Result<String> {
 
         // If it has a username, let's store the result
         if !incoming_score.username.is_empty() {
-            let body = serde_json::to_string_pretty(&high_score_table)?;
-
-            let _res = spin_sdk::http::send(
-                http::Request::builder()
-                    .method("PUT")
-                    .uri(config.jsonbin_endpoint)
-                    .header("X-Master-Key", config.master_key)
-                    .header("X-Bin-Versioning", "false")
-                    .header("content-type", "application/json")
-                    .body(Some(body.into()))?,
-            );
+            redis::set(
+                &config,
+                "fw-highscore-list",
+                &serde_json::to_vec_pretty(&high_score_table)?,
+            )
+            .map_err(|_| anyhow!("Error executing Redis set command"))?;
         }
-    } else {
-        println!("It's not a high score");
     }
-
     // Setting up response
     let response = HighScoreResult {
         is_high_score,
@@ -120,47 +114,23 @@ fn check_highscore(req: Request, config: Config) -> Result<String> {
     Ok(res_body)
 }
 
-fn get_highscore(config: &Config) -> Result<Vec<HighScore>> {
+fn get_highscore(config: &str) -> Result<Vec<HighScore>> {
+    let payload = redis::get(config, "fw-highscore-list");
 
-    let _res = spin_sdk::http::send(
-        http::Request::builder()
-            .method("GET")
-            .uri(&config.jsonbin_endpoint)
-            .header(
-                "X-Master-Key",
-                &config.master_key,
-            )
-            .header(
-                "X-Access-Key",
-                &config.access_key,
-            )
-            .header(
-                "X-Bin-Meta",
-                "false",
-            )
-            .body(None)?,
-    );
-
-    let _body_bytes = match &_res {
-        Ok(r) => {
-            match r.status() {
-                StatusCode::OK => {
-                    println!("{:?}", r.body());
-                    r.body()
-                },
-                _ => panic!("Error received from JsonBin. {:?} {:?}", r.status(), r.body()),
+    let highscore_list: Vec<HighScore> = match payload {
+        Ok(value) => {
+            let a = serde_json::from_slice(&value);
+            match a {
+                Ok(val) => val,
+                _ => Vec::new(),
             }
-            
         }
-        Err(e) => panic!("Error getting body. {:?}", e.to_string()),
+        _ => {
+            panic!("Error getting data from Redis")
+        }
     };
 
-    let _high_scores = match _body_bytes {
-        Some(b) => serde_json::from_slice(b)?,
-        None => panic!("Didn't get any data from jsonbin.io"),
-    };
-
-    Ok(_high_scores)
+    Ok(highscore_list)
 }
 
 #[derive(Deserialize, Serialize)]
@@ -175,10 +145,4 @@ struct HighScoreResult {
     is_high_score: bool,
     rank: usize,
     high_score_table: Vec<HighScore>,
-}
-
-struct Config {
-    jsonbin_endpoint: String,
-    master_key: String,
-    access_key: String,
 }
