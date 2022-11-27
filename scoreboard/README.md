@@ -2,7 +2,7 @@ Generate the scoreboard at the end of the game
 
 ## Building Scoreboard
 
-THe `components/scoreboard.wasm` file should be the latest. However, if you need to build from source, use `make build`. You will need to have Rust and Spin to build.
+The `components/scoreboard.wasm` file should be the latest. However, if you need to build from source, use `make build`. You will need to have Rust and Spin to build.
 
 At this time, you may need to manually edit the Cargo.toml to point to the correct Spin path.
 
