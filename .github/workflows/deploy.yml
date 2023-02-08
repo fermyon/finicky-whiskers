@@ -41,6 +41,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'fermyon' }}
     steps:
       - uses: actions/checkout@v3
 
