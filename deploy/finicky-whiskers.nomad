@@ -113,9 +113,9 @@ job "finicky-whiskers" {
       }
 
       artifact {
-        source = "https://github.com/fermyon/spin/releases/download/v0.8.0/spin-v0.8.0-linux-amd64.tar.gz"
+        source = "https://github.com/fermyon/spin/releases/download/v0.10.0/spin-v0.10.0-linux-amd64.tar.gz"
         options {
-          checksum = "sha256:0ef31fe6e2b4d34ddd089b01a1f88820f88c456276bfe4e1477836a6087654c1"
+          checksum = "sha256:196038fa6ace3148a824b41cbb26ffc3118bb444e9e195ff169135194eeeddab"
         }
       }
 
@@ -256,9 +256,9 @@ job "finicky-whiskers" {
       driver = "exec"
 
       artifact {
-        source = "https://github.com/fermyon/spin/releases/download/v0.8.0/spin-v0.8.0-linux-amd64.tar.gz"
+        source = "https://github.com/fermyon/spin/releases/download/v0.10.0/spin-v0.10.0-linux-amd64.tar.gz"
         options {
-          checksum = "sha256:0ef31fe6e2b4d34ddd089b01a1f88820f88c456276bfe4e1477836a6087654c1"
+          checksum = "sha256:196038fa6ace3148a824b41cbb26ffc3118bb444e9e195ff169135194eeeddab"
         }
       }
 
