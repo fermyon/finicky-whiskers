@@ -108,8 +108,8 @@ job "finicky-whiskers" {
       // `spin up` but then settles back down with small CPU spikes
       // during gameplay. Mem appears to stay at around 600-700MB.
       resources {
-        cpu = 1000
-        memory = 800
+        cpu = 2000
+        memory = 1200
       }
 
       artifact {
@@ -254,6 +254,11 @@ job "finicky-whiskers" {
 
     task "morsel" {
       driver = "exec"
+
+      resources {
+        memory = 800
+      }
+
 
       artifact {
         source = "https://github.com/fermyon/spin/releases/download/v0.10.0/spin-v0.10.0-linux-amd64.tar.gz"
