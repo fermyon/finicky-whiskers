@@ -1,4 +1,4 @@
-spin_version = "1"
+spin_manifest_version = "1"
 name = "finicky-whiskers-session"
 version = "0.1.0"
 trigger = { type = "http", base = "/" }

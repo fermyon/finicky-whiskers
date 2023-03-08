@@ -34,8 +34,8 @@ jobs:
 
       - name: Install spin
         run: |
-          curl -LOs https://github.com/fermyon/spin/releases/download/v0.5.0/spin-v0.5.0-linux-amd64.tar.gz
-          tar zxvf spin-v0.5.0-linux-amd64.tar.gz
+          curl -LOs https://github.com/fermyon/spin/releases/download/v0.10.0/spin-v0.10.0-linux-amd64.tar.gz
+          tar zxvf spin-v0.10.0-linux-amd64.tar.gz
           mv spin /usr/local/bin
 
       - name: Build
