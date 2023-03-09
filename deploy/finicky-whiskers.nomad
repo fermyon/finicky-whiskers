@@ -256,9 +256,9 @@ job "finicky-whiskers" {
       driver = "exec"
 
       artifact {
-        source = "https://github.com/fermyon/spin/releases/download/v0.10.0/spin-v0.10.0-linux-amd64.tar.gz"
+        source = "https://github.com/fermyon/spin/releases/download/v0.10.1/spin-v0.10.1-linux-amd64.tar.gz"
         options {
-          checksum = "sha256:196038fa6ace3148a824b41cbb26ffc3118bb444e9e195ff169135194eeeddab"
+          checksum = "sha256:105054335fd76b3d2a1b76a705dbdb3b83d7e4093b302a7816ce7f922893f29d"
         }
       }
 
