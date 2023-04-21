@@ -1,9 +1,6 @@
 .PHONY: build
-build: build-morsel_event build-redirect build-scoreboard build-session build-tally build-highscore
-
-.PHONY: build-%
-build-%:
-	cd $* && make build
+build:
+	spin build
 
 .PHONY: serve
 serve:

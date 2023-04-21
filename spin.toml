@@ -24,6 +24,10 @@ environment = { DESTINATION = "/index.html" }
 [component.trigger]
 route = "/"
 executor = { type = "wagi" }
+[component.build]
+workdir = "redirect"
+command = "make"
+watch = ["**/*.go", "go.mod"]
 
 # Tally an individual event
 [[component]]
@@ -32,6 +36,10 @@ source = "components/tally.wasm"
 environment = {REDIS_ADDRESS = "redis://localhost:6379/", REDIS_CHANNEL = "fw-tally"}
 [component.trigger]
 route = "/tally"
+[component.build]
+workdir = "tally"
+command = "make"
+watch = ["src/**/*.rs", "Cargo.toml"]
 
 # Initialize session data
 [[component]]
@@ -40,6 +48,10 @@ source = "session/session.wasm"
 [component.trigger]
 executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/session.rb ${SCRIPT_NAME} ${ARGS}" }
 route = "/session"
+[component.build]
+workdir = "session"
+command = "make"
+watch = ["**/*.rs"]
 
 # Get the scores for a particular game
 [[component]]
@@ -48,6 +60,10 @@ source = "components/scoreboard.wasm"
 environment = {REDIS_ADDRESS = "redis://localhost:6379/"}
 [component.trigger]
 route = "/score"
+[component.build]
+workdir = "scoreboard"
+command = "make"
+watch = ["src/**/*.rs", "Cargo.toml"]
 
 # Stores highscores in redis
 [[component]]
@@ -56,3 +72,7 @@ source = "components/highscore.wasm"
 environment = {REDIS_ADDRESS = "redis://localhost:6379/"}
 [component.trigger]
 route = "/highscore"
+[component.build]
+workdir = "highscore"
+command = "make"
+watch = ["src/**/*.rs", "Cargo.toml"]
