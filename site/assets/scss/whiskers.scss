@@ -749,6 +749,22 @@ footer {
     }
 }
 
+.beef {
+    background-color: rgb(237, 89, 118);
+}
+
+.chicken {
+    background-color: rgb(248, 198, 70);
+}
+
+.fish {
+    background-color: rgb(69, 148, 228);
+}
+
+.veg {
+    background-color: rgb(84, 174, 146);
+}
+
 // game is activated!
 .beef > .cat-bubble:after {
     background: url('../images/beef.svg') no-repeat 50% 50%;
