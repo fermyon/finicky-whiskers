@@ -86,6 +86,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          
+          nomad namespace list
+          nomad job allocs -region="${{ secrets.AWS_REGION }}" -namespace="${{ env.PRODUCTION }} finicky-whiskers
 
           nomad alloc restart \
             -region="${{ secrets.AWS_REGION }}" \
