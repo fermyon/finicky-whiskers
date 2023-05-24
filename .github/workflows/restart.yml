@@ -87,7 +87,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          nomad alloc restart \
+          nomad job restart \
             -var "region=${{ secrets.AWS_REGION }}" \
             -var "production=${{ env.PRODUCTION }}" \
-            -task finicky-whiskers-redis
+            -task=finicky-whiskers-redis \
+            deploy/finicky-whiskers.nomad
