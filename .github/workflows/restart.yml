@@ -88,8 +88,9 @@ jobs:
           set -euo pipefail
 
           nomad job status
+          nomad job allocs -region="${{ secrets.AWS_REGION }}" -namespace=prod -t '{{ range . }}{{ if eq .ClientStatus "running" }}{{ println .ID }}{{ end }}{{ end }}' finicky-whiskers
           nomad alloc restart \
             -region="${{ secrets.AWS_REGION }}" \
-            -namespace=* \
-            `nomad job allocs -region="${{ secrets.AWS_REGION }}" -namespace=* -t '{{ range . }}{{ if eq .ClientStatus "running" }}{{ println .ID }}{{ end }}{{ end }}' finicky-whiskers`
+            -namespace=prod \
+            `nomad job allocs -region="${{ secrets.AWS_REGION }}" -namespace=prod -t '{{ range . }}{{ if eq .ClientStatus "running" }}{{ println .ID }}{{ end }}{{ end }}' finicky-whiskers`
             finicky-whiskers-redis
