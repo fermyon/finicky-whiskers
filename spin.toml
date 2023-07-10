@@ -33,7 +33,7 @@ watch = ["**/*.go", "go.mod"]
 [[component]]
 id = "tally"
 source = "components/tally.wasm"
-environment = {REDIS_ADDRESS = "redis://localhost:6379/", REDIS_CHANNEL = "fw-tally"}
+key_value_stores = ["default"]
 [component.trigger]
 route = "/tally"
 [component.build]
@@ -57,7 +57,7 @@ watch = ["**/*.rs"]
 [[component]]
 id = "scoreboard"
 source = "components/scoreboard.wasm"
-environment = {REDIS_ADDRESS = "redis://localhost:6379/"}
+key_value_stores = ["default"]
 [component.trigger]
 route = "/score"
 [component.build]
@@ -65,7 +65,7 @@ workdir = "scoreboard"
 command = "make"
 watch = ["src/**/*.rs", "Cargo.toml"]
 
-# Stores highscores in redis
+# Stores highscores in key/value
 [[component]]
 id = "highscore"
 source = "components/highscore.wasm"
@@ -74,5 +74,19 @@ sqlite_databases = ["default"]
 route = "/highscore"
 [component.build]
 workdir = "highscore"
+command = "make"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+# Component to reset all state
+[[component]]
+id = "reset"
+source = "components/reset.wasm"
+allowed_http_hosts = []
+key_value_stores = ["default"]
+sqlite_databases = ["default"]
+[component.trigger]
+route = "/reset"
+[component.build]
+workdir = "reset"
 command = "make"
 watch = ["src/**/*.rs", "Cargo.toml"]

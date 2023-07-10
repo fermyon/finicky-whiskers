@@ -3,25 +3,19 @@ use anyhow::Result;
 use chrono::{Duration, Utc};
 use http::Uri;
 use rusty_ulid::Ulid;
+use serde::{Deserialize, Serialize};
 use spin_sdk::{
     http::{Request, Response},
-    http_component, redis,
+    http_component,
+    key_value::Store,
 };
 use std::collections::HashMap;
+use std::str;
 
 mod tally;
 
 /// Game duration in seconds
 const GAME_DURATION_SECONDS: i64 = 30;
-
-// The environment variable set in `spin.toml` that points to the
-// address of the Redis server that the component will publish
-// a message to.
-const REDIS_ADDRESS_ENV: &str = "REDIS_ADDRESS";
-
-// The environment variable set in `spin.toml` that specifies
-// the Redis channel that the component will publish to.
-const REDIS_CHANNEL_ENV: &str = "REDIS_CHANNEL";
 
 /// A simple Spin HTTP component.
 #[http_component]
@@ -29,13 +23,13 @@ fn tally_point(req: Request) -> Result<Response> {
     // This gets info out of query params
     match parse_query_params(req.uri()) {
         Ok(tally) => {
-            // Should store something in Redis.
+            // Should store something in key/value.
             match serde_json::to_string(&tally) {
                 Ok(payload) => {
-                    if let Err(e) = publish(payload.clone()) {
-                        eprintln!("Error sending to Redis: {}", e)
+                    if let Err(e) = tally_score(&payload) {
+                        eprintln!("Error tallying score: {}", e)
                     } else {
-                        println!("Sent message to Redis: {}", payload)
+                        println!("Tallied score: {}", payload)
                     }
                 }
                 Err(e) => eprintln!("Error serializing JSON: {}", e),
@@ -114,12 +108,61 @@ fn validate_ulid(ulid: &str) -> anyhow::Result<Ulid> {
     Ok(id)
 }
 
-fn publish(payload: String) -> Result<()> {
-    let address = std::env::var(REDIS_ADDRESS_ENV)?;
-    let channel = std::env::var(REDIS_CHANNEL_ENV)?;
+fn tally_score(msg: &str) -> anyhow::Result<()> {
+    let tally_mon: Tally = serde_json::from_str(msg)?;
 
-    redis::publish(&address, &channel, payload.as_bytes())
-        .map_err(|e| anyhow::anyhow!("Error sending to redis: {:?}", e))
+    if !tally_mon.correct {
+        return Ok(());
+    }
+
+    let id: rusty_ulid::Ulid = tally_mon.ulid.parse()?;
+
+    let store = Store::open_default()?;
+    let mut scorecard = match store.get(format!("fw-{}",  &id.to_string())) {
+        Err(_) => Scorecard::new(id),
+        Ok(data) => serde_json::from_slice(&data).unwrap_or_else(|_| Scorecard::new(id)),
+    };
+
+    match tally_mon.food.as_str() {
+        "chicken" => scorecard.chicken += 1,
+        "fish" => scorecard.fish += 1,
+        "beef" => scorecard.beef += 1,
+        "veg" => scorecard.veg += 1,
+        _ => {}
+    };
+
+    scorecard.total += 1;
+
+    if let Ok(talled_mon) = serde_json::to_vec(&scorecard) {
+        store
+            .set(format!("fw-{}",  &id.to_string()), &talled_mon)
+            .map_err(|_| anyhow::anyhow!("Error saving to key/value store"))?;
+    }
+
+    Ok(())
+}
+
+#[derive(Deserialize, Serialize)]
+struct Scorecard {
+    pub ulid: rusty_ulid::Ulid,
+    pub beef: i32,
+    pub fish: i32,
+    pub chicken: i32,
+    pub veg: i32,
+    pub total: i32,
+}
+
+impl Scorecard {
+    fn new(ulid: rusty_ulid::Ulid) -> Self {
+        Scorecard {
+            ulid,
+            beef: 0,
+            fish: 0,
+            chicken: 0,
+            veg: 0,
+            total: 0,
+        }
+    }
 }
 
 #[cfg(test)]

@@ -13,7 +13,4 @@ trap 'kill $(jobs -p)' EXIT
 # Start HTTP handlers
 spin up --log-dir "${SPIN_LOG_DIR}" --file spin.toml --listen "${SPIN_ADDRESS}" --sqlite @highscore/migration.sql &
 
-# Start Redis handler
-spin up --log-dir "${SPIN_LOG_DIR}" --file spin-morsel.toml &
-
 wait

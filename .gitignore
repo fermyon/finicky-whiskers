@@ -1,6 +1,8 @@
+.spin/
 tally/target/*
 scoreboard/target/*
 highscore/target/*
+reset/target/*
 site/.parcel-cache/
 site/dist/
 site/node_modules/
