@@ -33,7 +33,7 @@ watch = ["**/*.go", "go.mod"]
 [[component]]
 id = "tally"
 source = "components/tally.wasm"
-environment = {REDIS_ADDRESS = "redis://localhost:6379/", REDIS_CHANNEL = "fw-tally"}
+environment = { REDIS_ADDRESS = "redis://localhost:6379/" }
 [component.trigger]
 route = "/tally"
 [component.build]

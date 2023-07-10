@@ -66,7 +66,6 @@ fn get_ulid(url: &Uri) -> Result<Ulid> {
 
 fn get_scores(ulid: &Ulid) -> Result<Scorecard> {
     let address = std::env::var(REDIS_ADDRESS_ENV)?;
-    //let channel = std::env::var(REDIS_CHANNEL_ENV)?;
 
     let raw_scorecard = redis::get(&address, &ulid.to_string())
         .map_err(|_| anyhow::anyhow!("Error fetching from Redis"))?;
@@ -83,4 +82,3 @@ fn simple_query_parser(q: &str) -> HashMap<String, String> {
     });
     dict
 }
-

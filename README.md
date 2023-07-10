@@ -1,7 +1,6 @@
 Finicky Whiskers is comprised of a handful of microservices. Click on each item
 below to see more details around a particular microservice.
 
-- [morsel_event](./morsel_event/README.md)
 - [redirect](./redirect/README.md)
 - [scoreboard](./scoreboard/README.md)
 - [session](./session/README.md)
