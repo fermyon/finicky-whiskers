@@ -6,18 +6,16 @@ use rusty_ulid::Ulid;
 use serde::{Deserialize, Serialize};
 use spin_sdk::{
     http::{Request, Response},
-    http_component, redis,
+    http_component,
+    key_value::Store,
 };
 
 #[http_component]
 fn highscore(req: Request) -> Result<Response> {
-    let redis_address = std::env::var("REDIS_ADDRESS")?;
-
+    let store = Store::open_default()?;
     let res_body: String = match *req.method() {
-        Method::GET => {
-            serde_json::to_string_pretty(&get_highscore(&redis_address).unwrap()).unwrap()
-        }
-        Method::POST => check_highscore(req, redis_address).unwrap_or_else(|_| "".to_string()),
+        Method::GET => serde_json::to_string_pretty(&get_highscore(&store).unwrap()).unwrap(),
+        Method::POST => check_highscore(req, &store).unwrap_or_else(|_| "".to_string()),
         _ => "".to_string(),
     };
 
@@ -32,7 +30,7 @@ fn highscore(req: Request) -> Result<Response> {
         .body(Some(res_body.into()))?)
 }
 
-fn check_highscore(req: Request, config: String) -> Result<String> {
+fn check_highscore(req: Request, store: &Store) -> Result<String> {
     println!("Incoming body: {:?}", req.body());
 
     // Parsing incoming request to HighScore
@@ -42,7 +40,7 @@ fn check_highscore(req: Request, config: String) -> Result<String> {
     };
 
     // Fetching the highscores from store (JsonBin)
-    let mut high_score_table = match get_highscore(&config) {
+    let mut high_score_table = match get_highscore(&store) {
         Ok(high_score_table) => high_score_table,
         Err(e) => panic!("Tried to get high score: {}", Error::msg(e.to_string())),
     };
@@ -94,12 +92,12 @@ fn check_highscore(req: Request, config: String) -> Result<String> {
 
         // If it has a username, let's store the result
         if !incoming_score.username.is_empty() {
-            redis::set(
-                &config,
-                "fw-highscore-list",
-                &serde_json::to_vec_pretty(&high_score_table)?,
-            )
-            .map_err(|_| anyhow!("Error executing Redis set command"))?;
+            store
+                .set(
+                    "fw-highscore-list",
+                    &serde_json::to_vec_pretty(&high_score_table)?,
+                )
+                .map_err(|_| anyhow!("Error storing in key/value"))?;
         }
     }
     // Setting up response
@@ -114,8 +112,8 @@ fn check_highscore(req: Request, config: String) -> Result<String> {
     Ok(res_body)
 }
 
-fn get_highscore(config: &str) -> Result<Vec<HighScore>> {
-    let payload = redis::get(config, "fw-highscore-list");
+fn get_highscore(store: &Store) -> Result<Vec<HighScore>> {
+    let payload = store.get("fw-highscore-list");
 
     let highscore_list: Vec<HighScore> = match payload {
         Ok(value) => {
@@ -125,9 +123,7 @@ fn get_highscore(config: &str) -> Result<Vec<HighScore>> {
                 _ => Vec::new(),
             }
         }
-        _ => {
-            panic!("Error getting data from Redis")
-        }
+        _ => Vec::new(),
     };
 
     Ok(highscore_list)
