@@ -69,7 +69,7 @@ watch = ["src/**/*.rs", "Cargo.toml"]
 [[component]]
 id = "highscore"
 source = "components/highscore.wasm"
-environment = {REDIS_ADDRESS = "redis://localhost:6379/"}
+sqlite_databases = ["default"]
 [component.trigger]
 route = "/highscore"
 [component.build]
