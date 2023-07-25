@@ -1,23 +1,21 @@
 use core::panic;
 
-use anyhow::{anyhow, Error, Result};
+use anyhow::{Error, Result};
 use http::Method;
 use rusty_ulid::Ulid;
 use serde::{Deserialize, Serialize};
 use spin_sdk::{
     http::{Request, Response},
-    http_component, redis,
+    http_component, sqlite::{Row, ValueParam},
 };
 
 #[http_component]
 fn highscore(req: Request) -> Result<Response> {
-    let redis_address = std::env::var("REDIS_ADDRESS")?;
-
     let res_body: String = match *req.method() {
         Method::GET => {
-            serde_json::to_string_pretty(&get_highscore(&redis_address).unwrap()).unwrap()
+            serde_json::to_string_pretty(&get_highscore().unwrap()).unwrap()
         }
-        Method::POST => check_highscore(req, redis_address).unwrap_or_else(|_| "".to_string()),
+        Method::POST => check_highscore(req).unwrap_or_else(|_| "".to_string()),
         _ => "".to_string(),
     };
 
@@ -32,7 +30,7 @@ fn highscore(req: Request) -> Result<Response> {
         .body(Some(res_body.into()))?)
 }
 
-fn check_highscore(req: Request, config: String) -> Result<String> {
+fn check_highscore(req: Request) -> Result<String> {
     println!("Incoming body: {:?}", req.body());
 
     // Parsing incoming request to HighScore
@@ -41,72 +39,37 @@ fn check_highscore(req: Request, config: String) -> Result<String> {
         None => panic!("Failed to parse the incoming request"),
     };
 
+    // Inserting the highscore into the database
+    replace_highscore(&incoming_score)?;
+
     // Fetching the highscores from store (JsonBin)
-    let mut high_score_table = match get_highscore(&config) {
-        Ok(high_score_table) => high_score_table,
+    let highscores = match get_highscore() {
+        Ok(highscores) => highscores,
         Err(e) => panic!("Tried to get high score: {}", Error::msg(e.to_string())),
     };
 
-    // Sorting the highscore in descending order
-    // high_score_table.sort_by_key(|k| -(k.score));
+    // Check if the incoming score made the high score list
+    let incoming_score_pos = highscores
+        .iter()
+        .position(|s| s.ulid.unwrap() == incoming_score.ulid.unwrap());
 
-    let mut is_high_score = false;
-    let mut rank = 0;
+    let rank = match incoming_score_pos {
+        Some(r) => {
+            println!("It is a high score at {}", r + 1);
+            r + 1
+        },
+        None => {
+            println!("It is not a high score");
+            delete_highscore(incoming_score.ulid.unwrap())?;
+            0
+        },
+    };
 
-    if high_score_table.len() < 10 {
-        is_high_score = true;
-    }
-    // Check if the incoming score is larger than the lowest score,
-    else if incoming_score.score > high_score_table[9].score {
-        is_high_score = true;
-        // removing the last score
-        if !incoming_score.username.is_empty() {
-            high_score_table.remove(9);
-        }
-    } else {
-        println!("It's not a high score");
-    }
-    if is_high_score {
-        // adding it to the vector
-        high_score_table.push(HighScore {
-            score: incoming_score.score,
-            username: incoming_score.username.clone(),
-            ulid: incoming_score.ulid,
-        });
-        // sorting (descending)
-        high_score_table.sort_by_key(|k| -(k.score));
-
-        /*
-        You're welcome to implement a binary search function
-        to get the high score in the right place and replace the above
-        */
-
-        // Getting the rank of the score
-        match high_score_table
-            .iter()
-            .position(|p| p.ulid == incoming_score.ulid)
-        {
-            Some(r) => rank = r + 1,
-            None => todo!(),
-        };
-
-        println!("It's a high score at {}", rank);
-
-        // If it has a username, let's store the result
-        if !incoming_score.username.is_empty() {
-            redis::set(
-                &config,
-                "fw-highscore-list",
-                &serde_json::to_vec_pretty(&high_score_table)?,
-            )
-            .map_err(|_| anyhow!("Error executing Redis set command"))?;
-        }
-    }
     // Setting up response
     let response = HighScoreResult {
-        is_high_score,
+        is_high_score: rank > 0,
         rank,
-        high_score_table,
+        high_score_table: highscores,
     };
 
     let res_body = serde_json::to_string_pretty(&response)?;
@@ -114,23 +77,35 @@ fn check_highscore(req: Request, config: String) -> Result<String> {
     Ok(res_body)
 }
 
-fn get_highscore(config: &str) -> Result<Vec<HighScore>> {
-    let payload = redis::get(config, "fw-highscore-list");
+fn get_highscore() -> Result<Vec<HighScore>> {
+    let conn = spin_sdk::sqlite::Connection::open_default()?;
+    let query = "SELECT ulid, score, username FROM highscore ORDER BY score DESC LIMIT 10";
+    let result = conn.execute(query, &[])?;
+    let highscores = result.rows().map(HighScore::from).collect::<Vec<_>>();
+    Ok(highscores)
+}
 
-    let highscore_list: Vec<HighScore> = match payload {
-        Ok(value) => {
-            let a = serde_json::from_slice(&value);
-            match a {
-                Ok(val) => val,
-                _ => Vec::new(),
-            }
-        }
-        _ => {
-            panic!("Error getting data from Redis")
-        }
-    };
+fn replace_highscore(highscore: &HighScore) -> Result<()> {
+    let conn = spin_sdk::sqlite::Connection::open_default()?;
+    let query = "REPLACE INTO highscore (ulid, score, username) VALUES (?, ?, ?)";
 
-    Ok(highscore_list)
+    let ulid = highscore.ulid.expect("ulid is required").to_string();
+    let params = &[
+        ValueParam::Text(&ulid), 
+        ValueParam::Integer(highscore.score as i64), 
+        ValueParam::Text(&highscore.username)
+    ];
+    conn.execute(query, params)?;
+    Ok(())
+}
+
+fn delete_highscore(ulid: Ulid) -> Result<()> {
+    let conn = spin_sdk::sqlite::Connection::open_default()?;
+    let query = "DELETE FROM highscore WHERE ulid = ?";
+    let ulid = ulid.to_string();
+    let params = &[ValueParam::Text(&ulid)];
+    conn.execute(query, params)?;
+    Ok(())
 }
 
 #[derive(Deserialize, Serialize)]
@@ -138,6 +113,22 @@ struct HighScore {
     score: i32,
     username: String,
     ulid: Option<Ulid>,
+}
+
+impl From<Row<'_>> for HighScore {
+    fn from(row: Row<'_>) -> Self {
+        let uscore = row.get::<u32>("score")
+            .expect("column 'score' not found in row");
+        let username = row.get::<&str>("username")
+            .expect("column 'username' not found in row");
+        let ulid = row.get::<&str>("ulid")
+            .expect("column 'ulid' not found in row");
+        HighScore {
+            score: i32::try_from(uscore).expect("failed to convert score to an i32"),
+            username: username.to_string(),
+            ulid: ulid.parse::<Ulid>().ok(),
+        }
+    }
 }
 
 #[derive(Deserialize, Serialize)]
