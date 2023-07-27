@@ -7,7 +7,7 @@ trigger = { type = "http", base = "/" }
 [[component]]
 id = "fileserver"
 source = "components/fileserver.wasm"
-files = [{ source = "site", destination = "/" }]
+files = [{ source = "site/dist", destination = "/" }]
 [component.trigger]
 route = "/..."
 
