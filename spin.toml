@@ -51,7 +51,7 @@ route = "/session"
 [component.build]
 workdir = "session"
 command = "make"
-watch = ["**/*.rs"]
+watch = ["**/*.rb"]
 
 # Get the scores for a particular game
 [[component]]
