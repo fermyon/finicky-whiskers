@@ -35,16 +35,16 @@ jobs:
           version: v1.4.1
 
       - name: Login to Fermyon Cloud
-        run: spin cloud login --token "${{ secrets.FERMYAPPS_CLOUD_TOKEN }}"
+        run: spin cloud login --token "${{ secrets.FERMYON_CLOUD_TOKEN }}"
+
+      - name: Deploy to Fermyon Cloud
+        uses: fermyon/actions/spin/deploy@v1
+        with:
+          run_build: false
+          fermyon_token: "${{ secrets.FERMYON_CLOUD_TOKEN }}"
 
       - name: Run sqlite migration(s)
         run: |
           # NOTE: workaround for not being able to use 'default' as the database name
           SQLITE_DB_NAME="$(spin cloud sqlite list | grep 'default' | cut -d ' ' -f1)"
           spin cloud sqlite execute "$SQLITE_DB_NAME" "@highscore/migration.sql"
-
-      - name: Deploy to Fermyon Cloud
-        uses: fermyon/actions/spin/deploy@v1
-        with:
-          run_build: false
-          fermyon_token: "${{ secrets.FERMYAPPS_CLOUD_TOKEN }}"
