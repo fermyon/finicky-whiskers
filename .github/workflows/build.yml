@@ -1,21 +1,14 @@
 name: Build
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
+  workflow_call:
 
 jobs:
   build:
     runs-on: "ubuntu-latest"
-    services:
-      redis:
-        image: redis:7
-        ports:
-           - 6379:6379
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Wasm Rust target
         run: |
@@ -23,7 +16,7 @@ jobs:
 
       - name: Install wasi-vfs
         run: |
-          curl -LOs https://github.com/kateinoigakukun/wasi-vfs/releases/download/v0.1.1/wasi-vfs-cli-x86_64-unknown-linux-gnu.zip
+          curl -LOs https://github.com/kateinoigakukun/wasi-vfs/releases/download/v0.4.0/wasi-vfs-cli-x86_64-unknown-linux-gnu.zip
           unzip wasi-vfs-cli-x86_64-unknown-linux-gnu.zip
           mv wasi-vfs /usr/local/bin
 
@@ -38,6 +31,17 @@ jobs:
           tar zxvf spin-v1.4.1-linux-amd64.tar.gz
           mv spin /usr/local/bin
 
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install npm dependencies
+        working-directory: site
+        run: npm ci
+
       - name: Build
         env:
           ENABLE_WASM_OPT: false
@@ -49,3 +53,13 @@ jobs:
           TIMEOUT: 1m
         run: |
           make test-server
+
+      - name: Archive app artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: |
+            spin.toml
+            components/*.wasm
+            site/dist/
+            highscore/migration.sql

@@ -6,7 +6,7 @@ build: $(RUBY_FLAVOR) .gem
 		--mapdir /lib::./lib \
 		--mapdir /.gem::./.gem \
 		--mapdir /usr::./$(RUBY_FLAVOR)/usr \
-		-o session.wasm
+		-o ../components/session.wasm
 
 $(RUBY_FLAVOR):
 	curl -fsLO https://github.com/ruby/ruby.wasm/releases/download/ruby-head-wasm-wasi-0.3.0/ruby-$(RUBY_FLAVOR).tar.gz

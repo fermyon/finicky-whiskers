@@ -5,7 +5,7 @@ trigger = { type = "http", base = "/" }
 
 [[component]]
 id = "ruby"
-source = "session.wasm"
+source = "../components/session.wasm"
 [component.trigger]
 executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/session.rb ${SCRIPT_NAME} ${ARGS}" }
 route = "/session"

@@ -4,12 +4,11 @@ use rusty_ulid::Ulid;
 use serde::{Deserialize, Serialize};
 use spin_sdk::{
     http::{Request, Response},
-    http_component, redis,
+    http_component,
+    key_value::Store,
 };
 use std::collections::HashMap;
-
-// Env var that has the Redis address
-const REDIS_ADDRESS_ENV: &str = "REDIS_ADDRESS";
+use std::str;
 
 #[http_component]
 fn scoreboard(req: Request) -> Result<Response> {
@@ -65,11 +64,11 @@ fn get_ulid(url: &Uri) -> Result<Ulid> {
 }
 
 fn get_scores(ulid: &Ulid) -> Result<Scorecard> {
-    let address = std::env::var(REDIS_ADDRESS_ENV)?;
-    //let channel = std::env::var(REDIS_CHANNEL_ENV)?;
+    let store = Store::open_default()?;
 
-    let raw_scorecard = redis::get(&address, &ulid.to_string())
-        .map_err(|_| anyhow::anyhow!("Error fetching from Redis"))?;
+    let raw_scorecard = store
+        .get(format!("fw-{}", ulid.to_string()))
+        .map_err(|e| anyhow::anyhow!("Error fetching from key/value: {e}"))?;
     let score: Scorecard = serde_json::from_slice(raw_scorecard.as_slice())?;
     Ok(score)
 }
@@ -83,4 +82,3 @@ fn simple_query_parser(q: &str) -> HashMap<String, String> {
     });
     dict
 }
-

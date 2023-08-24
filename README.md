@@ -1,7 +1,6 @@
 Finicky Whiskers is comprised of a handful of microservices. Click on each item
 below to see more details around a particular microservice.
 
-- [morsel_event](./morsel_event/README.md)
 - [redirect](./redirect/README.md)
 - [scoreboard](./scoreboard/README.md)
 - [session](./session/README.md)
@@ -37,15 +36,6 @@ make build-session
 
 ## To Run
 
-Finicky Whiskers depends on a Redis instance to run. The default connection
-string is `redis://localhost:6379`.
-
-If you have Docker installed, you can start a redis container like so:
-
-```console
-make start-redis
-```
-
 The following command will serve the Finicky Whiskers site locally:
 
 ```console
@@ -53,12 +43,6 @@ make serve
 ```
 
 This will run the game at [http://127.0.0.1:3000](http://127.0.0.1:3000)
-
-When finished, the following command will stop the redis container:
-
-```console
-make stop-redis
-```
 
 ## To Test
 
