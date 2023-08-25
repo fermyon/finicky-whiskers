@@ -12,7 +12,7 @@ files = [{ source = "site/dist", destination = "/" }]
 route = "/..."
 [component.build]
 workdir = "site"
-command = "npm run build"
+command = "make"
 
 # Redirect / to /index.html
 [[component]]
@@ -88,3 +88,4 @@ route = "/reset"
 workdir = "reset"
 command = "make"
 watch = ["src/**/*.rs", "Cargo.toml"]
+

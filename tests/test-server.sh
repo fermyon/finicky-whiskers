@@ -1,7 +1,7 @@
 #!/bin/bash
 set -beuo pipefail
 
-./serve.sh &
+spin up --sqlite @highscore/migration.sql &
 
 timeout ${TIMEOUT:-10s} bash -c 'until curl -q 127.0.0.1:3000/index.html &>/dev/null; do sleep 1; done'
 
