@@ -1,7 +1,7 @@
-Finicky Whiskers is comprised of a handful of microservices. Click on each item
-below to see more details around a particular microservice.
+Finicky Whiskers is comprised of a handful of microservices.
 
 - [redirect](./redirect/README.md)
+- [reset](./reset/README.md)
 - [scoreboard](./scoreboard/README.md)
 - [session](./session/README.md)
 - [site](./site/README.md)
@@ -9,10 +9,10 @@ below to see more details around a particular microservice.
 
 ## Prerequisites
 
-You'll need Spin [v0.4.0](https://github.com/fermyon/spin/releases/tag/v0.4.0)
+You'll need Spin [v0.4.1](https://github.com/fermyon/spin/releases/tag/v0.4.1)
 to run the site locally.
 
-You will also need `wasi-vfs` in order to build and run the Ruby part:
+You will also need `wasi-vfs` to build and run the Ruby component:
 ```
 $ brew tap kateinoigakukun/wasi-vfs https://github.com/kateinoigakukun/wasi-vfs.git
 $ brew install kateinoigakukun/wasi-vfs/wasi-vfs
