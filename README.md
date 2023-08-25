@@ -23,7 +23,7 @@ $ brew install kateinoigakukun/wasi-vfs/wasi-vfs
 This will by default build all microservices per the `Makefile` in their directories:
 
 ```console
-make build
+spin build
 ```
 
 You may also build a particular microservice by navigating into its directory
@@ -39,7 +39,7 @@ make build-session
 The following command will serve the Finicky Whiskers site locally:
 
 ```console
-make serve
+spin up --sqlite @highscore/migration.sql
 ```
 
 This will run the game at [http://127.0.0.1:3000](http://127.0.0.1:3000)

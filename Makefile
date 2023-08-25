@@ -4,7 +4,7 @@ build:
 
 .PHONY: serve
 serve:
-	./serve.sh
+	spin up --sqlite @highscore/migration.sql
 
 .PHONY: test-server
 test-server:
