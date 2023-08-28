@@ -1,6 +1,6 @@
 # Deployments
 
-The [Finicky Whiskers](https://www.finickywhiskers.com) website is deployed via the [deploy.yaml](../.github/workflows/deploy.yml) GitHub workflow.
+The [Finicky Whiskers](https://finickywhiskers.com) website is deployed via the [deploy.yaml](../.github/workflows/deploy.yml) GitHub workflow.
 
 ## Auto Deploys
 
