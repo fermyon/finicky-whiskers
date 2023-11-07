@@ -14,3 +14,4 @@ morsel_event/
 session/ruby.wasm
 session/ruby/
 target/
+.parcel-cache/

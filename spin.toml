@@ -14,14 +14,6 @@ route = "/..."
 workdir = "site"
 command = "make"
 
-[[component]]
-source = "favicon/favicon.wasm"
-id = "favicon"
-files = [ { source = "site/assets/images", destination = "/" } ]
-[component.trigger]
-route = "/favicon.ico"
-executor = { type = "wagi" }
-
 # Redirect / to /index.html
 [[component]]
 id = "redirect-to-index"
