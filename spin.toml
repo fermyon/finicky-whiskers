@@ -1,5 +1,5 @@
 spin_manifest_version = "1"
-name = "fw2"
+name = "finicky-whiskers"
 version = "1.1.0"
 trigger = { type = "http", base = "/" }
 
