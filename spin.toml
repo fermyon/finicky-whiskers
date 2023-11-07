@@ -1,5 +1,5 @@
 spin_manifest_version = "1"
-name = "finicky-whiskers"
+name = "fw2"
 version = "1.1.0"
 trigger = { type = "http", base = "/" }
 
@@ -13,14 +13,6 @@ route = "/..."
 [component.build]
 workdir = "site"
 command = "make"
-
-[[component]]
-source = "favicon/favicon.wasm"
-id = "favicon"
-files = [ { source = "site/assets/images", destination = "/" } ]
-[component.trigger]
-route = "/favicon.ico"
-executor = { type = "wagi" }
 
 # Redirect / to /index.html
 [[component]]
