@@ -10,13 +10,13 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "styles": "sass --watch assets/scss/whiskers.scss assets/css/whiskers.css",
-    "dev": "parcel serve index.html"
-  },
-  "dependencies": {
-    "@fermyon/styleguide": "^0.1.6"
+    "build": "parcel build index.html",
+    "dev": "parcel serve index.html --open",
+    "styles": "sass assets/scss/whiskers.scss assets/css/whiskers.css",
+    "watch": "sass --watch assets/scss/whiskers.scss assets/css/whiskers.css"
   },
   "devDependencies": {
+    "@fermyon/styleguide": "^0.1.6",
     "nodemon": "^3.0.1",
     "@parcel/core": "2.8.3",
     "@parcel/packager-raw-url": "2.8.3",
