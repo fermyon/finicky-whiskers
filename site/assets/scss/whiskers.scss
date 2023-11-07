@@ -6,6 +6,9 @@ body {
     padding: 0;
 }
 
+$gamewidth: 1180px;
+$gameheight: 820px;
+
 $green:  #56EEB8;
 $black:  #031835;
 $white:  #fff;
@@ -37,6 +40,25 @@ $light0:   $green;
     100% { rotate: 0deg; }
 }
 
+@keyframes resultFade {
+    0%    {
+        opacity: 0;
+        margin-top: 2rem;
+    }
+    20% {
+        opacity: 1;
+        margin-top: 0;
+    }
+    80%   {
+        opacity: 1;
+        margin-top: 0;
+    }
+    100%  {
+        opacity: 0;
+        margin-top: -1rem;
+    }
+}
+
 @keyframes headLook {
     0%   { rotate: 0deg; }
     60%  { rotate: 0deg; }
@@ -65,7 +87,7 @@ $light0:   $green;
 @keyframes thots {
     0%   { 
         top: 13rem;
-        left: 13rem;
+        // left: 13rem;
         opacity: 0;
     }
     50% {
@@ -73,7 +95,7 @@ $light0:   $green;
     }
     100% {
         top: 12rem;
-        left: 10rem;
+        // left: 10rem;
         opacity: 0;
      }
 }
@@ -99,20 +121,21 @@ h3 {
 }
 
 html,
-body,
-.content,
-.columns.content,
-article.column,
-#whiskerStage {
-    height: 100%; 
-    min-height: 100%;
+body {
+    height: $gameheight;
+    max-height: 100vh;
+    text-align: center;
+    overflow-y: hidden;
 }
 
 .container-full,
 .fullscreen {
     width: 100%;
+    height: $gameheight;
+    max-height: 100vh;
     border-radius: 0;
-    margin: 0 !important;
+    overflow-y: hidden;
+    margin: 0 auto !important;
 
     .column {
         padding-top: 0;
@@ -120,41 +143,74 @@ article.column,
     }
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 20%;
-    background-color: rgba(100,100,100,0.72);
-    text-align: left;
+.stage,
+.stage-wrap {
+    width: $gamewidth; 
+    max-height: 100vh;
+    height: $gameheight;
+    position: relative;
+    margin: 0 auto;
+    overflow-y: hidden;
+}
 
-    p {
-        margin: 1rem 1.5rem;
-        font-size: 0.825rem;
+.stage-wrap {
+    z-index: 100;
+    position: relative;
+}
+
+header {
+    width: $gamewidth; 
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    margin-left: calc(-#{$gamewidth} / 2);
+    background: red;
+    
+    .game-menu,
+    .score {
+        position: absolute;
+        top: 2rem;
+        height: 5rem;
+        z-index: 650;
+    }
+    .game-menu {
+        left: 2rem;
+    }
+
+    .score {
+        right: 2rem;
+        border-radius: 4.96794rem;
+        background: linear-gradient(180deg, #374276 0%, #404F94 100%);
+        text-align: right;
+        font-family: Azeret Mono;
+        font-size: 1.5rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
         color: white;
-        padding-left: 3%;
-        padding-right: 3%;
-        
-        a {
-            color: white;
-
-            &:hover {
-                color: $gold;
-            }
-        }
+        min-width: 10rem;
+        height: 3rem;
+        padding: 0.5rem 2rem;
     }
 }
 
 #whiskerStage {
     padding: 1.5rem;
     position: relative;
-    margin: 3rem 0 3rem;
+    margin: 3rem auto 3rem;
     overflow: hidden;
-    background-color: $dark3;
-    background-size: cover;
+    background: url('../images/bg.jpg') no-repeat center top;
+    background-size: contain;
+    z-index: 345;
+
+    &.gametime {
+        background: url('../images/bg2.jpg') no-repeat center top;
+        background-size: contain;
+        z-index: 650;
+    }
 
     &.fullscreen {
-        position: fixed;
+        position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
@@ -163,7 +219,7 @@ footer {
 
     .button {
         position: relative;
-        z-index: 1100;
+        z-index: 2420;
     }
 
     &:before,
@@ -171,21 +227,9 @@ footer {
     .modal.monitor,
     .modal.monitor:before,
     .modal.monitor:after {
-        position: fixed;
+        position: absolute;
         content: " ";
         z-index: 1;
-    }
-
-    &:after {
-        background: url('../images/background-desk.svg') no-repeat 0 0;
-        background-size: cover;
-        display: block;
-        opacity: 1;
-        width: 100%;
-        min-height: 39%;
-        bottom: 0;
-        left: 0;
-        z-index: 1700;
     }
 
     nav,
@@ -198,38 +242,78 @@ footer {
 
     nav {
         position: absolute;
-        bottom: -10vw;
+        bottom: -50%;
         left: 0;
         right: 0;
         z-index: 1900;
         transition: all 0.3s ease-in-out;
 
         .button {
-            width: 17%;
-            margin: 0.5%;
-            padding: 2rem 0;
-            min-height: 5rem;
-            border-radius: 0.1rem;
-            background: $gold;
-            color: $dark2;
-            position: relative;
-            transition: background 0.1s linear;
-            box-shadow: 0 9px darken($gold, 12.5%);
+            background: none transparent;
+            padding: 0.25rem 0.5rem;
+            margin: 0 1rem -3.5rem;
+            height: auto;
+            min-height: 10rem;
+            border: none;
+            max-width: 25%;
+            text-align: center;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.1s linear;
+
+            &:after {
+                opacity: 0;
+                transition: all 0.1s linear;
+            }
+
+            img {
+                text-align: center;
+                width: 200px;
+                margin: 0 auto;
+                max-width: auto;
+                max-height: auto;
+            }
 
             &:hover {
-                border-radius: 0.25rem;
-                top: 1px;
-                box-shadow: 0 8px darken($gold, 17.5%);
+                background: rgba(255, 255, 255, 0.25);
             }
 
             &:active {
-                top: 8px;
-                box-shadow: none;
-                background: darken($gold, 5%);
+                background: rgba(255, 255, 255, .5);
 
-                &.correct {
-                    background: $success !important;
-                }
+                // &.correct {
+                //     &:after {
+                //         background: url('../images/response-success.png') no-repeat 0 0;
+                //         background-size: contain;
+                //         height: 96px;
+                //         width: 189px;
+                //         content: " ";
+                //         display: block;
+                //         position: absolute;
+                //         top: -4rem;
+                //         left: 6.5rem; 
+                //         opacity: 1;
+                //     }
+                // }
+
+                // &:not(.correct) {
+                //     &:after {
+                //         background: url('../images/response-nope.png') no-repeat 0 0;
+                //         background-size: contain;
+                //         height: 96px;
+                //         width: 189px;
+                //         content: " ";
+                //         display: block;
+                //         position: absolute;
+                //         top: -4rem;
+                //         left: 6.5rem; 
+                //         opacity: 1;
+                //     }
+                // }
+            }
+
+            &.correct:active {
+                background: rgba(86, 238, 184, 0.95);
             }
 
             &:first-of-type {
@@ -238,26 +322,34 @@ footer {
             &:last-of-type {
                 margin-right: 2%;
             }
-
-            em {
-                position: relative;
-                display: inline-block;
-                padding-right: 1.25rem;
-                margin-top: 0.5vw;
-
-                img {
-                    max-width: 4vw;
-                    max-height: 3.333vw;
-                }
-            }
         }
     }
 
-    &.gametime {
-        progress,
-        .tag.game-time {
-            top: 0vw !important;
+    
 
+    span.yum, span.nope {
+        background: url('../images/response-success.png') no-repeat 0 0;
+        background-size: contain;
+        height: 72px;
+        width: 144px;
+        content: " ";
+        display: block;
+        position: absolute;
+        top: -4.7rem;
+        left: 2rem; 
+        opacity: 1;
+        animation: resultFade 0.5s linear forwards;
+    }
+
+    span.nope {
+        background: url('../images/response-nope.png') no-repeat 0 0;
+        background-size: contain;
+    }
+
+    &.gametime {
+        progress {
+            top: 1.5rem !important;
+            opacity: 1;
         }
         nav {
             bottom: 1.2vw !important;
@@ -274,7 +366,7 @@ footer {
 
         }
         nav {
-            bottom: -12vw;
+            bottom: -50%;
         }
 
         .cat-bubble {
@@ -288,77 +380,64 @@ footer {
 
     progress {
         position: absolute;
-        top: -12vw;
-        left: 0%;
-        width: 72%;
+        top: -1.5rem;
+        left: 2%;
+        right: 2%;
+        width: 94%;
         transition: all 0.3s ease;
-        border: 1rem solid $dark2;
-        height: 3rem;
+        height: 0.67rem;
         border-radius: 0;
-        transition: all 0.3s linear;
+        opacity: 0;
+        transition: all 0.3s ease;
+        background: transparent;
+
+        &::-moz-progress-bar {
+            background: rgb(111,196,190);
+            background: linear-gradient(132deg, rgba(111,196,190,1) 0%, rgba(130,255,228,1) 100%);
+            border-radius: 50px;
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+        }
+        
+        &::-webkit-progress-value {
+            background: rgb(111,196,190);
+            background: linear-gradient(132deg, rgba(111,196,190,1) 0%, rgba(130,255,228,1) 100%);
+            border-radius: 50px;
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+        }
+        
+        &::-ms-fill {
+            background: rgb(111,196,190);
+            background: linear-gradient(132deg, rgba(111,196,190,1) 0%, rgba(130,255,228,1) 67%, white 100%); 
+            border-radius: 50px;
+            box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+        }
     }
 
     .tag.game-time {
         position: absolute;
-        top: -12vw;
-        right: 19.5%;
-        font-size: 1.5rem;
+        left: 0.825rem;
+        top: -0.05rem;
+        font-size: 14px;
         width: 8.5%;
         border-radius: 0;
         transition: all 0.3s linear;
-        background-color: darken($dark2, 5%);
-
-        img {
-            width: 1.25rem;
-            height: auto;
-            margin: 0.67rem 1rem 0 -0.825rem;
-            opacity: 0.5;
-            fill: white;
-        }
+        background-color: transparent;
+        color: white;
     }
 
     .modal {
         z-index: 1330 !important;
         position: absolute;
-        left: 4.5%;
-        top: 7.5rem;
-        right: 33%;
-        bottom: 30%;
+        left: 11.5%;
+        top: 9rem;
+        right: 10.5%;
+        bottom: 33%;
         min-height: 344px;
         justify-content: flex-start;
-        // background-color: $dark1;
-        background: 
-            linear-gradient(to left, $dark1 0%, darken($dark2, 5%) 100%);
-        border: 0.7rem solid $light2;
         overflow: visible !important;
-        box-shadow: -0.5rem 0.5rem 0 0rem darken($light3, 10%);
 
         &.monitor-placeholder {
             display: block !important;
-        }
-
-        &:before {
-            background: url('../images/foreground-light.svg') no-repeat left bottom;
-            background-size: contain;
-            display: block;
-            bottom: 18%;
-            min-width: 55%;
-            left: -3%;
-            top: 6%;
-            z-index: 1650 !important;
-        }
-
-        &:after {
-            background: url('../images/background-monitorbase.svg') no-repeat center bottom;
-            background-size: contain;
-            display: block;
-            height: 18%;
-            width: 466px;
-            z-index: 1300 !important;
-            left: 35%;
-            margin-left: -15%;
-            bottom: 11% !important;
-            position: fixed !important;
         }
 
         &.monitor-placeholder .modal-content {
@@ -376,10 +455,10 @@ footer {
             width: 100%;
             align-self: center;
             display: flex;
-            padding-left: 13.333%;
+            padding-left: 0;
             background-color: transparent;
             z-index: 2020;
-            overflow-x: hidden;
+            overflow: hidden;
             -webkit-box-align: center;
             -ms-flex-align: center;
             position: absolute;
@@ -387,56 +466,14 @@ footer {
             top: 50%;
             -ms-transform: translateY(-50%);
             transform: translateY(-50%);
-
-            .ivan {
-                color: $green;
-                padding-top: 3.5rem;
-                display: inline-block;
-                position: relative;
-
-                span {
-                    display: inline-block;
-                }
-
-                em {
-                    position: absolute;
-                    font-style: normal;
-                    left: -1rem;
-                }
-            }
-            
-            .ivantype {
-                color: $light3;
-                overflow: hidden; /* Ensures the content is not revealed until the animation */
-                white-space: nowrap; /* Keeps the content on a single line */
-                margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-                letter-spacing: .15em; /* Adjust as needed */
-                padding-left: 1rem;
-                width: 1px;
-                animation: typing 7s normal forwards ease-in-out;
-                animation-iteration-count: 1;
-                animation-delay: 9s;
-                position: relative;
-              }
-
-              .prompt {
-                  animation: blinkCaret 1s ease;
-                  animation-iteration-count: infinite;
-                  transition: opacity 1s ease-in-out;
-                  width: 2px;
-                  background-color: $green;
-                  height: 2rem;
-                  position: absolute;
-                  right: 0;
-              }
         }
 
         .box {
             z-index: 2150;
             background-color: transparent;
-            padding: 3rem;
+            padding: 0 3rem;
             width: 100%;
-            min-height: 25rem;
+            min-height: 20rem;
             color: white;
 
             h1 {
@@ -483,6 +520,59 @@ footer {
         }
     }
 
+    .cursor {
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+            opacity: 0.67;
+        }
+    }
+
+    .intro {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        
+        img {
+            max-height: 200px;
+        }
+    }
+
+    .intro-two {
+        position: relative;
+        z-index: 1500;
+
+        h2 {
+            img {
+                height: 6rem;
+            }
+            margin-bottom: 2rem;
+        }
+
+        p {
+            max-width: 18rem;
+            margin-bottom: 7rem;
+        }
+
+        .start-game {
+            display: inline-block;
+            z-index: 1600;
+            position: absolute;
+            top: 15.5rem;
+            width: 19.5rem;
+
+            &.start-ninja {
+                left: 8rem;
+            }
+
+            &.start-slats {
+                right: 8rem;
+            }
+        }
+    }
+
     #gameFinishModal {
 
         .modal-content {
@@ -490,6 +580,7 @@ footer {
 
             h1 {
                 font-size: 3.5rem;
+                margin-bottom: 1.5rem;
             }
 
             .button#gameStart {
@@ -528,29 +619,7 @@ footer {
             }
         }
     }
-
-    aside.score {
-        width: 20%;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        padding: 1rem 2rem 2rem 2rem;
-        background: url('../images/background-shelf.svg') no-repeat 0 0;
-        background-size: cover;
-        text-align: center;
-
-        h2 {
-            color: $gold;
-            font-size: 0.75rem;
-        }
-
-        strong {
-            color: $gold;
-            font-size: 3rem;
-            margin: -0.825rem 0.5rem 0;
-            display: block;
-        }
-    }
+    
 
     aside.highscore {
         width: 20%;
@@ -585,15 +654,36 @@ footer {
         }
     }
 
-    .slats-the-cat {
+    .pet {
         position: absolute;
-        bottom: -4.5%;
-        right: 25%;
+        z-index: 555;
+    }
+
+    #hiNinja {
+        top: 13rem;
+        left: -14rem;
+        max-width: 35rem;
+    }
+
+    &.choose-slats {
+        #hiNinja {
+            display: none;
+        }
+    }
+
+    &.choose-ninja {
+        .slats-the-cat {
+            display: none;
+        }
+    }
+
+    .slats-the-cat {
+        bottom: -5%;
+        right: -2%;
         width: 20rem;
         height: 30rem;
         background: url('../images/slats-torso.svg') no-repeat 0 0;
         background-size: contain;
-        z-index: 1405;
 
         .slats-head {
             position: absolute;
@@ -618,6 +708,18 @@ footer {
     }
 }
 
+.score {
+    right: 1rem;
+    top: 1rem;
+    position: absolute;
+    text-align: center;
+
+    h2 {
+        font-size: 0.75rem;
+        color: white;
+    }
+}
+
 .cat-bubble {
     background: rgba(255,255,255,0.92);
     border-radius: 50%;
@@ -626,8 +728,8 @@ footer {
     display: none;
     position: absolute;
     z-index: 1850;
-    top: -13rem;
-    left: -15rem;
+    top: 30%;
+    left: 35%;
     transition: all 0.3s ease;
     animation: bubbleFood 5s linear infinite;
     z-index: 1111;
@@ -642,8 +744,8 @@ footer {
         content: " ";
         position: absolute;
         z-index: 1850;
-        top: 12rem;
-        left: 10rem;
+        top: 42%;
+        left: 36.5%;
         background: rgba(255,255,255,0.92);
         transition: all 0.3s ease-in-out;
         opacity: 0.8;
@@ -749,21 +851,21 @@ footer {
     }
 }
 
-.beef {
-    background-color: rgb(237, 89, 118);
-}
+// .beef {
+//     background-color: rgb(237, 89, 118);
+// }
 
-.chicken {
-    background-color: rgb(248, 198, 70);
-}
+// .chicken {
+//     background-color: rgb(248, 198, 70);
+// }
 
-.fish {
-    background-color: rgb(69, 148, 228);
-}
+// .fish {
+//     background-color: rgb(69, 148, 228);
+// }
 
-.veg {
-    background-color: rgb(84, 174, 146);
-}
+// .veg {
+//     background-color: rgb(84, 174, 146);
+// }
 
 // game is activated!
 .beef > .cat-bubble:after {
@@ -786,42 +888,79 @@ footer {
     background-size: contain;
 }
 
+footer {
+    position: absolute;
+    z-index: 355;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    a {
+        display: block;
+        position: absolute;
+        min-width: 27%;
+        height: 5rem;
+        bottom: 0;
+        z-index: 500;
+
+        &.cta-components {
+            right: 0;
+        }
+
+        &.cta-fermyon-www {
+            left: 0;
+        }
+    }
+
+    .chair {
+        width: 467px;
+        height: 206;
+        position: absolute;
+        display: block;
+        bottom: 0;
+        right: 1rem;
+        z-index: 600;
+        background: url('../images/chair.png') no-repeat bottom right;
+        background-size: contain;
+    }
+}
+
 
 
 /* Mobile Styles */
 
 // most normal screens: laptop, tablet etc
-@media (min-aspect-ratio: 4/3) {
-    #whiskerStage {
+// @media (min-aspect-ratio: 4/3) {
+//     #whiskerStage {
 
-        .slats-the-cat {
-            right: 0;
-            bottom: -7.5vw;
-        }
-    }
-}
+//         .slats-the-cat {
+//             right: 0;
+//             bottom: 0.5vw;
+//         }
+//     }
+// }
 
-// taller viewport
-@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 4/3) {
-    #whiskerStage {
+// // taller viewport
+// @media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 4/3) {
+//     #whiskerStage {
 
-        .slats-the-cat {
-            right: 0;
-            margin-right: -7vw;
-            bottom: 0;
-        }
+//         .slats-the-cat {
+//             right: 0;
+//             margin-right: -7vw;
+//             bottom: 0;
+//         }
 
-        nav {
+//         nav {
 
-        }
+//         }
 
-        aside.score {
-            min-width: 25%;
-            width: auto;
-            padding: 1rem 4rem 2rem;
-        }
-    }
-}
+//         aside.score {
+//             min-width: 25%;
+//             width: auto;
+//             padding: 1rem 4rem 2rem;
+//         }
+//     }
+// }
 
 // thin viewport
 @media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 1/1) {
@@ -899,29 +1038,6 @@ footer {
         &.waiting > nav {
             bottom: -100vw;
         }
-
-        nav {
-            bottom: 0;
-
-            .button {
-                width: 47%;
-                margin: 0.67rem 1%;
-
-                &:first-of-type,
-                &:nth-child(3) {
-                    margin-left: 0 !important;
-                }
-
-                &:nth-child(2),
-                &:last-of-type {
-                    margin-right: 0 !important;
-                }
-            }
-        }
-    }
-
-    footer p {
-        font-size: 3vw;
     }
 }
 
@@ -997,6 +1113,44 @@ footer {
 
 @media screen and (min-width: 1024px) {
     #whiskerStage > .slats-the-cat {
-        right: 17.5%;
+        right: 0%;
     }
 }
+
+
+/* ios */
+@supports (-webkit-touch-callout: none) {
+    html,
+    body,
+    .container-full,
+    .fullscreen,
+    .stage-wrap,
+    .stage,
+    #whiskerStage {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        overflow: hidden;
+        margin: 0 auto;
+        touch-action: none;
+    }
+}
+  
+/* not ios */
+@supports not (-webkit-touch-callout: none) {
+    html,
+    body,
+    .container-full,
+    .fullscreen,
+    .stage-wrap,
+    .stage,
+    #whiskerStage {
+        width: $gamewidth;
+        height: $gameheight;
+        max-width: $gamewidth;
+        max-height: $gameheight;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+  }

@@ -9,3 +9,8 @@ site/node_modules/
 log/
 .DS_Store
 .spin/
+dump.rdb
+morsel_event/
+session/ruby.wasm
+session/ruby/
+target/
