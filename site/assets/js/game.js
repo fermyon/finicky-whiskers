@@ -110,6 +110,14 @@ function gameEnd() {
   // check highscores
   isHighscore()
 
+  function introReset() {
+    $(".intro-one").hide();
+    $(".intro-two").hide();
+    $(".pet").show();
+  };
+
+  introReset();
+
   $("#gameOver").click();
   $("#highScores").show();
   $(".cat-bubble").hide();
@@ -145,7 +153,7 @@ function setup() {
       // if (timeLeft == -1) {
       clearTimeout(timerId);
       gameEnd();
-      $("#whiskerStage").addClass('waiting').removeClass('gametime')
+      $("#whiskerStage").addClass('waiting').removeClass('gametime').removeClass('choose-ninja').removeClass('choose-slats')
     } else {
       textLeft.innerHTML = timeLeft;
       progressLeft.setAttribute("value", timeLeft);
@@ -156,6 +164,8 @@ function setup() {
     }
     $()
   }
+
+  $(".intro-two").hide();
 
   gameCountdown();
   console.log('Game has started!');
@@ -185,8 +195,8 @@ function displayMorsels(data) {
     setTimeout(function () {
       console.log(morselName + " demand! for " + morselTime + " milliseconds.");
 
-      $("#hiSlats").removeClass("beef chicken fish veg");
-      $("#hiSlats").addClass(morselName);
+      $("#whiskerStage").removeClass("beef chicken fish veg");
+      $("#whiskerStage").addClass(morselName);
 
       // remove correct class from all buttons
       $("nav > .button.correct").removeClass('correct');
@@ -207,7 +217,11 @@ $("nav > .button").on('click', function (i, e) {
   if ($(this).hasClass('correct')) {
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=true`).then(
       response => console.log(response)
+
     );
+
+    var nYum = '<span class="yum"></span>';
+    $(this).append(nYum);
 
     $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
     $(".slats-head").addClass("slats-eating2").delay(100).queue(function () {
@@ -221,6 +235,9 @@ $("nav > .button").on('click', function (i, e) {
     fetch(`/tally?ulid=${ulid}&food=${food}&correct=false`).then(
       response => console.log(response)
     );
+
+    var nNope = '<span class="nope"></span>';
+    $(this).append(nNope);
 
     $(".slats-head").removeClass("slats-eating slats-eating2 slats-huh");
     $(".slats-head").addClass("slats-huh").delay(100).queue(function () {
@@ -288,13 +305,30 @@ $(document).ready(function () {
   $("#gameInit").click();
   $("#highScores").hide();
 
-  $("#gameStart").on('click', function () {
-    setup()
+  $(".start-game").on('click', function () {
+    setup();
+
+    if ($(this).hasClass('start-slats')) {
+      $("#whiskerStage").addClass('choose-slats');
+    };
+    if ($(this).hasClass('start-ninja')) {
+      $("#whiskerStage").addClass('choose-ninja');
+    };
   });
 
-  $("#gameRestart").on('click', function () {
-    setup()
+  $("#startOver").on('click', function () {
+    $("#gameInit").click();
+    $(".intro-one").hide();
+    $(".intro-two").show();
+    $(".pet").show();
   });
+
+  $("#introOne").on('click', function () {
+    $(".intro-one").hide();
+    $(".intro-two").show();
+    $(".pet").show();
+  });
+
 
   // blinking
   setInterval(function () {

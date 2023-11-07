@@ -52,3 +52,19 @@ as seen [here](./tests/test-server.sh):
 ```console
 make test-server
 ```
+
+## Development Notes
+
+For working on the game UI (styles, etc):
+
+
+Recompiling Assets:
+
+```console
+cd site
+npm i
+npm run styles
+```
+
+To just run the UI locally (without the other services) use [Parcel](https://parceljs.org/features/development/) via `npm run dev` and then view the site at [localhost:1234](http://localhost:1234/)
+

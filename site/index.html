@@ -2,18 +2,38 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6L91BKKG5R"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { window.dataLayer.push(arguments); }
-        gtag('js', new Date());
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"">
 
-        gtag('config', 'G-6L91BKKG5R');
-    </script>
+    <!-- meta tags: base -->
+    <title>Play Finicky Whiskers!</title>
+    <meta name="description" content="Finicky Whiskers is a browser-based game in which the player attempts to feed their fickle pets - Slats and Ninja">
+    <meta name="author" content="page.head.extra.author">
+    <meta name="keywords" content="webassembly, fermyon, spin, fermyon cloud, serverless, wasm, spin, deploy, next wave">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Finicky Whiskers</title>
+    <!-- meta tags: open graph -->
+    <meta property="og:url" name="url" content="https://www.finickywhiskers.com/">
+    <meta property="og:type" name="type" content="article">
+    <meta property="og:title" name="title" content="Play Finicky Whiskers!">
+    <meta property="og:description" name="description" content="Finicky Whiskers is a browser-based game in which the player attempts to feed their fickle pets - Slats and Ninja">
+    <meta property="og:image" name="image" content="/assets/images/twc-fw-2.jpg">
+    <meta property="og:locale" name="locale" content="en_US">
+    <meta property="og:site_name" name="site" content="Finicky Whiskers">
+
+    <!-- meta tags: search engine -->
+    <meta itemprop="name" content="Play Finicky Whiskers!">
+    <meta itemprop="description" content="Finicky Whiskers is a browser-based game in which the player attempts to feed their fickle pets - Slats and Ninja">
+    <meta itemprop="image" content="/assets/images/twc-fw-2.jpg">
+
+    <!-- meta tags: twitter -->
+    <meta name="twitter:title" content="Play Finicky Whiskers!">
+    <meta name="twitter:description" content="Finicky Whiskers is a browser-based game in which the player attempts to feed their fickle pets - Slats and Ninja">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/assets/images/twc-fw-2.jpg">    
+    <meta property="twitter:url" content="https://www.finickywhiskers.com/">
+
+    <title>Play Finicky Whiskers!</title>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,147 +41,157 @@
     <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@100;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/whiskers.css" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/site.webmanifest">
+
+    <!-- scripts -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6L91BKKG5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6L91BKKG5R');
+    </script>
+    <script defer data-domain="finickywhiskers.com" src="//plausible.io/js/script.tagged-events.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
 
-    <main class="container container-full is-fullheight">
-        <div class="columns content is-fullheight">
+    <header>
+        <!-- <section class="game-menu">
+            <a class="plausible-event-name=view-game">Game</a>
+            <a class="plausible-event-name=view-data">Data</a>
+            <a class="plausible-event-name=view-map">Map</a>
+        </section> -->
+        <section class="score">
+            <p>Score: <span id="scoreTotal"> 0</span></p>
+        </section>
+    </header>
 
-            <article class="column is-fullheight">
+    <main class="stage-wrap">
+        <!-- the game stage -->
+        <section id="whiskerStage" class="fullscreen stage">
+            <progress class="progress is-primary" id="progressBar" value="30" max="30"></progress>
+            <span class="tag game-time is-info"> <span id="gameTime">30</span>&nbsp;<small>seconds</small></span>
 
-                <!-- the game stage -->
-                <section id="whiskerStage" class="fullscreen">
-                    <progress class="progress is-primary" id="progressBar" value="30" max="30"></progress>
-                    <span class="tag game-time is-info"><i><img src="assets/images/timer.svg"
-                                alt="Time remaining" /></i> <span id="gameTime">30</span></span>
+            <button id="gameInit" class="modal-button is-hidden" data-target="#gameStartModal"
+                aria-haspopup="true">Init</button>
+            <button id="gameRestartInit" class="modal-button is-hidden" data-target="#gameStartModal"
+                aria-haspopup="true">RestartInit</button>
+            <button id="gameOver" class="modal-button is-hidden" data-target="#gameFinishModal"
+                aria-haspopup="true">Over</button>
 
-                    <button id="gameInit" class="modal-button is-hidden" data-target="#gameStartModal"
-                        aria-haspopup="true">Init</button>
-                    <button id="gameRestartInit" class="modal-button is-hidden" data-target="#gameStartModal"
-                        aria-haspopup="true">RestartInit</button>
-                    <button id="gameOver" class="modal-button is-hidden" data-target="#gameFinishModal"
-                        aria-haspopup="true">Over</button>
+            <div class="modal monitor monitor-placeholder">
+                <div class="modal-content">
+                    
+                </div>
+            </div>
 
-                    <div class="modal monitor monitor-placeholder">
-                        <div class="modal-content">
-                            <span class="ivan">
-                                <em>$</em>
-                                <span class="ivantype">
-                                    spin up --file slats.toml
-                                    <span class="prompt"></span>
-                                </span>
-                            </span>
-                        </div>
+            <!-- start screen -->
+            <div class="modal monitor" id="gameStartModal">
+                <div class="modal-content">
+                    <div class="box is-vcentered intro intro-one" id="introOne">
+                        <img src="assets/images/fw2-intro.png" class="cursor" alt="Finicky Friends" />
+
                     </div>
 
-                    <!-- start screen -->
-                    <div class="modal monitor" id="gameStartModal">
-                        <div class="modal-content">
-                            <div class="box is-vcentered">
-                                <h1 class="logo">
-                                    Finicky<br>
-                                    Whiskers
-                                </h1>
+                    <div class="box is-vcentered intro intro-two" style="display: none;">
+                        <h2><img src="assets/images/choose.png" alt="Choose a Finicky Friends" />
+                        </h2>
 
-                                <p>Slats demands satisfaction.<br>
-                                    But <em>which</em> morsel does Slats want?</p>
+                        <p>These pernickety pets are hungry...  but for what?</p>
 
-                                <button id="gameStart"
-                                    class="button is-primary modal-trigger-close is-large">Start</button>
+                        <div class="is-primary modal-trigger-close is-large cursor start-game start-ninja plausible-event-name=game-dog "><img src="assets/images/btn-ninja.svg" alt="Play as Ninja the dog" /></div>
+
+                        <div class="is-primary modal-trigger-close is-large cursor start-game start-slats plausible-event-name=game-cat"><img src="assets/images/btn-slats.svg" alt="Play as Slats the cat" /></div>
+                    </div>
+                </div>
+            </div> 
+
+            <!-- end screen -->
+            <div class="modal monitor" id="gameFinishModal">
+                <div class="modal-content">
+                    <div class="box">
+                        <h1 class="logo logo-game-over">
+                            Game Over
+                        </h1>
+
+                        <p class="finalscore">Time is up! <br>
+                            You fed Slats <strong id="scoreFinal">0</strong> times.
+                        </p>
+
+                        <div id="promptName" style="display: none;">
+                            It's a highscore!!!
+                            <div class="control">
+                                <input class="input is-normal" type="text" placeholder="Name" maxlength="3"
+                                    id="yourName">
+                                <button class="button is-small" id="submitName">Submit</button>
                             </div>
                         </div>
+
+                        <a id="startOver" class="modal-trigger-close button">Paw to play again</a>
+
+                        <!-- <button id="gameRestart" class="button is-link modal-trigger-close is-large">&#8617;
+                            Restart</button> -->
                     </div>
+                </div>
+            </div>
 
-                    <!-- end screen -->
-                    <div class="modal monitor" id="gameFinishModal">
-                        <div class="modal-content">
-                            <div class="box">
-                                <h1 class="logo logo-game-over">
-                                    Game Over
-                                </h1>
+            <div class="ninja pet" id="hiNinja" style="display: none;">
+                <img src="assets/images/ninja.svg" />
+            </div>
 
-                                <p class="finalscore">Time is up! <br>
-                                    You fed Slats <strong id="scoreFinal">0</strong> times.
-                                </p>
+            <div class="slats-the-cat pet" style="display: none;">
+                <span class="slats-head slats-resting">
+                    <img src="assets/images/slats-face-resting.svg" alt="Slats is waiting."
+                        class="is-resting" />
+                    <img src="assets/images/slats-face-blink.svg" alt="Slats is waiting." class="is-blink" />
+                    <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating." class="is-eating" />
+                    <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating." class="is-eating2" />
+                    <img src="assets/images/slats-face-huh.svg" alt="Slats is confused." class="is-huh" />
+                </span>
+                <span class="slats-body"></span>
+                <span class="slats-tail"></span>  
+            </div>
 
-                                <div id="promptName" style="display: none;">
-                                    It's a highscore!!!
-                                    <div class="control">
-                                        <input class="input is-normal" type="text" placeholder="Name" maxlength="3"
-                                            id="yourName">
-                                        <button class="button is-small" id="submitName">Submit</button>
-                                    </div>
-                                </div>
+            <div class="cat-bubble"></div>
 
-                                <button id="gameRestart" class="button is-link modal-trigger-close is-large">&#8617;
-                                    Restart</button>
-                            </div>
-                        </div>
-                    </div>
+            <nav>
+                <a id="beef" class="button button-food beef">
+                    <em><img src="assets/images/food-pate.png" alt="Python Paté" /></em>
+                </a>
+                <a id="chicken" class="button button-food fish">
+                    <em><img src="assets/images/food-salmon.png" alt="Rust-ic Salmon" /></em>
+                </a>
+                <a id="fish" class="button button-food chicken">
+                    <em><img src="assets/images/food-turkey.png" alt="TypeScript Turkey" /></em>
+                </a>
+                <a id="veg" class="button button-food veg">
+                    <em><img src="assets/images/food-veggie.png" alt="Go Veggie" /></em>
+                </a>
+            </nav>
 
-                    <div class="slats-the-cat" id="hiSlats">
-                        <span class="slats-head slats-resting">
-                            <img src="assets/images/slats-face-resting.svg" alt="Slats is waiting."
-                                class="is-resting" />
-                            <img src="assets/images/slats-face-blink.svg" alt="Slats is waiting." class="is-blink" />
-                            <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating." class="is-eating" />
-                            <img src="assets/images/slats-face-eating2.svg" alt="Slats is eating." class="is-eating2" />
-                            <img src="assets/images/slats-face-huh.svg" alt="Slats is confused." class="is-huh" />
-                        </span>
-                        <span class="slats-body"></span>
-                        <span class="slats-tail"></span>
-
-                        <div class="cat-bubble"></div>
-                    </div>
-
-                    <nav>
-                        <a id="beef" class="button beef">
-                            <em><img src="assets/images/beef.svg" alt="Choose Meat" /></em>
-                            Meat</a>
-                        <a id="chicken" class="button chicken">
-                            <em><img src="assets/images/chicken.svg" alt="Choose Chicken" /></em>
-                            Chicken</a>
-                        <a id="fish" class="button fish">
-                            <em><img src="assets/images/fish.svg" alt="Choose Fish" /></em>
-                            Fish
-                        </a>
-                        <a id="veg" class="button veg">
-                            <em><img src="assets/images/veggies.svg" alt="Choose Veggie" /></em>
-                            Veggie
-                        </a>
-                    </nav>
-
-                    <aside class="highscore" id="highScores" style="display: none;">
-                        <h2>High Scores</h2>
-                        <dl id="highScoresList">
-                        </dl>
-                    </aside>
-
-                    <aside class="score">
-                        <h2>Score</h2>
-                        <strong id="scoreTotal">0</strong>
-                    </aside>
-                    <h1 id="currentDemand"></h1>
-                </section>
-            </article>
-        </div>
+            <aside class="highscore" id="highScores" style="display: none;">
+                <h2>High Scores</h2>
+                <dl id="highScoresList">
+                    <dt>Kwt</dt><dd>195</dd><dt>Kwt</dt><dd>189</dd><dt></dt><dd>177</dd><dt>MNk</dt><dd>175</dd><dt>MNk</dt><dd>165</dd><dt>Mar</dt><dd>146</dd><dt></dt><dd>141</dd><dt>Kar</dt><dd>140</dd><dt>MNK</dt><dd>137</dd><dt>Mat</dt><dd>135</dd>
+                </dl>
+            </aside>
+        </section>
 
         <footer>
-            <p>
-                <a href="https://www.fermyon.com/blog/finicky-whiskers-part-1-intro" target="_blank">
-                    <span class="is-hidden-touch">You've executed <span id="modCount">0</span> WebAssembly
-                        microservices... what is Finicky Whiskers <em>actually doing</em>?</span>
-                </a>
-            </p>
+            <a href="https://www.fermyon.com/?utm_source=fw2&utm_medium=banner&utm_campaign=fw2" target="_blank" class="cta-fermyon-www plausible-event-name=cta-fermyon-www" title="Check out Fermyon">&nbsp;</a>
+            <a href="https://bit.ly/462BHGD" class="cta-components plausible-event-name=cta-components" title="Learn more about the WebAssembly Component Model">&nbsp;</a>
+            <div class="chair" title="My chair has good lumbar support. ⭐️⭐️⭐️⭐️⭐️"></div>
         </footer>
     </main>
 
     <script src="assets/js/game.js"></script>
 
 </body>
-
 </html>

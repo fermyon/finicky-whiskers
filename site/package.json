@@ -9,15 +9,18 @@
     "url": "https://fermyon.com"
   },
   "license": "Apache-2.0",
-  "devDependencies": {
-    "@fermyon/styleguide": "^0.1.6",
-    "@parcel/transformer-sass": "^2.7.0",
-    "parcel": "^2.7.0"
-  },
   "scripts": {
-    "build": "parcel build index.html",
-    "dev": "parcel serve index.html --open",
-    "styles": "parcel build assets/scss/whiskers.scss --dist-dir assets/css",
-    "watch": "parcel watch assets/scss/whiskers.scss --dist-dir assets/css"
+    "styles": "sass --watch assets/scss/whiskers.scss assets/css/whiskers.css",
+    "dev": "parcel serve index.html"
+  },
+  "dependencies": {
+    "@fermyon/styleguide": "^0.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "@parcel/core": "2.8.3",
+    "@parcel/packager-raw-url": "2.8.3",
+    "@parcel/transformer-webmanifest": "2.8.3",
+    "sass": "^1.66.1"
   }
 }
