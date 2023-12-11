@@ -1,3 +1,10 @@
+To learn more about "The World's Most Adorable Manual Load Generator", Finicky Whiskers, and the technical details under the covers, you should read the four-part blog post series accompanying the project:
+
+1. [The World's Most Adorable Manual Load Generator](https://www.fermyon.com/blog/finicky-whiskers-part-1-intro)
+2. [Serving the HTML, CSS, and static assets](https://www.fermyon.com/blog/finicky-whiskers-part-2-fileserver)
+3. [The Microservices](https://www.fermyon.com/blog/finicky-whiskers-part-3-microservices)
+4. [Spin, Containers, Nomad, and Infrastructure](https://www.fermyon.com/blog/finicky-whiskers-part-4-infrastructure)
+
 Finicky Whiskers is comprised of a handful of microservices.
 
 - [redirect](./redirect/README.md)
@@ -6,6 +13,7 @@ Finicky Whiskers is comprised of a handful of microservices.
 - [session](./session/README.md)
 - [site](./site/README.md)
 - [tally](./tally/README.md)
+
 
 ## Prerequisites
 
