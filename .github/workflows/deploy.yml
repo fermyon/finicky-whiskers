@@ -45,6 +45,4 @@ jobs:
 
       - name: Run sqlite migration(s)
         run: |
-          # NOTE: workaround for not being able to use 'default' as the database name
-          SQLITE_DB_NAME="$(spin cloud sqlite list -a finicky-whiskers --format json | jq -j '.[].database')"
-          spin cloud sqlite execute "$SQLITE_DB_NAME" "@highscore/migration.sql"
+          spin cloud sqlite execute -a finicky-whiskers -l default "@highscore/migration.sql"
