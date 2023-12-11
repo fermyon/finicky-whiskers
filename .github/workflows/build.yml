@@ -25,11 +25,10 @@ jobs:
           wget https://github.com/tinygo-org/tinygo/releases/download/v0.27.0/tinygo_0.27.0_amd64.deb
           sudo dpkg -i tinygo_0.27.0_amd64.deb
 
-      - name: Install spin
-        run: |
-          curl -LOs https://github.com/fermyon/spin/releases/download/v1.4.1/spin-v1.4.1-linux-amd64.tar.gz
-          tar zxvf spin-v1.4.1-linux-amd64.tar.gz
-          mv spin /usr/local/bin
+      - name: Install Spin
+        uses: fermyon/actions/spin/setup@v1
+        with:
+          version: v2.0.1
 
       - name: Install node
         uses: actions/setup-node@v3
