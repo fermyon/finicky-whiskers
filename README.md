@@ -20,11 +20,18 @@ Finicky Whiskers is comprised of a handful of microservices.
 You'll need Spin [v0.4.1](https://github.com/fermyon/spin/releases/tag/v0.4.1)
 to run the site locally.
 
-You will also need `wasi-vfs` to build and run the Ruby component:
+You will also need the following to build and run the components:
 ```
 $ brew tap kateinoigakukun/wasi-vfs https://github.com/kateinoigakukun/wasi-vfs.git
 $ brew install kateinoigakukun/wasi-vfs/wasi-vfs
+$ brew install npm
+$ brew tap tinygo-org/tools
+$ brew install tinygo
+$ rustup target add wasm32-wasi
 ```
+
+It is expected that Rust will be installed already. Do not use Homebrew to install Rust,
+it will cause errors.
 
 ## To Build
 
