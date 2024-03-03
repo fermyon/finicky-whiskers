@@ -82,5 +82,3 @@ npm run styles
 ```
 
 To just run the UI locally (without the other services) use [Parcel](https://parceljs.org/features/development/) via `npm run dev` and then view the site at [localhost:1234](http://localhost:1234/)
-
-

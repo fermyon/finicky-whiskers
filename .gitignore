@@ -8,6 +8,7 @@ site/dist/
 site/node_modules/
 log/
 .DS_Store
+.vscode
 .spin/
 dump.rdb
 morsel_event/
