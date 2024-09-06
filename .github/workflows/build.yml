@@ -20,6 +20,10 @@ jobs:
           unzip wasi-vfs-cli-x86_64-unknown-linux-gnu.zip
           mv wasi-vfs /usr/local/bin
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'redirect/go.mod'
+
       - name: Install tinygo
         run: |
           wget https://github.com/tinygo-org/tinygo/releases/download/v0.27.0/tinygo_0.27.0_amd64.deb
