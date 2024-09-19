@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   build:
-    uses: fermyon/finicky-whiskers/.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
 
   deploy:
     runs-on: ubuntu-latest
