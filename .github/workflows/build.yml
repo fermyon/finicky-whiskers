@@ -41,8 +41,12 @@ jobs:
           cache: "npm"
           cache-dependency-path: site/package-lock.json
 
-      - name: Install npm dependencies
+      - name: Install npm dependencies for site
         working-directory: site
+        run: npm ci
+
+      - name: Install npm dependencies for sessionv2
+        working-directory: sessionv2
         run: npm ci
 
       - name: Build
