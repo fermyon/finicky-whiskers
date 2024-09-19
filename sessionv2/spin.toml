@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+authors = ["Danielle Lancashire <dani@builds.terrible.systems>"]
+description = ""
+name = "sessionv2"
+version = "0.1.0"
+
+[[trigger.http]]
+route = "/session"
+component = "sessionv2"
+
+[component.sessionv2]
+source = "target/sessionv2.wasm"
+exclude_files = ["**/node_modules"]
+[component.sessionv2.build]
+command = "npm run build"
+watch = ["src/**/*.ts", "package.json"]
