@@ -15,9 +15,31 @@ concurrency: ${{ github.workflow }}
 permissions:
   contents: read
 
+env:
+  SPIN_VERSION: v2.7.0
+
 jobs:
   build:
     uses: ./.github/workflows/build.yml
+
+  deploy-www-redirect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Spin
+        uses: fermyon/actions/spin/setup@v1
+        with:
+          version: ${{ env.SPIN_VERSION }}
+
+      - name: Login to Fermyon Cloud
+        run: spin cloud login --token "${{ secrets.FERMYON_CLOUD_TOKEN }}"
+
+      - name: Deploy to Fermyon Cloud
+        uses: fermyon/actions/spin/deploy@v1
+        with:
+          manifest_file: deploy/finicky-whiskers-www-redirect/spin.toml
+          fermyon_token: "${{ secrets.FERMYON_CLOUD_TOKEN }}"
 
   deploy:
     runs-on: ubuntu-latest
@@ -32,7 +54,7 @@ jobs:
       - name: Setup Spin
         uses: fermyon/actions/spin/setup@v1
         with:
-          version: v2.7.0
+          version: ${{ env.SPIN_VERSION }}
 
       - name: Login to Fermyon Cloud
         run: spin cloud login --token "${{ secrets.FERMYON_CLOUD_TOKEN }}"
